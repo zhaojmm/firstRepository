@@ -2,6 +2,7 @@
   <div class="home">
       <el-button >文字按钮</el-button>
     <div @click="skipPage">跳转about页面</div>
+    <div @click="skipPagew">跳转 横屏 页面</div>
   </div>
 </template>
 
@@ -16,7 +17,11 @@ export default {
   methods:{
       skipPage:function(){
           this.$router.push({ name: 'About'});
+      },
+      skipPagew:function(){
+          this.$router.push({ name: 'hor'});
       }
+
   }
 }
 </script>
