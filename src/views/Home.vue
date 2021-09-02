@@ -1,18 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <el-button >文字按钮</el-button>
+    <div @click="skipPage">跳转about页面</div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+   
+  },
+  methods:{
+      skipPage:function(){
+          this.$router.push({ name: 'About'});
+      }
   }
 }
 </script>
