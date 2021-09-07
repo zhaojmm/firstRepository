@@ -11,15 +11,16 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import( '../views/About.vue')
+    path: '/verticalScreen',
+    name: 'verticalScreen',
+    component: () => import( '../views/verticalScreen.vue')
   },
   {
     path: '/hor',
     name: 'hor',
     component: () => import( '../views/valueDelivery.vue')
   }
+  
 ]
 
 const router = new VueRouter({
