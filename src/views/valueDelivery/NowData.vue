@@ -10,7 +10,7 @@
                 <span class="title-right">正常范围</span>
             </div>
         </div>
-        <span class="hor-nowData-title-slogan">主动式空调，会呼吸的写字楼</span>
+        <div class="hor-nowData-title-slogan">主动式空调，会呼吸的写字楼</div>
         <div
             class="contain"
         >
@@ -93,21 +93,20 @@ export default {
         text-align: left;
     }
     .hor-nowData-title-slogan {
-        padding: 6px 0 0px 32px;
+        padding: 4px 0 0px 32px;
     }
     .contain {
         display: flex;
          // width: 1306px;
          // margin-left: 101px;
-        height: 280px;
-        
-        padding-top: 46px;
+        // height: 280px;
+        padding-top: 47px;
        
     }
     .item {
         width: calc(100% / 5);
         .item_content {
-            height: 100%;
+            // height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -125,11 +124,11 @@ export default {
                 font-family: Persagy;
                 font-size: 42px;
                 font-weight: 700;
-                margin-top: 20px;
+                margin-top: 10px;
                 color: rgba(59, 53, 88, 1);
             }
             .content_name {
-                margin-top: 12px;
+                margin-top: 8px;
                 font-family: PingFang SC;
                 font-size: 24px;
                 font-weight: 400;
@@ -140,6 +139,7 @@ export default {
     }
     .content_level {
         margin-top: 8px;
+        margin-right: 8px;
         box-sizing: border-box;
         width: 16px;
         height: 16px;
@@ -173,8 +173,12 @@ export default {
                     font-size: 32px;
                 }
                 .content_name{
+                     margin-top:12px;
                     font-size: 20px; 
 
+                }
+                .content_level{
+                    margin-top:12px;
                 }
             }
         }
