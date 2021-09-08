@@ -3,10 +3,7 @@
         <div class="hor-nowData">
             <NowData screenType="ver" />
             <AirSwitchVer status="false" />
-            <div>
-                <LastMonth screenType="hor" />
-            </div>
-
+                <LastMonth screenType="ver" />
             <div>
                 <AirSwitch />
             </div>

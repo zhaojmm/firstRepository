@@ -1,46 +1,35 @@
 <template>
-    <div class="lastMonth">
+    <div :class="[screenType==='hor' ? 'lastMonth' : 'lastMonth verticalClass' ]">
         <div class="lastMonth-title"><span>上月数据</span></div>
-        <div
-            class="item"
-            v-for="(item,index) in lastMonthData"
-            :key="index"
-        >
-            <div class="item-left">
-                <img :src="item.img" />
-            </div>
-            <div class="item-right">
-                <div class="item-value">
-                    <span>{{item.value}}</span><span>{{item.unit}}</span>
+        <div class="itemWrap">
+            <div class="item" v-for="(item,index) in lastMonthData" :key="index">
+                <div class="item-left">
+                    <img :src="item.img" />
                 </div>
-                <div class="item-content">
-                    <div class="item-content-left">
-                        <span
-                            class="max-value maxmin-level"
-                            :style="{background:item.maxColor}"
-                        ></span>
-                        <span
-                            class="max-min-line"
-                            :style="{ background: 'linear-gradient('+item.maxColor+',' +item.minColor+')' }"
-                        ></span>
-                        <span
-                            class="min-value maxmin-level"
-                            :style="{background:item.minColor}"
-                        ></span>
+                <div class="item-right">
+                    <div class="item-value">
+                        <span>{{item.value}}</span><span>{{item.unit}}</span>
                     </div>
-                    <div class="item-content-right">
-                        <div class="max">
-                            <span>{{item.maxName}}</span>
-                            <span>{{item.max}}</span>
-                            <span>{{item.unit}}</span>
+                    <div class="item-content">
+                        <div class="item-content-left">
+                            <span class="max-value maxmin-level" :style="{background:item.maxColor}"></span>
+                            <span class="max-min-line" :style="{ background: 'linear-gradient('+item.maxColor+',' +item.minColor+')' }"></span>
+                            <span class="min-value maxmin-level" :style="{background:item.minColor}"></span>
                         </div>
-                        <div class="min">
-                            <span>{{item.minName}}</span>
-                            <span>{{item.min}}</span>
-                            <span>{{item.unit}}</span>
+                        <div class="item-content-right">
+                            <div class="max">
+                                <span>{{item.maxName}}</span>
+                                <span>{{item.max}}</span>
+                                <span>{{item.unit}}</span>
+                            </div>
+                            <div class="min">
+                                <span>{{item.minName}}</span>
+                                <span>{{item.min}}</span>
+                                <span>{{item.unit}}</span>
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +53,7 @@ export default {
         return {
             lastMonthData: [
                 { id: 1, name: "温度", value: 24.5, unit: "℃", maxName: '最高温', maxColor: "#F5483D", minColor: "#7ed874", max: 26, minName: "最低温", min: 24, img: icon_temp },
-                { id: 1, name: "湿度", value: 36, unit: "%", maxColor: "#EE9F2B", minColor: "#7ed874", maxName: '最大值', max: 50, minName: "最小值", min: 20, img: icon_humidity},
+                { id: 1, name: "湿度", value: 36, unit: "%", maxColor: "#EE9F2B", minColor: "#7ed874", maxName: '最大值', max: 50, minName: "最小值", min: 20, img: icon_humidity },
                 { id: 1, name: "CO2", value: 420, unit: "ppm", maxColor: "#EFD62E", minColor: "#7ed874", maxName: '最大值', max: 630, minName: "最小值", min: 300, img: icon_CO2 },
                 { id: 1, name: "甲醛", value: 0.03, unit: "mg/m³", maxColor: "#F5483D", minColor: "#7ed874", maxName: '最大值', max: 0.01, minName: "最小值", min: 0.07, img: icon_formaldehyde },
                 { id: 1, name: "PM3d5", value: 120, unit: "ug/m³", maxColor: "#C4E34F", minColor: "#7ed874", maxName: '最大值', max: 140, minName: "最小值", min: 70, img: icon_PM2d5 },
@@ -97,8 +86,11 @@ export default {
         color: rgba(59, 53, 88, 1);
         margin: 24px 0 0 0;
     }
+    .itemWrap{
+
+    }
     .item {
-         padding-top: 60px;
+        padding-top: 60px;
         display: flex;
         align-items: center;
         height: 86px;
@@ -146,6 +138,22 @@ export default {
             padding-top: 8px;
         }
     }
+}
+.verticalClass {
+    height: 440px;
+    width: 1000px;
+    margin: 0 auto;
+       .itemWrap{
+           display: flex;
+           flex-direction: row;
+         flex-wrap:  wrap ;
+        //  justify-content:space-around;
+         .item{
+             padding-bottom: 20px;
+             margin-right:75px;
+         }
+    }
+
 }
 </style>
 
