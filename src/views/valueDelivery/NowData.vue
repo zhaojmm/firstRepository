@@ -1,7 +1,7 @@
 <template>
     <div
         class="NowData"
-        :class="[screenType==='hor' ? 'hor-nowData-contain' : 'ver-nowData-contain' ]"
+        :class="[screenType==='hor' ? 'hor-nowData-contain' : 'verticalClass' ]"
     >
         <div class="nowData-title">
             <span class="hor-nowData-title-text">实时数据</span>
@@ -163,7 +163,7 @@ export default {
         display: flex;
         align-items: center;
     }
-    &.ver-nowData-contain{
+    &.verticalClass{
          height: 460px;
          width: 1000px;
         margin:0 auto;

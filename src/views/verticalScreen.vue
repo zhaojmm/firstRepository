@@ -2,11 +2,9 @@
     <div>
         <div class="hor-nowData">
             <NowData screenType="ver" />
-            <AirSwitchVer status="false" />
-                <LastMonth screenType="ver" />
-            <div>
-                <AirSwitch />
-            </div>
+            <AirSwitchVer  />
+            <LastMonth screenType="ver" />
+            <lastTotalEnergy></lastTotalEnergy>
             <div>
                 <FloorSpace />
             </div>
@@ -20,8 +18,10 @@ import LastMonth from './valueDelivery/LastMonthData.vue'
 import AirSwitch from './valueDelivery/AirSwitch.vue'
 import AirSwitchVer from './valueDelivery/AirSwitchVer.vue'
 import FloorSpace from './valueDelivery/FloorSpace.vue'
+import lastTotalEnergy from './valueDelivery/lastTotalEnergy.vue'
+
 export default {
-    components: { NowData, AirSwitch, FloorSpace, LastMonth, AirSwitchVer },
+    components: { NowData, AirSwitch, FloorSpace, LastMonth, AirSwitchVer ,lastTotalEnergy},
     data() {
         return {
 

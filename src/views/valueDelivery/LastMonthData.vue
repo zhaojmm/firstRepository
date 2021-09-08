@@ -143,6 +143,7 @@ export default {
     height: 440px;
     width: 1000px;
     margin: 0 auto;
+    box-sizing: border-box;
        .itemWrap{
            display: flex;
            flex-direction: row;
@@ -150,7 +151,7 @@ export default {
         //  justify-content:space-around;
          .item{
              padding-bottom: 20px;
-             margin-right:75px;
+             margin-right:70px;
          }
     }
 
