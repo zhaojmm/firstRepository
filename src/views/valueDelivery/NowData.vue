@@ -1,7 +1,7 @@
 <template>
     <div
         class="NowData"
-        :class="[screenType==='hor' ? 'hor-nowData-contain' : '' ]"
+        :class="[screenType==='hor' ? 'hor-nowData-contain' : 'ver-nowData-contain' ]"
     >
         <div class="nowData-title">
             <span class="hor-nowData-title-text">实时数据</span>
@@ -10,11 +10,9 @@
                 <span class="title-right">正常范围</span>
             </div>
         </div>
-        <span :class="[screenType==='hor' ? 'hor-nowData-title-slogan' : '' ]">主动式空调，会呼吸的写字楼</span>
-
+        <span class="hor-nowData-title-slogan">主动式空调，会呼吸的写字楼</span>
         <div
             class="contain"
-            :class="[screenType==='hor' ? 'hor-contain' : 'vert-contain' ]"
         >
             <div
                 class="item"
@@ -74,11 +72,11 @@ export default {
 <style lang="less" scoped>
 .NowData {
     &.hor-nowData-contain {
-        height: 498px;
         width: 1508px;
-        border-radius: 20px;
-        background: #ffffff;
+        height: 498px;
     }
+    border-radius: 20px;
+    background: #ffffff;
     color: rgba(87, 82, 113, 1);
     .nowData-title {
         display: flex;
@@ -95,18 +93,16 @@ export default {
         text-align: left;
     }
     .hor-nowData-title-slogan {
-        padding: 4px 0 0px 32px;
+        padding: 6px 0 0px 32px;
     }
     .contain {
         display: flex;
-        &.hor-contain {
-            width: 1306px;
-            height: 280px;
-            margin-left: 101px;
-            padding-top: 46px;
-        }
-        &.vert-contain {
-        }
+         // width: 1306px;
+         // margin-left: 101px;
+        height: 280px;
+        
+        padding-top: 46px;
+       
     }
     .item {
         width: calc(100% / 5);
@@ -125,25 +121,25 @@ export default {
                     height: 130px;
                 }
             }
-
             .content_value {
                 font-family: Persagy;
                 font-size: 42px;
                 font-weight: 700;
-                line-height: 51px;
+                margin-top: 20px;
                 color: rgba(59, 53, 88, 1);
             }
             .content_name {
-                padding-top: 8px;
+                margin-top: 12px;
                 font-family: PingFang SC;
                 font-size: 24px;
                 font-weight: 400;
                 line-height: 34px;
             }
         }
+
     }
     .content_level {
-        padding-top: 8px;
+        margin-top: 8px;
         box-sizing: border-box;
         width: 16px;
         height: 16px;
@@ -166,6 +162,23 @@ export default {
     .normal-explain {
         display: flex;
         align-items: center;
+    }
+    &.ver-nowData-contain{
+         height: 460px;
+         width: 1000px;
+        margin:0 auto;
+        .item{
+            .item_content{
+                .content_value{
+                    font-size: 32px;
+                }
+                .content_name{
+                    font-size: 20px; 
+
+                }
+            }
+        }
+      
     }
 }
 </style>
