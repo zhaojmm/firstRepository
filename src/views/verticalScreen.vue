@@ -2,11 +2,10 @@
     <div>
         <div class="hor-nowData">
             <NowData screenType="ver" />
+            <AirSwitchVer status="false" />
+                <LastMonth screenType="ver" />
             <div>
-                <LastMonth screenType="hor" />
-            </div>
-            <div>
-                <AirSwitch screenType="hor" />
+                <AirSwitch />
             </div>
             <div>
                 <FloorSpace />
@@ -19,9 +18,10 @@
 import NowData from './valueDelivery/NowData.vue'
 import LastMonth from './valueDelivery/LastMonthData.vue'
 import AirSwitch from './valueDelivery/AirSwitch.vue'
+import AirSwitchVer from './valueDelivery/AirSwitchVer.vue'
 import FloorSpace from './valueDelivery/FloorSpace.vue'
 export default {
-    components: { NowData, AirSwitch, FloorSpace, LastMonth },
+    components: { NowData, AirSwitch, FloorSpace, LastMonth, AirSwitchVer },
     data() {
         return {
 
@@ -31,7 +31,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .hor-nowData {
-    width:100%;
+    width: 100%;
     background: #e5e5e5;
 }
 </style>
