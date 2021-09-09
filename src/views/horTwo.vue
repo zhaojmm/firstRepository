@@ -1,16 +1,48 @@
 <template>
     <div class="horTwo">
-        2
+        <div class="bg">
+            <img
+                :src="bgImg"
+                alt=""
+            >
+        </div>
+        <div class="container">
+            <div class="hor-head">
+                <HorHead />
+            </div>
+            <div>
+                <HorFloorSpace />
+            </div>
+        </div>
+
     </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
+import HorHead from "./valueDelivery/HorHead.vue";
+import HorFloorSpace from "./valueDelivery/HorFloorSpace.vue";
+declare function require(img: string): string;
+const hor_big_bg = require("@/assets/horImg/hor_big_bg.png");
 export default Vue.extend({
+    components: { HorHead, HorFloorSpace },
     data() {
         return {
-            
-        }
+            bgImg: hor_big_bg
+        };
     },
-})
+});
 </script>
+<style lang="less" scoped>
+.horTwo {
+    .hor-head {
+        display: flex;
+        justify-content: center;
+    }
+    .bg {
+        position: absolute;
+        z-index: -1;
+    }
+}
+</style>
+
 

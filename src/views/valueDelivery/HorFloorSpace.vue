@@ -18,32 +18,33 @@
         </div>
     </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
     name: 'FloorSpace',
     data() {
         return {
             floorData: [
                 {
-                    floorName: '8F',
+                    floorName: "8F",
                     data: [
-                        { id: 1, name: '空间1' },
-                        { id: 2, name: '空间2' },
-                        { id: 3, name: '空间3' },
-                    ]
+                        { id: 1, name: "空间1" },
+                        { id: 2, name: "空间2" },
+                        { id: 3, name: "空间3" },
+                    ],
                 },
                 {
-                    floorName: '7F',
+                    floorName: "7F",
                     data: [
-                        { id: 1, name: '空间1' },
-                        { id: 2, name: '空间2' },
-                        { id: 3, name: '空间3' },
-                    ]
+                        { id: 1, name: "空间1" },
+                        { id: 2, name: "空间2" },
+                        { id: 3, name: "空间3" },
+                    ],
                 },
-            ]
-        }
+            ],
+        };
     },
-}
+});
 </script>
 <style lang="less" scoped>
 .floorSpace {

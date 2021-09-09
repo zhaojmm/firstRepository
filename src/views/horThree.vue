@@ -20,10 +20,12 @@
                             <div>上月总能耗</div>
                             <div class="left-title-text">低能耗亲自然</div>
                         </div>
-                        <div>
-                            <span>比基准能耗</span>
-                            <span>节能50%</span>
-                            <span>总能耗28050KWh</span>
+                        <div class="left-content">
+                            <div class="left-content-first">比基准能耗</div>
+                            <div class="left-content-next">
+                                节能<span class="next-num">50%</span>
+                            </div>
+                            <div class="left-content-first blue">总能耗28050KWh</div>
                         </div>
                     </div>
                     <div class="right box">
@@ -134,6 +136,29 @@ export default Vue.extend({
             font-weight: 400;
             line-height: 20px;
         }
+        .left-content {
+            text-align: center;
+            .left-content-first {
+                font-size: 20px;
+                font-weight: 500;
+                line-height: 28px;
+                &.blue {
+                    color: #2ec5f5;
+                    padding-top: 12px;
+                }
+            }
+            .left-content-next {
+                padding-top: 12px;
+                font-size: 46px;
+                font-weight: 600;
+                line-height: 64px;
+                .next-num {
+                    font-size: 48px;
+                    font-weight: 700;
+                    line-height: 58px;
+                }
+            }
+        }
     }
     .right {
         position: relative;
@@ -181,7 +206,7 @@ export default Vue.extend({
             top: 400px;
         }
     }
-    .chart-box{
+    .chart-box {
         margin-top: 24px;
     }
 }

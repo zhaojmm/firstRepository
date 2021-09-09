@@ -34,9 +34,7 @@
                 </div>
             </div>
 
-            <!-- <div>
-                <FloorSpace />
-            </div> -->
+         
         </div>
 
     </div>
@@ -47,7 +45,6 @@ import HorHead from './valueDelivery/HorHead.vue'
 import NowData from './valueDelivery/NowData.vue'
 import LastMonth from './valueDelivery/LastMonthData.vue'
 import AirSwitch from './valueDelivery/AirSwitch.vue'
-import FloorSpace from './valueDelivery/FloorSpace.vue'
 export default {
     components: { HorHead, NowData, AirSwitch, FloorSpace, LastMonth },
     data() {
