@@ -1,5 +1,5 @@
 <template>
-    <div :class="[screenType==='hor' ? 'lastMonth' : 'lastMonth verticalClass' ]">
+    <div :class="[screenType==='hor' ? 'lastMonth' : 'lastMonth verticalClass2' ]">
         <div class="lastMonth-title"><span>上月数据</span></div>
         <div class="itemWrap">
             <div class="item" v-for="(item,index) in lastMonthData" :key="index">
@@ -139,10 +139,10 @@ export default {
         }
     }
 }
-.verticalClass {
+.verticalClass2 {
     height: 440px;
     width: 1000px;
-    margin: 0 auto;
+    margin:0 auto 20px;
     box-sizing: border-box;
        .itemWrap{
            display: flex;

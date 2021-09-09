@@ -1,5 +1,5 @@
 <template>
-    <div class="airSwitch verticalClass">
+    <div class="airSwitch">
         <div class="air-title head-title">
             <span>空调实时开关</span>
             <span class="status">{{status ? "空调已开启" : "空调已关闭"}}</span>
