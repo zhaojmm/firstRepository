@@ -1,6 +1,6 @@
 <template>
     <div class="airSwitch">
-        <div class="air-title">
+        <div class="air-title head-title">
             <span>空调实时开关</span>
             <span class="status">{{status ? "空调已开启" : "空调已关闭"}}</span>
         </div>
@@ -47,6 +47,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@import "/src/assets/css/common.less";
 .airSwitch {
     padding: 24px 32px;
     height: 250px;
@@ -57,9 +58,6 @@ export default {
     border: 2px solid #ffffff;
     background: #ffffff;
     .air-title {
-        font-size: 20px;
-        font-weight: 600;
-        color: #3b3558;
         .status {
             margin-top: 8px;
             margin-left: 12px;
