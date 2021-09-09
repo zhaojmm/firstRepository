@@ -19,7 +19,17 @@ const routes: Array<RouteConfig> = [
     path: '/hor',
     name: 'hor',
     component: () => import( '../views/valueDelivery.vue')
-  }
+  },
+  {
+    path: '/horTwo',
+    name: 'horTwo',
+    component: () => import( '../views/horTwo.vue')
+  },
+  {
+    path: '/horThree',
+    name: 'horThree',
+    component: () => import( '../views/horThree.vue')
+  },
   
 ]
 

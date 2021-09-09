@@ -7,7 +7,7 @@
             >
         </div>
 
-        <div class="hor-nowData">
+        <div class="container">
             <div class="hor-head">
                 <HorHead />
             </div>
