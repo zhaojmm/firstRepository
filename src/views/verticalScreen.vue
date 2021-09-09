@@ -24,13 +24,15 @@
             <div class="bottomCont">
                 <img src='@/assets/save_energy.png' />
                 <div class="showData">
-                    <div class="leftsave">节约电<br/><span>2566</span>度</div>
+                    <div class="leftsave">节约电<br /><span>2566</span>度</div>
+                    <div class="equalTo">相当于</div>
                     <div class="saveCo2">减排<span>0.955</span>kg二氧化碳</div>
                     <div class="saveCarbon">减排<span>0.225</span>kg碳</div>
                     <div class="plantTree">为国家种<span>26</span>棵树</div>
                 </div>
             </div>
         </div>
+        <div></div>
         <div>
             <FloorSpace />
         </div>
@@ -120,19 +122,26 @@ export default {
             // flex-direction: column;
             .leftsave {
                 position: absolute;
-                left: 60px;
+                left: 12px;
                 top: 160px;
-                color:#fff;
+                color: #fff;
+                width: 210px;
                 line-height: 34px;
-                span{
-                    font-size:32px;
+                text-align: center;
+                span {
+                    font-size: 32px;
                 }
+            }
+            .equalTo {
+                position: absolute;
+                left: 249px;
+                top: 186px;
+                font-size: 20px;
             }
             .saveCo2 {
                 position: absolute;
                 left: 562px;
                 top: 32px;
-                
             }
             .saveCarbon {
                 position: absolute;
