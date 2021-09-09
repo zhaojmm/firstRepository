@@ -42,11 +42,11 @@
 <script>
 import hor_big_bg from '@/assets/horImg/hor_big_bg.png';
 import HorHead from './valueDelivery/HorHead.vue'
-import NowData from './valueDelivery/NowData.vue'
-import LastMonth from './valueDelivery/LastMonthData.vue'
-import AirSwitch from './valueDelivery/AirSwitch.vue'
+import NowData from './valueDelivery/HorNowData.vue'
+import LastMonth from './valueDelivery/HorLastMonthData.vue'
+import AirSwitch from './valueDelivery/HorAirSwitch.vue'
 export default {
-    components: { HorHead, NowData, AirSwitch, FloorSpace, LastMonth },
+    components: { HorHead, NowData, AirSwitch, LastMonth },
     data() {
         return {
             bgImg: hor_big_bg

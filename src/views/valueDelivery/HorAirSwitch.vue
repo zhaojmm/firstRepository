@@ -16,8 +16,8 @@
     </div>
 </template>
 <script>
-import air_close from '@/assets/horImg/air_open.png';
-import air_open from '@/assets/horImg/air_close.png';
+import  air_open from '@/assets/horImg/air_open.png';
+import air_close from '@/assets/horImg/air_close.png';
 export default {
     name: "AirSwitch",
     props: {
