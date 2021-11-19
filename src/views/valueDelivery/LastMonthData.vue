@@ -1,8 +1,15 @@
 <template>
-    <div :class="[screenType==='hor' ? 'lastMonth' : 'lastMonth verticalClass2' ]">
-        <div class="lastMonth-title"><span>上月数据</span></div>
+    <div
+        class="lastMonth"
+        :class="[screenType==='hor' ? 'horizontalClass' : 'verticalClass verticalLastMonth' ]"
+    >
+        <div class="head-title"><span>上月数据</span></div>
         <div class="itemWrap">
-            <div class="item" v-for="(item,index) in lastMonthData" :key="index">
+            <div
+                class="item"
+                v-for="(item,index) in lastMonthData"
+                :key="index"
+            >
                 <div class="item-left">
                     <img :src="item.img" />
                 </div>
@@ -12,9 +19,18 @@
                     </div>
                     <div class="item-content">
                         <div class="item-content-left">
-                            <span class="max-value maxmin-level" :style="{background:item.maxColor}"></span>
-                            <span class="max-min-line" :style="{ background: 'linear-gradient('+item.maxColor+',' +item.minColor+')' }"></span>
-                            <span class="min-value maxmin-level" :style="{background:item.minColor}"></span>
+                            <span
+                                class="max-value maxmin-level"
+                                :style="{background:item.maxColor}"
+                            ></span>
+                            <span
+                                class="max-min-line"
+                                :style="{ background: 'linear-gradient('+item.maxColor+',' +item.minColor+')' }"
+                            ></span>
+                            <span
+                                class="min-value maxmin-level"
+                                :style="{background:item.minColor}"
+                            ></span>
                         </div>
                         <div class="item-content-right">
                             <div class="max">
@@ -70,38 +86,23 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.lastMonth {
-    height: 910px;
-    width: 308px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.8);
-    border: 2px solid rgba(255, 255, 255, 1);
-    padding-left: 32px;
-    color: rgba(87, 82, 113, 1);
-    .lastMonth-title {
-        font-family: PingFang SC;
-        font-size: 20px;
-        font-weight: 600;
-        line-height: 28px;
-        color: rgba(59, 53, 88, 1);
-        margin: 24px 0 0 0;
-    }
-    .itemWrap{
 
+.lastMonth {
+    &.horizontalClass {
+        height: 910px;
+        width: 308px;
     }
     .item {
         padding-top: 60px;
         display: flex;
         align-items: center;
-        height: 86px;
-        width: 250px;
+
         .item-left {
             width: 86px;
             height: 86px;
             margin-right: 20px;
             img {
-                width: 100%;
-                height: 100%;
+                width: 86px;
             }
         }
         .item-value {
@@ -115,6 +116,7 @@ export default {
             align-items: center;
             padding-top: 8px;
             font-weight: 500;
+            font-size: 14px;
             .item-content-left {
                 display: flex;
                 flex-direction: column;
@@ -139,22 +141,22 @@ export default {
         }
     }
 }
-.verticalClass2 {
+.verticalLastMonth {
     height: 440px;
-    width: 1000px;
-    margin:0 auto 20px;
-    box-sizing: border-box;
-       .itemWrap{
-           display: flex;
-           flex-direction: row;
-         flex-wrap:  wrap ;
-        //  justify-content:space-around;
-         .item{
-             padding-bottom: 20px;
-             margin-right:70px;
-         }
-    }
 
+    .itemWrap {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        //  justify-content:space-around;
+        .item {
+            width: 33.33%;
+            // justify-content: center;
+            .item-content-right {
+                font-size: 14px;
+            }
+        }
+    }
 }
 </style>
 

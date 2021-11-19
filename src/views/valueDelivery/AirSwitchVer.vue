@@ -1,5 +1,5 @@
 <template>
-    <div class="airSwitch">
+    <div class="airSwitch verticalClass">
         <div class="air-title head-title">
             <span>空调实时开关</span>
             <span class="status">{{status ? "空调已开启" : "空调已关闭"}}</span>
@@ -47,24 +47,16 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import "/src/assets/css/common.less";
+
 .airSwitch {
-    padding: 24px 32px;
     height: 250px;
-    width: 1000px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    border-radius: 20px;
-    border: 2px solid #ffffff;
-    background: #ffffff;
     .air-title {
         .status {
-            margin-top: 8px;
             margin-left: 12px;
             display: inline-block;
-            height: 24px;
-            line-height: 24px;
-            width: 86px;
+            height: 22px;
+            line-height: 22px;
+            width: 82px;
             border-radius: 4px;
             background: rgba(126, 216, 116, 1);
             box-sizing: border-box;
@@ -106,10 +98,10 @@ export default {
                 display: flex;
                 height: 40px;
                 align-items: center;
-                margin-top:14px;
+                margin-top: 14px;
                 .air-rate-value {
                     font-size: 32px;
-                    padding-left:8px;
+                    padding-left: 8px;
                 }
             }
         }

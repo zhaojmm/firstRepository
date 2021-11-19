@@ -2,6 +2,7 @@
     <div class="verticalWrap">
         <NowData screenType="ver" />
         <AirSwitchVer />
+        <TemChart screenType="ver" />
         <LastMonthData screenType="ver" />
         <div class="lastTotalEnergy verticalClass">
             <div class="head-title">
@@ -17,37 +18,24 @@
                 </div>
             </div>
         </div>
-        <div class="lastSaveEnergy verticalClass">
-            <div class="head-title">
-                <span>上月节约能耗</span>
-            </div>
-            <div class="bottomCont">
-                <img src='@/assets/save_energy.png' />
-                <div class="showData">
-                    <div class="leftsave">节约电<br /><span>2566</span>度</div>
-                    <div class="equalTo">相当于</div>
-                    <div class="saveCo2">减排<span>0.955</span>kg二氧化碳</div>
-                    <div class="saveCarbon">减排<span>0.225</span>kg碳</div>
-                    <div class="plantTree">为国家种<span>26</span>棵树</div>
-                </div>
-            </div>
-        </div>
-        <div></div>
-        <div>
+        <lastSaveEnergy screenType="ver" />
+            <!-- <lastEnergyChart /> -->
+
             <FloorSpace />
-        </div>
+
     </div>
 </template>
 <script>
 import NowData from './valueDelivery/NowData.vue'
 import LastMonthData from './valueDelivery/LastMonthData.vue'
-import AirSwitch from './valueDelivery/AirSwitch.vue'
 import AirSwitchVer from './valueDelivery/AirSwitchVer.vue'
 import FloorSpace from './valueDelivery/FloorSpace.vue'
-
+import TemChart from './valueDelivery/TemChart.vue'
+import lastEnergyChart from './valueDelivery/lastEnergyChart.vue'
+import lastSaveEnergy from './valueDelivery/lastSaveEnergy.vue'
 
 export default {
-    components: { NowData, AirSwitch, FloorSpace, LastMonthData, AirSwitchVer },
+    components: { NowData, FloorSpace, LastMonthData, AirSwitchVer, TemChart, lastEnergyChart, lastSaveEnergy },
     data() {
         return {
 
@@ -96,62 +84,6 @@ export default {
                 margin-top: 18px;
                 color: #2ec5f5;
                 font-size: 28px;
-            }
-        }
-    }
-}
-.lastSaveEnergy {
-    height: 535px;
-    .bottomCont {
-        width: 900px;
-        margin: 40px auto;
-        position: relative;
-        img {
-            width: 100%;
-        }
-        .showData {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-            // display: flex;
-            // align-items: center;
-            // justify-content: center;
-            // flex-direction: column;
-            .leftsave {
-                position: absolute;
-                left: 12px;
-                top: 160px;
-                color: #fff;
-                width: 210px;
-                line-height: 34px;
-                text-align: center;
-                span {
-                    font-size: 32px;
-                }
-            }
-            .equalTo {
-                position: absolute;
-                left: 249px;
-                top: 186px;
-                font-size: 20px;
-            }
-            .saveCo2 {
-                position: absolute;
-                left: 562px;
-                top: 32px;
-            }
-            .saveCarbon {
-                position: absolute;
-                left: 562px;
-                top: 186px;
-            }
-            .plantTree {
-                position: absolute;
-                left: 562px;
-                top: 340px;
             }
         }
     }

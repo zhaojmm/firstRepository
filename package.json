@@ -8,7 +8,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@antv/g2": "^4.1.25",
+    "@antv/g2": "^3.5.7",
+    "@antv/data-set": "^0.10.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.5",

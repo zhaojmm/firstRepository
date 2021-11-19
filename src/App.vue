@@ -33,4 +33,5 @@ export default {
 //   color: #2c3e50;
 //   margin-top: 60px;
 }
+@import "/src/assets/css/common.less";
 </style>

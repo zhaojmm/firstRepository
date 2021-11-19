@@ -1,19 +1,17 @@
 <template>
     <div
         class="NowData"
-        :class="[screenType==='hor' ? 'hor-nowData-contain' : 'verticalClass2' ]"
+        :class="[screenType==='hor' ? 'horizontalClass' : 'verticalClass verticalNowData' ]"
     >
-        <div class="nowData-title">
-            <span class="hor-nowData-title-text">实时数据</span>
+        <div class="head-title">
+            <span>实时数据</span>
             <div class="normal-explain">
-                <span class="content_level title-right-icon"></span>
-                <span class="title-right">正常范围</span>
+                <span class="title-right-icon"></span>
+                <span>正常范围</span>
             </div>
         </div>
-        <div class="hor-nowData-title-slogan">主动式空调，会呼吸的写字楼</div>
-        <div
-            class="contain"
-        >
+        <div class="subhead-title">主动式空调，会呼吸的写字楼</div>
+        <div class="contain">
             <div
                 class="item"
                 v-for="(item, index) in horScreenImg"
@@ -59,9 +57,9 @@ export default {
     data() {
         return {
             horScreenImg: [
-                { id: 1, name: '温度', img:icon_temp, value: 24.5, unit: '℃', level: 'low' },
+                { id: 1, name: '温度', img: icon_temp, value: 24.5, unit: '℃', level: 'low' },
                 { id: 2, name: '湿度', img: icon_humidity, value: 33, unit: '%', level: 'middle' },
-                { id: 3, name: 'CO2', img:icon_CO2, value: 399, unit: 'ppm', level: 'low' },
+                { id: 3, name: 'CO2', img: icon_CO2, value: 399, unit: 'ppm', level: 'low' },
                 { id: 4, name: '甲醛', img: icon_formaldehyde, value: 0.03, unit: 'mg/m³', level: 'low' },
                 { id: 5, name: 'PM2.5', img: icon_PM2d5, value: 6, unit: 'ug/m³', level: 'low' }
             ]
@@ -70,38 +68,28 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
 .NowData {
-    &.hor-nowData-contain {
+    &.horizontalClass {
         width: 1508px;
         height: 498px;
     }
-    border-radius: 20px;
-    background: #ffffff;
-    color: rgba(87, 82, 113, 1);
-    .nowData-title {
-        display: flex;
+    .head-title{
         justify-content: space-between;
-        padding: 24px 32px 0 32px;
     }
-    .hor-nowData-title-text {
-        font-family: PingFang SC;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 28px;
-        letter-spacing: 0px;
-        text-align: left;
+    .title-right-icon {
+        display: inline-block;
+        padding: 0;
+        width: 12px;
+        height: 12px;
+        margin-right: 8px;
+        border-radius: 50%;
+        background: rgba(126, 216, 116, 1);
     }
-    .hor-nowData-title-slogan {
-        padding: 4px 0 0px 32px;
-    }
+
     .contain {
         display: flex;
-         // width: 1306px;
-         // margin-left: 101px;
-        // height: 280px;
         padding-top: 47px;
-       
     }
     .item {
         width: calc(100% / 5);
@@ -135,7 +123,6 @@ export default {
                 line-height: 34px;
             }
         }
-
     }
     .content_level {
         margin-top: 8px;
@@ -148,41 +135,28 @@ export default {
         &.middle {
             background: rgba(239, 214, 46, 1);
         }
-        &.title-right-icon {
-            display: inline-block;
-            padding: 0;
-            width: 12px;
-            height: 12px;
-        }
-        &.title-right {
-            height: 20px;
-            width: 56px;
-        }
     }
     .normal-explain {
         display: flex;
         align-items: center;
+        font-size: 14px;
     }
-    &.verticalClass2{
-         height: 460px;
-         width: 1000px;
-        margin:0 auto 20px;
-        .item{
-            .item_content{
-                .content_value{
+    &.verticalNowData {
+        height: 460px;
+        .item {
+            .item_content {
+                .content_value {
                     font-size: 32px;
                 }
-                .content_name{
-                     margin-top:12px;
-                    font-size: 20px; 
-
+                .content_name {
+                    margin-top: 12px;
+                    font-size: 20px;
                 }
-                .content_level{
-                    margin-top:12px;
+                .content_level {
+                    margin-top: 12px;
                 }
             }
         }
-      
     }
 }
 </style>

@@ -16,9 +16,9 @@ const routes: Array<RouteConfig> = [
     component: () => import( '../views/verticalScreen.vue')
   },
   {
-    path: '/hor',
-    name: 'hor',
-    component: () => import( '../views/valueDelivery.vue')
+    path: '/horizontalScreen',
+    name: 'horizontalScreen',
+    component: () => import( '../views/horizontalScreen.vue')
   },
   {
     path: '/horTwo',
