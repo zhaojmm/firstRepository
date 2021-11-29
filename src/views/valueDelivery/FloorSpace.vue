@@ -115,7 +115,7 @@ export default {
 <style lang="less" scoped>
 .topChange {
     height: 194px;
-    width: 1000px;
+    // width: 1000px;
     margin: 0 auto;
     background: #ffffff;
     .allIndicator {
@@ -125,6 +125,7 @@ export default {
         align-items: center;
         justify-content: center;
         .eachItem {
+            cursor: pointer;
             font-size: 24px;
             color: #9b98ad;
             margin-right: 60px;
@@ -161,7 +162,7 @@ export default {
 }
 
 .floorWrap {
-    width: 1000px;
+    // width: 1000px;
     margin: 0 auto;
     background: #ffffff;
     .floor-item {

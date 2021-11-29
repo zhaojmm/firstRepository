@@ -17,7 +17,10 @@
             <div class="right-item">
                 晴
             </div>
-            <div class="right-item">
+            <div
+                class="right-item"
+                style="display:none"
+            >
                 <img
                     class="firstImg"
                     :src="changeVer"
@@ -28,7 +31,10 @@
                     alt=""
                 >
             </div>
-            <div class="right-item">
+            <div
+                class="right-item"
+                style="display:none"
+            >
                 退出
             </div>
         </div>
@@ -62,13 +68,13 @@ export default Vue.extend({
     align-items: center;
     &.horSty {
         height: 74px;
-        width: 1840px;
+        // width: 1840px;
     }
     .horHead-right {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         height: 46px;
-        width: 396px;
+        // width: 396px;
         .right-item {
             display: flex;
             justify-content: center;
@@ -79,7 +85,7 @@ export default Vue.extend({
             color: #575271;
             font-weight: 400;
             line-height: 22px;
-
+            margin-left: 10px;
             background: #ffffff99;
             border: 2px solid #ffffffcc;
             box-sizing: border-box;

@@ -21,15 +21,15 @@
                         <div class="item-content-left">
                             <span
                                 class="max-value maxmin-level"
-                                :style="{background:item.maxColor}"
+                                :style="{backgroundColor: selectColor(item.max,item.id)}"
                             ></span>
                             <span
                                 class="max-min-line"
-                                :style="{ background: 'linear-gradient('+item.maxColor+',' +item.minColor+')' }"
+                                :style="{ background: 'linear-gradient('+selectColor(item.max,item.id)+',' +selectColor(item.min,item.id)+')' }"
                             ></span>
                             <span
                                 class="min-value maxmin-level"
-                                :style="{background:item.minColor}"
+                                :style="{backgroundColor: selectColor(item.min,item.id)}"
                             ></span>
                         </div>
                         <div class="item-content-right">
@@ -57,6 +57,8 @@ import icon_humidity from '@/assets/icon_humidity.png'
 import icon_CO2 from '@/assets/icon_CO2.png'
 import icon_formaldehyde from '@/assets/icon_formaldehyde.png'
 import icon_PM2d5 from '@/assets/icon_PM2d5.png'
+import { selectColor } from '@/utils/publicMethod'
+
 export default {
     name: 'lastMonthData',
     props: {
@@ -68,11 +70,11 @@ export default {
     data() {
         return {
             lastMonthData: [
-                { id: 1, name: "温度", value: 24.5, unit: "℃", maxName: '最高温', maxColor: "#F5483D", minColor: "#7ed874", max: 26, minName: "最低温", min: 24, img: icon_temp },
-                { id: 1, name: "湿度", value: 36, unit: "%", maxColor: "#EE9F2B", minColor: "#7ed874", maxName: '最大值', max: 50, minName: "最小值", min: 20, img: icon_humidity },
-                { id: 1, name: "CO2", value: 420, unit: "ppm", maxColor: "#EFD62E", minColor: "#7ed874", maxName: '最大值', max: 630, minName: "最小值", min: 300, img: icon_CO2 },
-                { id: 1, name: "甲醛", value: 0.03, unit: "mg/m³", maxColor: "#F5483D", minColor: "#7ed874", maxName: '最大值', max: 0.01, minName: "最小值", min: 0.07, img: icon_formaldehyde },
-                { id: 1, name: "PM3d5", value: 120, unit: "ug/m³", maxColor: "#C4E34F", minColor: "#7ed874", maxName: '最大值', max: 140, minName: "最小值", min: 70, img: icon_PM2d5 },
+                { id: 'temp', name: "温度", value: 24.5, unit: "℃", maxName: '最高温', max: 37, minName: "最低温", min: 24, img: icon_temp },
+                { id: 'shidu', name: "湿度", value: 100, unit: "%", maxName: '最大值', max: 50, minName: "最小值", min: 20, img: icon_humidity },
+                { id: 'co2', name: "CO2", value: 2600, unit: "ppm", maxName: '最大值', max: 2600, minName: "最小值", min: 300, img: icon_CO2 },
+                { id: 'jiaquan', name: "甲醛", value: 0.03, unit: "mg/m³", maxName: '最大值', max: 0.01, minName: "最小值", min: 0.07, img: icon_formaldehyde },
+                { id: 'pm25', name: "PM2.5", value: 120, unit: "ug/m³", maxColor: "#C4E34F", minColor: "#7ed874", maxName: '最大值', max: 340, minName: "最小值", min: 20, img: icon_PM2d5 },
             ]
         }
     },
@@ -82,15 +84,16 @@ export default {
         //         "border-image":linear-gradient(start,end) 0 18
         //     }
         // }
+        selectColor: selectColor
     },
 }
 </script>
 <style lang="less" scoped>
-
 .lastMonth {
     &.horizontalClass {
-        height: 910px;
-        width: 308px;
+        height: 100%;
+        //height: 910px;
+        // width: 308px;
     }
     .item {
         padding-top: 60px;

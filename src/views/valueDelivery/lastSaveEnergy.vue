@@ -46,7 +46,7 @@ export default {
         height: 100%;
     }
     .bottomCont {
-        width: 900px;
+         width: 900px;
         margin: 40px auto;
         position: relative;
         img {

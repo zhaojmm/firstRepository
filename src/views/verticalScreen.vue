@@ -1,5 +1,9 @@
 <template>
     <div class="verticalWrap">
+        <div class="pageHead">
+            <pageHead />
+        </div>
+
         <NowData screenType="ver" />
         <AirSwitchVer />
         <TemChart screenType="ver" />
@@ -19,9 +23,9 @@
             </div>
         </div>
         <lastSaveEnergy screenType="ver" />
-            <!-- <lastEnergyChart /> -->
+        <lastEnergyChart />
 
-            <FloorSpace />
+        <FloorSpace />
 
     </div>
 </template>
@@ -33,9 +37,10 @@ import FloorSpace from './valueDelivery/FloorSpace.vue'
 import TemChart from './valueDelivery/TemChart.vue'
 import lastEnergyChart from './valueDelivery/lastEnergyChart.vue'
 import lastSaveEnergy from './valueDelivery/lastSaveEnergy.vue'
+import pageHead from './valueDelivery/pageHead.vue'
 
 export default {
-    components: { NowData, FloorSpace, LastMonthData, AirSwitchVer, TemChart, lastEnergyChart, lastSaveEnergy },
+    components: { NowData, FloorSpace, LastMonthData, AirSwitchVer, TemChart, lastEnergyChart, lastSaveEnergy, pageHead },
     data() {
         return {
 
@@ -47,6 +52,10 @@ export default {
 @import "/src/assets/css/common.less";
 .verticalWrap {
     background: #f3fdff;
+    padding: 50px 40px 100px;
+}
+.pageHead {
+    padding-bottom: 50px;
 }
 .lastTotalEnergy {
     height: 535px;

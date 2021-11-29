@@ -10,10 +10,13 @@
             id="lastChartBox"
             class="lastChartBox"
         ></div>
+        <!-- <div id="slider"></div> -->
     </div>
 </template>
 <script>
 import G2 from '@antv/g2';
+import DataSet from '@antv/data-set';
+import moment from 'moment';
 
 // 自定义 shape, 支持图片形式的气泡
 G2.Shape.registerShape('interval', 'borderRadius', {
@@ -53,45 +56,101 @@ export default {
     mounted() {
         console.log("mounted");
         this.cInitChart();
+        var start = moment('2021-08-01', 'YYYY-MM-DD');
+        var end = moment('2021-08-12', 'YYYY-MM-DD');
+        var end2 = moment('2021-08-12', 'YYYY-MM-DD');
+        console.log('start', start);
+        // var intervalInt = setInterval(() => {
+        //     start.add(1, 'days');
+        //     end.add(1, 'days');
+
+        //     //console.log('start', start);
+
+        //     this.ds.setState('start', start.format('YYYY-MM-DD'));
+        //     this.ds.setState('end', end.format('YYYY-MM-DD'));
+
+        //     if (end.format('YYYY-MM-DD') == end2.endOf('month').format('YYYY-MM-DD')) {
+        //         clearInterval(intervalInt);
+        //     }
+        // }, 800);
     },
     data() {
         return {
-
+            ds: null,
         }
     },
     methods: {
+
         cInitChart() {
             var data = [
-                { Date: '08-01', type: '订阅数', value: 1300 },
-                { Date: '08-02', type: '订阅数', value: 1200 },
-                { Date: '08-03', type: '订阅数', value: 1350 },
-                { Date: '08-04', type: '订阅数', value: 1100 },
-                { Date: '08-05', type: '订阅数', value: 1005 },
-                { Date: '08-06', type: '订阅数', value: 1200 },
-                { Date: '08-07', type: '订阅数', value: 1100 },
-                { Date: '08-08', type: '订阅数', value: 1100 },
-                { Date: '08-09', type: '订阅数', value: 1200 },
-                { Date: '08-10', type: '订阅数', value: 900 },
-                { Date: '08-11', type: '订阅数', value: 800 },
-                { Date: '08-12', type: '订阅数', value: 970 },
+                { Date: '2021-08-01', type: '订阅数', value: 1300 },
+                { Date: '2021-08-02', type: '订阅数', value: 1200 },
+                { Date: '2021-08-03', type: '订阅数', value: 1350 },
+                { Date: '2021-08-04', type: '订阅数', value: 1100 },
+                { Date: '2021-08-05', type: '订阅数', value: 1005 },
+                { Date: '2021-08-06', type: '订阅数', value: 1200 },
+                { Date: '2021-08-07', type: '订阅数', value: 1100 },
+                { Date: '2021-08-08', type: '订阅数', value: 1100 },
+                { Date: '2021-08-09', type: '订阅数', value: 1200 },
+                { Date: '2021-08-10', type: '订阅数', value: 900 },
+                { Date: '2021-08-11', type: '订阅数', value: 800 },
+                { Date: '2021-08-12', type: '订阅数', value: 970 },
+                { Date: '2021-08-13', type: '订阅数', value: 1100 },
+                { Date: '2021-08-14', type: '订阅数', value: 1100 },
+                { Date: '2021-08-15', type: '订阅数', value: 1005 },
+                { Date: '2021-08-16', type: '订阅数', value: 1200 },
+                { Date: '2021-08-17', type: '订阅数', value: 1100 },
+                { Date: '2021-08-18', type: '订阅数', value: 1100 },
+                { Date: '2021-08-19', type: '订阅数', value: 1200 },
+                { Date: '2021-08-20', type: '订阅数', value: 900 },
+                { Date: '2021-08-21', type: '订阅数', value: 800 },
+                { Date: '2021-08-22', type: '订阅数', value: 970 },
+                { Date: '2021-08-23', type: '订阅数', value: 1100 },
+                { Date: '2021-08-24', type: '订阅数', value: 1100 },
+                { Date: '2021-08-25', type: '订阅数', value: 1005 },
+                { Date: '2021-08-26', type: '订阅数', value: 1200 },
+                { Date: '2021-08-27', type: '订阅数', value: 1100 },
+                { Date: '2021-08-28', type: '订阅数', value: 1100 },
+                { Date: '2021-08-29', type: '订阅数', value: 1200 }, { Date: '2021-08-30', type: '订阅数', value: 1200 },
             ];
+            var ds = new DataSet({
+                state: {
+                    start: '2021-08-01',
+                    end: '2021-08-12'
+                }
+            })
+            var dv = ds.createView();
+            dv.source(data).transform({
+                type: 'filter',
+                callback: function callback(obj) {
+                    var date = obj.Date;
+                    return date <= ds.state.end && date >= ds.state.start;
+                }
+            });
             var chart = new G2.Chart({
                 container: 'lastChartBox',
                 forceFit: true,
                 height: this.screenType === 'hor' ? 274 : 330,
-                padding: [50, 40, 46, 60],
+                padding: [20, 20, 36, 20],
             });
-            chart.source(data);
+            chart.source(dv);
             chart.tooltip(false);
             chart.scale('Date', {
                 //range: [0, 1],
-                //tickCount: 2,
-                //tickInterval
-                // type: 'timeCat'
+                tickCount: 12,
+                //tickInterval:0,
+                type: 'timeCat',
+                mask: 'MM-DD',
+                // formatter: function formatter(val) {
+                //     console.log('val',val);
+                //     return val.substr(5);
+                // }
             });
             chart.scale('value', {
                 //range: [0, 1],
                 tickCount: 5,
+                type: 'linear',
+                max: 1500
                 //tickInterval
                 // type: 'timeCat'
             });
@@ -109,24 +168,9 @@ export default {
                 },
                 tickLine: null
             });
-            chart.axis('value', {
-                tickLine: null,
-                label: {
-                    textStyle: {
-                        fill: '#9B98AD',
-                        fontSize: 12,
-                    },
-                    // formatter: function formatter(text) {
-                    //     return text；
-                    // }
-                }
-            });
-            // chart.tooltip({
-            //     crosshairs: 'y'
-            // });
-            chart.legend(false);
+            chart.axis('value', false);
 
-            //#3E91F8 #76DEFF
+            chart.legend(false);
 
             chart.interval().position('Date*value').color('l(90) 0:#3E91F8 1:#76DEFF').opacity(1).shape('borderRadius').adjust({ type: 'stack' }).size(12).label('value', {
                 offset: 10,
@@ -137,6 +181,31 @@ export default {
             });
 
             chart.render();
+            this.ds = ds;
+            // chart.interact('slider', {
+            //     container: 'slider', // DOM id
+            //     start: ds.state.start, // 和状态量对应
+            //     end: ds.state.end,
+            //     data: data, // 源数据
+            //     xAxis: 'Date', // 背景图的横轴对应字段，同时为数据筛选的字段
+            //     yAxis: 'value', // 背景图的纵轴对应字段，同时为数据筛选的字段
+            //     scales: {
+            //         Date: {
+            //             type: 'timeCat',
+            //             nice: false
+            //         }
+            //     },
+            //     onChange: function onChange(_ref) {
+            //         var startText = _ref.startText,
+            //             endText = _ref.endText;
+
+            //         ds.setState('start', startText);
+            //         ds.setState('end', endText);
+            //         setTimeout(function () {
+            //             chart.render();
+            //         }, 32);
+            //     }
+            // });
             return chart;
         }
     }
@@ -160,7 +229,7 @@ export default {
     }
     &.horizontalClass {
         .lastChartBox {
-            height: 274px;
+            height: 276px;
         }
     }
 }

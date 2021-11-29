@@ -8,7 +8,7 @@
         </div>
         <div class="container">
             <div class="hor-head">
-                <HorHead />
+                <pageHead />
             </div>
             <div>
                 <HorFloorSpace />
@@ -19,12 +19,13 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import HorHead from "./valueDelivery/HorHead.vue";
-import HorFloorSpace from "./valueDelivery/HorFloorSpace.vue";
+import pageHead from "./valueDelivery/pageHead.vue";
+import HorFloorSpace from "./valueDelivery/HorFloorSpace2.vue";
 declare function require(img: string): string;
 const hor_big_bg = require("@/assets/horImg/hor_big_bg.png");
+
 export default Vue.extend({
-    components: { HorHead, HorFloorSpace },
+    components: { pageHead, HorFloorSpace },
     data() {
         return {
             bgImg: hor_big_bg

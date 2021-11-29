@@ -8,7 +8,7 @@
         </div>
         <div class="container">
             <div class="hor-head">
-                <HorHead />
+                <pageHead />
             </div>
             <div class="hor-nowData-content">
                 <div class="flexBetween">
@@ -68,10 +68,10 @@ declare function require(img: string): string;
 const hor_big_bg = require("@/assets/horImg/hor_big_bg.png");
 const hor_lastMonthEner = require("@/assets/horImg/hor_lastMonthEner.png");
 const hor_lastMonthTotal = require("@/assets/horImg/hor_lastMonthTotal.png");
-import HorHead from "./valueDelivery/HorHead.vue";
+import pageHead from "./valueDelivery/pageHead.vue";
 
 export default Vue.extend({
-    components: { HorHead },
+    components: { pageHead },
     data() {
         return {
             bgImg: hor_big_bg,
