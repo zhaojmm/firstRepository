@@ -17,7 +17,7 @@
 </template>
 <script>
 import G2 from '@antv/g2';
-
+import {mapActions} from "vuex"
 export default {
     name: "TemChart",
     props: {
@@ -28,9 +28,11 @@ export default {
     },
     created() {
         console.log("created");
+
     },
     mounted() {
         console.log("mounted");
+        //this.getRealTimeTemp();
         this.cInitChart();
     },
     data() {
@@ -39,18 +41,19 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['getRealTimeTemp']),
         cInitChart() {
             var data = [
-                { Date: '8', type: '订阅数', value: 23.5 },
-                { Date: '9', type: '订阅数', value: 26.5 },
-                { Date: '10', type: '订阅数', value: 29.5 },
-                { Date: '11', type: '订阅数', value: 30.5 },
-                { Date: '12', type: '订阅数', value: 26.5 },
-                { Date: '13', type: '订阅数', value: 29.5 },
-                { Date: '14', type: '订阅数', value: 30.5 },
-                { Date: '15', type: '订阅数', value: 33.5 },
-                { Date: '16', type: '订阅数', value: 34.5 },
-                { Date: '17', type: '订阅数', value: 30.5 },
+                { time: '8', type: '温度', temp: 23.5 },
+                { time: '9', type: '温度', temp: 26.5 },
+                { time: '10', type: '温度', temp: 29.5 },
+                { time: '11', type: '温度', temp: 30.5 },
+                { time: '12', type: '温度', temp: 26.5 },
+                { time: '13', type: '温度', temp: 29.5 },
+                { time: '14', type: '温度', temp: 30.5 },
+                { time: '15', type: '温度', temp: 33.5 },
+                { time: '16', type: '温度', temp: 34.5 },
+                { time: '17', type: '温度', temp: 30.5 },
             ];
             var chart = new G2.Chart({
                 container: 'tempChartBox',
@@ -60,13 +63,13 @@ export default {
             });
             chart.source(data);
 
-            chart.scale('Date', {
+            chart.scale('time', {
                 //range: [0, 1],
                 //tickCount: 2,
                 //tickInterval
                 // type: 'timeCat'
             });
-            chart.scale('value', {
+            chart.scale('temp', {
                 //range: [0, 1],
                 tickCount: 5,
                 minTickInterval:2,
@@ -74,7 +77,7 @@ export default {
                 //tickInterval
                 // type: 'timeCat'
             });
-            chart.axis('Date', {
+            chart.axis('time', {
                 line: {
                     lineWidth: 1, // 设置线的宽度
                     stroke: 'rgba(155, 152, 173,0.4)', // 设置线的颜色
@@ -88,7 +91,7 @@ export default {
                 },
                 tickLine: null
             });
-            chart.axis('value', {
+            chart.axis('temp', {
                 tickLine: null,
                 label: {
                     textStyle: {
@@ -108,19 +111,19 @@ export default {
             // var view1 = chart.view();
             // view1.source(dv2);
             // view1.axis(false);
-            // view1.area().position('Date*value').color('#8d8d8d').opacity(0.1).tooltip(false);
+            // view1.area().position('time*temp').color('#8d8d8d').opacity(0.1).tooltip(false);
             //view1
             //var view1 = chart.view();
 
-            chart.line().position('Date*value').color('#23CCF9').opacity(1).shape('smooth').style({
+            chart.line().position('time*temp').color('#23CCF9').opacity(1).shape('smooth').style({
                 lineWidth: 3,
 
             });
-            chart.point().position('Date*value').color('#23CCF9').opacity(1).shape('circle').style({
+            chart.point().position('time*temp').color('#23CCF9').opacity(1).shape('circle').style({
                 lineWidth: 1,
                 stroke: '#ffffff',
             });
-            chart.area().position('Date*value').color('l(90) 0:#23CCF9 1:#ffffff').opacity(0.2).tooltip(false).shape('smooth');
+            chart.area().position('time*temp').color('l(90) 0:#23CCF9 1:#ffffff').opacity(0.2).tooltip(false).shape('smooth');
 
             chart.guide().text({
                 top: false,
@@ -161,7 +164,7 @@ export default {
 <style lang="less" scoped>
 
 .horizontalClass{
-    width:1036px;
+    // width:1036px;
     height: 388px;
 }
 .temChart {

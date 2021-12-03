@@ -3,14 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from './utils/axios';
-
+import api from './api/index';
 
 Vue.prototype.$axios = axios;
-Vue.config.productionTip = false
-import { Button } from 'element-ui';
+Vue.prototype.$api = api;
 
+Vue.config.productionTip = false
+import { Button ,Loading} from 'element-ui';
 
 Vue.use(Button);
+//Vue.use(Loading.directive);
+
+Vue.prototype.$loading = Loading.service;
 
 
 new Vue({

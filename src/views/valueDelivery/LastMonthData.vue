@@ -1,13 +1,17 @@
 <template>
     <div
         class="lastMonth"
-        :class="[screenType==='hor' ? 'horizontalClass' : 'verticalClass verticalLastMonth' ]"
+        :class="[
+            screenType === 'hor'
+                ? 'horizontalClass'
+                : 'verticalClass verticalLastMonth',
+        ]"
     >
         <div class="head-title"><span>上月数据</span></div>
         <div class="itemWrap">
             <div
                 class="item"
-                v-for="(item,index) in lastMonthData"
+                v-for="(item, index) in lastMonthData"
                 :key="index"
             >
                 <div class="item-left">
@@ -15,36 +19,53 @@
                 </div>
                 <div class="item-right">
                     <div class="item-value">
-                        <span>{{item.value}}</span><span>{{item.unit}}</span>
+                        <span>{{ item.value }}</span
+                        ><span>{{ item.unit }}</span>
                     </div>
                     <div class="item-content">
                         <div class="item-content-left">
                             <span
                                 class="max-value maxmin-level"
-                                :style="{backgroundColor: selectColor(item.max,item.id)}"
+                                :style="{
+                                    backgroundColor: selectColor(
+                                        item.max,
+                                        item.id
+                                    ),
+                                }"
                             ></span>
                             <span
                                 class="max-min-line"
-                                :style="{ background: 'linear-gradient('+selectColor(item.max,item.id)+',' +selectColor(item.min,item.id)+')' }"
+                                :style="{
+                                    background:
+                                        'linear-gradient(' +
+                                        selectColor(item.max, item.id) +
+                                        ',' +
+                                        selectColor(item.min, item.id) +
+                                        ')',
+                                }"
                             ></span>
                             <span
                                 class="min-value maxmin-level"
-                                :style="{backgroundColor: selectColor(item.min,item.id)}"
+                                :style="{
+                                    backgroundColor: selectColor(
+                                        item.min,
+                                        item.id
+                                    ),
+                                }"
                             ></span>
                         </div>
                         <div class="item-content-right">
                             <div class="max">
-                                <span>{{item.maxName}}</span>
-                                <span>{{item.max}}</span>
-                                <span>{{item.unit}}</span>
+                                <span>{{ item.maxName }}</span>
+                                <span>{{ item.max }}</span>
+                                <span>{{ item.unit }}</span>
                             </div>
                             <div class="min">
-                                <span>{{item.minName}}</span>
-                                <span>{{item.min}}</span>
-                                <span>{{item.unit}}</span>
+                                <span>{{ item.minName }}</span>
+                                <span>{{ item.min }}</span>
+                                <span>{{ item.unit }}</span>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -52,41 +73,113 @@
     </div>
 </template>
 <script>
-import icon_temp from '@/assets/icon_temp.png'
-import icon_humidity from '@/assets/icon_humidity.png'
-import icon_CO2 from '@/assets/icon_CO2.png'
-import icon_formaldehyde from '@/assets/icon_formaldehyde.png'
-import icon_PM2d5 from '@/assets/icon_PM2d5.png'
-import { selectColor } from '@/utils/publicMethod'
-
+import icon_temp from "@/assets/icon_temp.png";
+import icon_humidity from "@/assets/icon_humidity.png";
+import icon_CO2 from "@/assets/icon_CO2.png";
+import icon_formaldehyde from "@/assets/icon_formaldehyde.png";
+import icon_PM2d5 from "@/assets/icon_PM2d5.png";
+import { selectColor } from "@/utils/publicMethod";
+import { mapActions } from "vuex";
 export default {
-    name: 'lastMonthData',
+    name: "lastMonthData",
     props: {
         screenType: {
             type: String,
-            default: () => { return 'hor' } //hor 横屏  vert 竖屏
-        }
+            default: () => {
+                return "hor";
+            }, //hor 横屏  vert 竖屏
+        },
     },
     data() {
         return {
             lastMonthData: [
-                { id: 'temp', name: "温度", value: 24.5, unit: "℃", maxName: '最高温', max: 37, minName: "最低温", min: 24, img: icon_temp },
-                { id: 'shidu', name: "湿度", value: 100, unit: "%", maxName: '最大值', max: 50, minName: "最小值", min: 20, img: icon_humidity },
-                { id: 'co2', name: "CO2", value: 2600, unit: "ppm", maxName: '最大值', max: 2600, minName: "最小值", min: 300, img: icon_CO2 },
-                { id: 'jiaquan', name: "甲醛", value: 0.03, unit: "mg/m³", maxName: '最大值', max: 0.01, minName: "最小值", min: 0.07, img: icon_formaldehyde },
-                { id: 'pm25', name: "PM2.5", value: 120, unit: "ug/m³", maxColor: "#C4E34F", minColor: "#7ed874", maxName: '最大值', max: 340, minName: "最小值", min: 20, img: icon_PM2d5 },
-            ]
-        }
+                {
+                    id: "temp",
+                    name: "温度",
+                    value: 24.5,
+                    unit: "℃",
+                    maxName: "最高温",
+                    max: 37,
+                    minName: "最低温",
+                    min: 24,
+                    img: icon_temp,
+                },
+                {
+                    id: "humidity",
+                    name: "湿度",
+                    value: 100,
+                    unit: "%",
+                    maxName: "最大值",
+                    max: 50,
+                    minName: "最小值",
+                    min: 20,
+                    img: icon_humidity,
+                },
+                {
+                    id: "co2",
+                    name: "CO2",
+                    value: 2600,
+                    unit: "ppm",
+                    maxName: "最大值",
+                    max: 2600,
+                    minName: "最小值",
+                    min: 300,
+                    img: icon_CO2,
+                },
+                {
+                    id: "methanal",
+                    name: "甲醛",
+                    value: 0.03,
+                    unit: "mg/m³",
+                    maxName: "最大值",
+                    max: 0.01,
+                    minName: "最小值",
+                    min: 0.07,
+                    img: icon_formaldehyde,
+                },
+                {
+                    id: "pm25",
+                    name: "PM2.5",
+                    value: 120,
+                    unit: "ug/m³",
+                    maxColor: "#C4E34F",
+                    minColor: "#7ed874",
+                    maxName: "最大值",
+                    max: 340,
+                    minName: "最小值",
+                    min: 20,
+                    img: icon_PM2d5,
+                },
+            ],
+        };
+    },
+    created() {
+        //this.getLastMonthData();
     },
     methods: {
+        //...mapActions(['getLastMonthData']),
         // linearGraient(start,end){
         //     return {
         //         "border-image":linear-gradient(start,end) 0 18
         //     }
         // }
-        selectColor: selectColor
+        selectColor: selectColor,
+        getLastMonthData() {
+            //上月温度
+            this.$axios
+                .post(this.$api.queryLastMonthData, {
+                    projectId: "Pj1101080259",
+                })
+                .then((res) => {
+                    this.lastMonthData.forEach(function(item) {
+                        item.value = res[item.id];
+                        item.max = res[item.id + "Max"];
+                        item.min = res[item.id + "Min"];
+                    });
+                });
+        },
     },
-}
+};
 </script>
 <style lang="less" scoped>
 .lastMonth {
@@ -162,6 +255,3 @@ export default {
     }
 }
 </style>
-
-
-

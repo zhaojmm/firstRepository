@@ -13,7 +13,7 @@ var selectColor = function(value: any, typestr: string) {
             { min: 28, max: 30, color: "#EE9F2B" },
             { min: 30, max: Number.POSITIVE_INFINITY, color: "#F5483D" },
         ],
-        shidu: [
+        humidity: [
             { min: 0, max: 30, color: "#F5483D" },
             { min: 30, max: 35, color: "#EE9F2B" },
             { min: 35, max: 65, color: "#7ED874" },
@@ -26,7 +26,7 @@ var selectColor = function(value: any, typestr: string) {
             { min: 1000, max: 2500, color: "#EE9F2B" },
             { min: 2500, max: Number.POSITIVE_INFINITY, color: "#F5483D" },
         ],
-        jiaquan: [
+        methanal: [
             { min: 0, max: 0.08, color: "#7ED874" },
             { min: 0.08, max: 0.1, color: "#C4E34F" },
             { min: 0.1, max: 0.2, color: "#EE9F2B" },

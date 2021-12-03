@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -13,22 +13,22 @@ const routes: Array<RouteConfig> = [
   {
     path: '/verticalScreen',
     name: 'verticalScreen',
-    component: () => import( '../views/verticalScreen.vue')
+    component: () => import( '@/views/verticalScreen.vue')
   },
   {
     path: '/horizontalScreen',
     name: 'horizontalScreen',
-    component: () => import( '../views/horizontalScreen.vue')
+    component: () => import( '@/views/horizontalScreen.vue')
   },
   {
     path: '/horTwo',
     name: 'horTwo',
-    component: () => import( '../views/horTwo.vue')
+    component: () => import( '@/views/horTwo.vue')
   },
   {
     path: '/horThree',
     name: 'horThree',
-    component: () => import( '../views/horThree.vue')
+    component: () => import( '@/views/horThree.vue')
   },
   
 ]

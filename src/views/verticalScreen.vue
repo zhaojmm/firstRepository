@@ -3,50 +3,60 @@
         <div class="pageHead">
             <pageHead />
         </div>
-
-        <NowData screenType="ver" />
-        <AirSwitchVer />
-        <TemChart screenType="ver" />
-        <LastMonthData screenType="ver" />
-        <div class="lastTotalEnergy verticalClass">
-            <div class="head-title">
-                <span>上月总能耗</span>
-            </div>
-            <div class="subhead-title">低能耗亲自然</div>
-            <div class="bottomCont">
-                <img src='@/assets/circleEnergy.png' />
-                <div class="showData">
-                    <div class="title">比基准能耗</div>
-                    <div class="energySave">节能<span>50%</span></div>
-                    <div class="totalEnergy">总能耗<span>25541</span>KWh</div>
+        <div style="display:none">
+            <NowData screenType="ver" />
+            <AirSwitchVer />
+            <TemChart screenType="ver" />
+            <LastMonthData screenType="ver" />
+        </div>
+        <div style="display:none">
+            <div class="lastTotalEnergy verticalClass">
+                <div class="head-title">
+                    <span>上月总能耗</span>
+                </div>
+                <div class="subhead-title">低能耗亲自然</div>
+                <div class="bottomCont">
+                    <img src="@/assets/circleEnergy.png" />
+                    <div class="showData">
+                        <div class="title">比基准能耗</div>
+                        <div class="energySave">节能<span>50%</span></div>
+                        <div class="totalEnergy">
+                            总能耗<span>25541</span>KWh
+                        </div>
+                    </div>
                 </div>
             </div>
+            <lastSaveEnergy screenType="ver" />
+            <lastEnergyChart />
         </div>
-        <lastSaveEnergy screenType="ver" />
-        <lastEnergyChart />
-
         <FloorSpace />
-
     </div>
 </template>
 <script>
-import NowData from './valueDelivery/NowData.vue'
-import LastMonthData from './valueDelivery/LastMonthData.vue'
-import AirSwitchVer from './valueDelivery/AirSwitchVer.vue'
-import FloorSpace from './valueDelivery/FloorSpace.vue'
-import TemChart from './valueDelivery/TemChart.vue'
-import lastEnergyChart from './valueDelivery/lastEnergyChart.vue'
-import lastSaveEnergy from './valueDelivery/lastSaveEnergy.vue'
-import pageHead from './valueDelivery/pageHead.vue'
+import NowData from "./valueDelivery/NowData.vue";
+import LastMonthData from "./valueDelivery/LastMonthData.vue";
+import AirSwitchVer from "./valueDelivery/AirSwitchVer.vue";
+import FloorSpace from "./valueDelivery/FloorSpace.vue";
+import TemChart from "./valueDelivery/TemChart.vue";
+import lastEnergyChart from "./valueDelivery/lastEnergyChart.vue";
+import lastSaveEnergy from "./valueDelivery/lastSaveEnergy.vue";
+import pageHead from "./valueDelivery/pageHead.vue";
 
 export default {
-    components: { NowData, FloorSpace, LastMonthData, AirSwitchVer, TemChart, lastEnergyChart, lastSaveEnergy, pageHead },
+    components: {
+        NowData,
+        FloorSpace,
+        LastMonthData,
+        AirSwitchVer,
+        TemChart,
+        lastEnergyChart,
+        lastSaveEnergy,
+        pageHead,
+    },
     data() {
-        return {
-
-        }
-    }
-}
+        return {};
+    },
+};
 </script>
 <style lang="less" scoped>
 @import "/src/assets/css/common.less";
@@ -98,5 +108,3 @@ export default {
     }
 }
 </style>
-
-
