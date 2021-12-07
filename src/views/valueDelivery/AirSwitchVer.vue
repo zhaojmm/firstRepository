@@ -3,7 +3,7 @@
         <div class="air-title head-title">
             <span>空调实时开关</span>
             <span class="status">{{
-                status ? "空调已开启" : "空调已关闭"
+                airStatus ? "空调已开启" : "空调已关闭"
             }}</span>
         </div>
         <div class="air-cont">
@@ -13,11 +13,11 @@
                 </div>
                 <div class="air-rate">
                     <span>空调开启率</span>
-                    <span class="air-rate-value">{{ value }}%</span>
+                    <span class="air-rate-value">{{ airValue }}%</span>
                 </div>
             </div>
             <div class="air-bg">
-                <img :src="[status ? img.openImg : img.closeImg]" />
+                <img :src="[airStatus ? img.openImg : img.closeImg]" />
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
 <script>
 import air_close from "@/assets/horImg/air_close.png";
 import air_open from "@/assets/horImg/air_open.png";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
     name: "AirSwitch",
@@ -43,10 +43,20 @@ export default {
             }, // 默认开
         },
     },
-
     computed: {
         ...mapState({
-            airCondition: (state) => state.airCondition,
+            airValue(state) {
+                var openRate = state.airCondition.openRate;
+                var value = openRate
+                    ? Number((openRate * 100).toFixed(0))
+                    : openRate;
+                return value;
+            },
+            airStatus(state) {
+                var openRate = state.airCondition.openRate;
+                var state = openRate ? true : false;
+                return state;
+            },
         }),
     },
     data() {

@@ -7,13 +7,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        realTimeData: {}, //实时数据
+        realTimeData: [], //实时数据
         airCondition: {}, //空调情况
         realTimeTemp: [], //实时温度
-        lastMonthData: {}, //上月数据
+        lastMonthData: [], //上月数据
     },
     mutations: {
         getRealTimeData(state, data) {
+            //debugger;
             state.realTimeData = data;
         },
         getAirCondition(state, data) {
@@ -30,34 +31,28 @@ export default new Vuex.Store({
         getRealTimeData({ state, commit }, payload) {
             //实时数据
             axios
-                .post(api.queryEnvironmentData, {
-                    projectId: "Pj1101080259",
-                })
+                .get(api.queryEnvCurrent + "?projectId=Pj1101020002")
                 .then((res: any) => {
-                    commit({
-                        type: "getRealTimeData",
-                        data: res,
-                    });
+                    //debugger
+                    var resdata = res.data.data || [];
+                    commit("getRealTimeData", resdata);
                 });
         },
         getAirCondition({ state, commit }, payload) {
             //空调状态
             axios
-                .post(api.queryConditionerStatus, {
-                    projectId: "Pj1101080259",
-                })
+                .get(api.queryConditionerStatus + "?projectId=Pj1101020002")
                 .then((res: any) => {
-                    commit({
-                        type: "getAirCondition",
-                        data: res,
-                    });
+                    var resdata = res.data.data || {};
+                    // debugger;
+                    commit("getAirCondition", resdata);
                 });
         },
         getRealTimeTemp({ state, commit }, payload) {
             //实时温度
             axios
                 .post(api.queryIndoorTempList, {
-                    projectId: "Pj1101080259",
+                    projectId: "Pj1101020002",
                 })
                 .then((res: any) => {
                     // commit({
@@ -69,14 +64,11 @@ export default new Vuex.Store({
         getLastMonthData({ state, commit }, payload) {
             //上月温度
             axios
-                .post(api.queryLastMonthData, {
-                    projectId: "Pj1101080259",
-                })
+                .get(api.queryEnvHistory + "?projectId=Pj1101020002")
                 .then((res: any) => {
-                    commit({
-                        type: "getLastMonthData",
-                        data: res,
-                    });
+                    debugger;
+                    var resdata = res.data.data || [];
+                    commit("getLastMonthData", resdata);
                 });
         },
     },

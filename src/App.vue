@@ -12,7 +12,7 @@ export default {
         return {};
     },
     created() {
-       // this.getAirCondition();//空调数据
+        this.getAirCondition();//空调数据
     },
     components: {},
     methods: {

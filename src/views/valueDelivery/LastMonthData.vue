@@ -11,7 +11,7 @@
         <div class="itemWrap">
             <div
                 class="item"
-                v-for="(item, index) in lastMonthData"
+                v-for="(item, index) in lastDataArr"
                 :key="index"
             >
                 <div class="item-left">
@@ -79,7 +79,7 @@ import icon_CO2 from "@/assets/icon_CO2.png";
 import icon_formaldehyde from "@/assets/icon_formaldehyde.png";
 import icon_PM2d5 from "@/assets/icon_PM2d5.png";
 import { selectColor } from "@/utils/publicMethod";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
     name: "lastMonthData",
     props: {
@@ -91,93 +91,116 @@ export default {
         },
     },
     data() {
-        return {
-            lastMonthData: [
-                {
-                    id: "temp",
-                    name: "温度",
-                    value: 24.5,
-                    unit: "℃",
-                    maxName: "最高温",
-                    max: 37,
-                    minName: "最低温",
-                    min: 24,
-                    img: icon_temp,
-                },
-                {
-                    id: "humidity",
-                    name: "湿度",
-                    value: 100,
-                    unit: "%",
-                    maxName: "最大值",
-                    max: 50,
-                    minName: "最小值",
-                    min: 20,
-                    img: icon_humidity,
-                },
-                {
-                    id: "co2",
-                    name: "CO2",
-                    value: 2600,
-                    unit: "ppm",
-                    maxName: "最大值",
-                    max: 2600,
-                    minName: "最小值",
-                    min: 300,
-                    img: icon_CO2,
-                },
-                {
-                    id: "methanal",
-                    name: "甲醛",
-                    value: 0.03,
-                    unit: "mg/m³",
-                    maxName: "最大值",
-                    max: 0.01,
-                    minName: "最小值",
-                    min: 0.07,
-                    img: icon_formaldehyde,
-                },
-                {
-                    id: "pm25",
-                    name: "PM2.5",
-                    value: 120,
-                    unit: "ug/m³",
-                    maxColor: "#C4E34F",
-                    minColor: "#7ed874",
-                    maxName: "最大值",
-                    max: 340,
-                    minName: "最小值",
-                    min: 20,
-                    img: icon_PM2d5,
-                },
-            ],
-        };
+        return {};
     },
     created() {
-        //this.getLastMonthData();
+        this.getLastMonthData();
+    },
+    watch:{
+        lastDataArr(newv){
+            debugger;
+        }
+    },
+    computed: {
+        ...mapState({
+            lastDataArr(state) {
+                var lastMonthData = state.lastMonthData;
+                var lastMonthInit = [
+                    {
+                        id: "temp",
+                        name: "温度",
+                        code: "Tdb",
+                        value: 24.5,
+                        unit: "℃",
+                        maxName: "最高温",
+                        max: 37,
+                        minName: "最低温",
+                        min: 24,
+                        img: icon_temp,
+                    },
+                    {
+                        id: "humidity",
+                        name: "湿度",
+                        code: "RH",
+                        value: 100,
+                        unit: "%",
+                        maxName: "最大值",
+                        max: 50,
+                        minName: "最小值",
+                        min: 20,
+                        img: icon_humidity,
+                    },
+                    {
+                        id: "co2",
+                        name: "CO2",
+                        code: "CO2",
+                        value: 2600,
+                        unit: "ppm",
+                        maxName: "最大值",
+                        max: 2600,
+                        minName: "最小值",
+                        min: 300,
+                        img: icon_CO2,
+                    },
+                    {
+                        id: "methanal",
+                        name: "甲醛",
+                        code: "HCHO",
+                        value: 0.03,
+                        unit: "mg/m³",
+                        maxName: "最大值",
+                        max: 0.01,
+                        minName: "最小值",
+                        min: 0.07,
+                        img: icon_formaldehyde,
+                    },
+                    {
+                        id: "pm25",
+                        name: "PM2.5",
+                        code: "PM2d5",
+                        value: 120,
+                        unit: "ug/m³",
+                        maxColor: "#C4E34F",
+                        minColor: "#7ed874",
+                        maxName: "最大值",
+                        max: 340,
+                        minName: "最小值",
+                        min: 20,
+                        img: icon_PM2d5,
+                    },
+                ];
+                lastMonthInit.forEach((item) => {
+                    var filterRes = lastMonthData.filter((ele) => {
+                        return ele.code == item.code;
+                    });
+                    var filterObj = filterRes[0] || {};
+                    item.value = filterObj.avgData
+                        ? Number(filterObj.avgData.toFixed(1))
+                        : filterObj.avgData;
+                    item.max = filterObj.maxData;
+                    item.min = filterObj.minData;
+                });
+                return lastMonthInit;
+            },
+        }),
     },
     methods: {
-        //...mapActions(['getLastMonthData']),
-        // linearGraient(start,end){
-        //     return {
-        //         "border-image":linear-gradient(start,end) 0 18
-        //     }
-        // }
+        ...mapActions(["getLastMonthData"]),
         selectColor: selectColor,
-        getLastMonthData() {
-            //上月温度
-            this.$axios
-                .post(this.$api.queryLastMonthData, {
-                    projectId: "Pj1101080259",
-                })
-                .then((res) => {
-                    this.lastMonthData.forEach(function(item) {
-                        item.value = res[item.id];
-                        item.max = res[item.id + "Max"];
-                        item.min = res[item.id + "Min"];
-                    });
-                });
-        },
+        // getLastMonthData() {
+        //     //上月温度
+        //     this.$axios
+        //         .post(this.$api.queryEnvHistory, {
+        //             projectId: "Pj1101080259",
+        //         })
+        //         .then((res) => {
+        //             this.lastMonthData.forEach(function(item) {
+        //                 item.value = res[item.id];
+        //                 item.max = res[item.id + "Max"];
+        //                 item.min = res[item.id + "Min"];
+        //             });
+        //         });
+        // },
     },
 };
 </script>

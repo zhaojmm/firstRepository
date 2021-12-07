@@ -3,7 +3,7 @@ import axios from "axios";
 // axios默认配置
 axios.defaults.headers.post["Content-Type"] = "application/json,charset=utf-8";
 axios.defaults.timeout = 1000 * 60 * 60 * 24;
-axios.defaults.baseURL = "/daping/duoduo-service/object-service";
+axios.defaults.baseURL = "/daping";// /daping/duoduo-service/object-service
 
 //添加请求拦截器
 axios.interceptors.request.use(

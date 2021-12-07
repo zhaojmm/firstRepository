@@ -3,42 +3,37 @@
         <div class="head-title">
             <span>空调实时开关</span>
         </div>
-        <div class="air-status" v-bind:class="{ close: !status }">
-            <span>{{ status ? "空调已开启" : "空调已关闭" }}</span>
+        <div class="air-status" v-bind:class="{ close: !airStatus }">
+            <span>{{ airStatus ? "空调已开启" : "空调已关闭" }}</span>
         </div>
         <div class="air-bg">
-            <img :src="[status ? img.openImg : img.closeImg]" />
+            <img :src="[airStatus ? img.openImg : img.closeImg]" />
         </div>
         <div class="air-rate">
             <span>空调开启率</span>
-            <span class="air-rate-value">{{ value }}%</span>
+            <span class="air-rate-value">{{ airValue }}%</span>
         </div>
     </div>
 </template>
 <script>
 import air_open from "@/assets/horImg/air_open.png";
 import air_close from "@/assets/horImg/air_close.png";
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 export default {
     name: "AirSwitch",
     props: {
-        status: {
-            type: Boolean,
-            default: () => {
-                return false;
-            }, // 默认开
-        },
-        value: {
-            type: Number,
-            default: () => {
-                return 75;
-            }, // 默认开
-        },
-    },
-    computed: {
-        ...mapState({
-            airCondition: (state) => state.airCondition,
-        }),
+        // status: {
+        //     type: Boolean,
+        //     default: () => {
+        //         return false;
+        //     }, // 默认开
+        // },
+        // value: {
+        //     type: Number,
+        //     default: () => {
+        //         return 75;
+        //     }, // 默认开
+        // },
     },
     data() {
         return {
@@ -47,6 +42,28 @@ export default {
                 closeImg: air_close,
             },
         };
+    },
+    computed: {
+        ...mapState({
+            airValue: (state) => {
+             
+                var openRate = state.airCondition.openRate;
+                var value = openRate
+                    ? Number((openRate * 100).toFixed(0))
+                    : openRate;
+                return value;
+            },
+            airStatus: (state) => {
+                var openRate = state.airCondition.openRate;
+                var state = openRate ? true : false;
+                return state;
+            },
+        }),
+    },
+    watch: {
+        airStatus: function(newv, oldv) {
+            //debugger;
+        },
     },
 };
 </script>

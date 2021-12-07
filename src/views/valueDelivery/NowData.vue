@@ -16,7 +16,7 @@
         </div>
         <div class="subhead-title">主动式空调，会呼吸的写字楼</div>
         <div class="contain">
-            <div class="item" v-for="(item, index) in realData" :key="index">
+            <div class="item" v-for="(item, index) in realDataArr" :key="index">
                 <div class="item_content">
                     <img
                         :class="[screenType === 'hor' ? '' : 'vert']"
@@ -50,7 +50,8 @@ import icon_formaldehyde from "@/assets/icon_formaldehyde.png";
 import icon_PM2d5 from "@/assets/icon_PM2d5.png";
 import { selectColor } from "@/utils/publicMethod";
 
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
+
 export default {
     props: {
         screenType: {
@@ -61,60 +62,87 @@ export default {
         },
     },
     data() {
-        return {
-            realData: [
-                {
-                    id: "temp",
-                    name: "温度",
-                    img: icon_temp,
-                    value: 24.5,
-                    unit: "℃",
-                    level: "low",
-                },
-                {
-                    id: "humidity",
-                    name: "湿度",
-                    img: icon_humidity,
-                    value: 33,
-                    unit: "%",
-                    level: "middle",
-                },
-                {
-                    id: "co2",
-                    name: "CO2",
-                    img: icon_CO2,
-                    value: 2399,
-                    unit: "ppm",
-                    level: "low",
-                },
-                {
-                    id: "methanal",
-                    name: "甲醛",
-                    img: icon_formaldehyde,
-                    value: 0.12,
-                    unit: "mg/m³",
-                    level: "low",
-                },
-                {
-                    id: "pm25",
-                    name: "PM2.5",
-                    img: icon_PM2d5,
-                    value: 100,
-                    unit: "ug/m³",
-                    level: "low",
-                },
-            ],
-        };
+        return {};
     },
     watch: {
-        "$store.state.realTimeData"(newv, oldv) {
-            this.realData.forEach(function(item) {
-                item.value = newv[item.id];
-            });
+        // "$store.state.realTimeData"(newv, oldv) {
+        //     //debugger;
+        //     this.realData.forEach(function(item) {
+        //         item.value = newv[item.id];
+        //     });
+        // },
+        realDataArr(newv, oldv) {
+           // debugger;
         },
     },
-    created() {
-        //this.getRealTimeData();//实时数据
+    mounted() {
+        // setTimeout(() => {
+        this.getRealTimeData(); //实时数据
+        // }, 20000);
+    },
+    computed: {
+        ...mapState({
+            realDataArr(state) {
+                //debugger;
+                var realTimeData = state.realTimeData;
+                var realInit = [
+                    {
+                        id: "temp",
+                        code: "Tdb",
+                        name: "温度",
+                        img: icon_temp,
+                        //value: 24.5,
+                        unit: "℃",
+                        level: "low",
+                    },
+                    {
+                        id: "humidity",
+                        name: "湿度",
+                        code: "RH",
+                        img: icon_humidity,
+                        // value: 33,
+                        unit: "%",
+                        level: "middle",
+                    },
+                    {
+                        id: "co2",
+                        name: "CO2",
+                        code: "CO2",
+                        img: icon_CO2,
+                        // value: 2399,
+                        unit: "ppm",
+                        level: "low",
+                    },
+                    {
+                        id: "methanal",
+                        code: "HCHO",
+                        name: "甲醛",
+                        img: icon_formaldehyde,
+                        // value: 0.12,
+                        unit: "mg/m³",
+                        level: "low",
+                    },
+                    {
+                        id: "pm25",
+                        code: "PM2d5",
+                        name: "PM2.5",
+                        img: icon_PM2d5,
+                        // value: 100,
+                        unit: "ug/m³",
+                        level: "low",
+                    },
+                ];
+                realInit.forEach((item) => {
+                    var filterRes = realTimeData.filter((ele) => {
+                        return ele.code == item.code;
+                    });
+                    var value = (filterRes[0] || {}).data;
+                    item.value = value ? Number(value.toFixed(1)) : value;
+                });
+
+                return realInit;
+            },
+        }),
     },
     methods: {
         ...mapActions(["getRealTimeData"]),

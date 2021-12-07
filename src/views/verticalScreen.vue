@@ -3,7 +3,7 @@
         <div class="pageHead">
             <pageHead />
         </div>
-        <div style="display:none">
+        <div >
             <NowData screenType="ver" />
             <AirSwitchVer />
             <TemChart screenType="ver" />
@@ -29,7 +29,7 @@
             <lastSaveEnergy screenType="ver" />
             <lastEnergyChart />
         </div>
-        <FloorSpace />
+        <FloorSpace style="display:none" />
     </div>
 </template>
 <script>

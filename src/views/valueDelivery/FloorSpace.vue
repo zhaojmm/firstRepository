@@ -4,8 +4,8 @@
             <div class="allIndicator">
                 <div
                     class="eachItem"
-                    v-for="item in allIndicator"
-                    @click="clickIndicator(item)"
+                    v-for="(item, index) in allIndicator"
+                    @click="clickIndicator(index)"
                     v-bind:class="{ select: item.id == selIndicator.id }"
                 >
                     <span>{{ item.name }}</span
@@ -27,19 +27,31 @@
         <div class="floorWrap">
             <div
                 class="floor-item"
-                v-for="(item, index) in floorData"
+                v-for="(item, index) in showFloors"
                 :key="index"
             >
                 <div class="floor-num">
-                    <span>{{ item.floorName }}</span>
+                    <span>{{ item.localName }}</span>
                 </div>
                 <div class="floor-space">
                     <div
                         class="space-box"
-                        v-for="(childItem, id) in item.data"
+                        v-for="(childItem, id) in item.dataSpaces"
                         :key="id"
+                        v-bind:style="{ width: item.spacewidth + '%' }"
                     >
-                        <div class="space-name">{{ childItem.name }}</div>
+                        <div
+                            class="space-name"
+                            v-bind:style="{
+                                backgroundColor: selectColor(
+                                    childItem.avgValues,
+                                    selIndicator.id,
+                                    true
+                                ),
+                            }"
+                        >
+                            {{ childItem.localName }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,82 +60,82 @@
 </template>
 <script>
 import { Loading } from "element-ui";
+import moment from "moment";
+import { selectColor } from "@/utils/publicMethod";
+
 export default {
     name: "FloorSpace",
     data() {
         return {
             selIndicator: {},
+            nowIndicatorIndex: null, //现在选中的指标 index
+
             allIndicator: [
                 {
                     id: "temp",
                     name: "温度",
                     img: require("../../assets/verwendu.png"),
                     unit: "℃",
+                    code: "Tdb",
                 },
                 {
                     id: "humidity",
+                    code: "RH",
                     name: "湿度",
                     img: require("../../assets/vershidu.png"),
                     unit: "%",
                 },
                 {
                     id: "co2",
+                    code: "CO2",
                     name: "CO₂",
                     img: require("../../assets/verco2.png"),
                     unit: "ppm",
                 },
                 {
                     id: "methanal",
+                    code: "HCHO",
                     name: "甲醛",
                     img: require("../../assets/verjiaquan.png"),
                     unit: "mg/m³",
                 },
                 {
                     id: "pm25",
+                    code: "PM2d5",
                     name: "PM2.5",
                     img: require("../../assets/verpm25.png"),
                     unit: "ug/m³",
                 },
             ],
-            floorData: [
-                {
-                    floorName: "8F",
-                    data: [
-                        { id: 1, name: "空间1" },
-                        { id: 2, name: "空间2" },
-                        { id: 3, name: "空间3" },
-                        { id: 1, name: "空间4" },
-                        { id: 2, name: "空间5" },
-                        { id: 3, name: "空间6" },
-                        { id: 1, name: "空间1" },
-                        { id: 2, name: "空间2" },
-                        { id: 3, name: "空间3" },
-                        { id: 1, name: "空间4" },
-                        { id: 2, name: "空间5" },
-                        { id: 3, name: "空间6" },
-                    ],
-                },
-                {
-                    floorName: "7F",
-                    data: [
-                        { id: 1, name: "空间1" },
-                        { id: 2, name: "空间2" },
-                        { id: 3, name: "空间3" },
-                    ],
-                },
-            ],
+
+            allFloor: [],
             firstPageParams: [],
             secondPageParams: [],
             nowPage: 1, //当前哪一屏幕
+            showFloors: [],
         };
     },
+    watch: {
+        nowIndicatorIndex(newv, oldv) {
+            // debugger;
+            if (newv == oldv) return;
+            this.selIndicator = this.allIndicator[newv];
+            this.showFloors = [];
+            //第一屏的参数 第二屏的参数
+            var floorparam =
+                this.nowPage == 1
+                    ? this.firstPageParams
+                    : this.secondPageParams;
+            this.queryParam(floorparam);
+        },
+    },
     mounted() {
-        this.selIndicator = this.allIndicator[0];
         this.queryFs();
     },
     methods: {
-        clickIndicator(item) {
-            this.selIndicator = item;
+        selectColor: selectColor,
+        clickIndicator(index) {
+            this.nowIndicatorIndex = index;
         },
         queryFs() {
             //let loadingInstance = Loading.service({ fullscreen: true });
@@ -147,6 +159,10 @@ export default {
                     loading.close();
                     console.log("queryFs", res);
                     var allFloor = res.data.content || [];
+                    allFloor = allFloor.filter(function(item) {
+                        return item.spaceNum > 0;
+                    });
+                    this.allFloor = allFloor;
                     var allFloorNum = allFloor.length;
                     //如果超过7层 就显示两屏幕 第一屏 firstPageNum
                     //如果超过7层 就显示两屏幕 第二屏 secondPageNum
@@ -181,19 +197,60 @@ export default {
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });
-                    this.queryParam(this.firstPageParams);
+                    this.nowIndicatorIndex = 0;
+                    // var floorparam =
+                    //     this.nowPage == 1
+                    //         ? this.firstPageParams
+                    //         : this.secondPageParams;
+                    // this.queryParam(floorparam);
+                }).catch((res) =>{
+                      loading.close();
                 });
         },
 
-        queryParam(param) {
+        queryParam(floorparam) {
             var loading = this.$loading({ fullscreen: true });
-            this.$axios.post(this.$api.queryParam, param).then((res) => {
-                loading.close();
-                debugger;
-            });
+            //             Tdb 温度
+            // CO2 二氧化碳
+            // RH 湿度
+            // HCHO甲醛
+            // PM2d5 pm2.5
+
+            var endTime = moment();
+            var startTime = moment().subtract(15, "minutes");
+            var startStr = startTime.format("YYYYMMDDHHmmss");
+            var endStr = endTime.format("YYYYMMDDHHmmss");
+
+            var param = this.selIndicator.code;
+            this.$axios
+                .post(
+                    `${this.$api.queryParam}?endTime=${endStr}&startTime=${startStr}&param=${param}`,
+                    floorparam
+                )
+                .then((res) => {
+                    loading.close();
+                    console.log("queryParam", res);
+                    var showFloors = res.data.content || [];
+                    showFloors.forEach((ele) => {
+                        var filterFloorarr = this.allFloor.filter((item) => {
+                            return item.id == ele.id;
+                        });
+                        var filterFloor = filterFloorarr[0] || {};
+                        ele.name = filterFloor.name;
+                        ele.localId = filterFloor.localId;
+                        ele.localName = filterFloor.localName;
+                        var dataSpacesNum = (ele.dataSpaces || []).length;
+                        var lineNum = this.spaceHandle(dataSpacesNum); //一行的个数
+                        //debugger;
+                        ele.spacewidth = 100 / lineNum;
+                    });
+                    this.showFloors = showFloors;
+                    console.log("showFloors", showFloors);
+                });
         },
-        floorHandle(floorNum) {//返回一层 最多多少房间
-            var maxFloorSpace = 0; //一层 最多显示房间数
+        floorHandle(floorNum) {
+            //返回一层 最多多少房间
+            var maxFloorSpace = 1; //一层 最多显示房间数
             switch (floorNum) {
                 case 1:
                     maxFloorSpace = 160;
@@ -215,10 +272,13 @@ export default {
             }
             return maxFloorSpace;
         },
-        spaceHandle(spaceNum) {//返回一层 的每一行 几个房间
+        spaceHandle(spaceNum) {
+            //返回一层 的每一行 几个房间
             var lineNum = spaceNum; //一行的房间数
             var floorline = Math.ceil(spaceNum / 10); //20-30 3排 30-40个 4排 所以一排10个
             lineNum = Math.ceil(spaceNum / floorline);
+            return lineNum;
+            //debugger;
         },
     },
 };
@@ -259,6 +319,7 @@ export default {
     .imageDiv {
         height: 32px;
         margin: 0 32px;
+        text-align: center;
     }
     .textCont {
         color: #3b3558;
@@ -305,14 +366,16 @@ export default {
         flex-wrap: wrap;
         .space-box {
             padding: 4px;
+            box-sizing: border-box;
             .space-name {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 height: 86px;
-                width: 90px;
+                min-width: 80px;
                 border-radius: 8px;
                 background: #d9f5d6;
+                text-align: center;
             }
         }
     }
