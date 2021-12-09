@@ -3,13 +3,13 @@
         <div class="pageHead">
             <pageHead />
         </div>
-        <div >
+        <div style="display:none">
             <NowData screenType="ver" />
             <AirSwitchVer />
             <TemChart screenType="ver" />
             <LastMonthData screenType="ver" />
         </div>
-        <div style="display:none">
+        <div>
             <div class="lastTotalEnergy verticalClass">
                 <div class="head-title">
                     <span>上月总能耗</span>
@@ -19,9 +19,12 @@
                     <img src="@/assets/circleEnergy.png" />
                     <div class="showData">
                         <div class="title">比基准能耗</div>
-                        <div class="energySave">节能<span>50%</span></div>
+                        <div class="energySave">
+                            节能<span>{{ lastAllEnergy.energyCompare }}%</span>
+                        </div>
                         <div class="totalEnergy">
-                            总能耗<span>25541</span>KWh
+                            总能耗<span>{{ lastAllEnergy.energyTotal }}</span
+                            >KWh
                         </div>
                     </div>
                 </div>
@@ -41,7 +44,7 @@ import TemChart from "./valueDelivery/TemChart.vue";
 import lastEnergyChart from "./valueDelivery/lastEnergyChart.vue";
 import lastSaveEnergy from "./valueDelivery/lastSaveEnergy.vue";
 import pageHead from "./valueDelivery/pageHead.vue";
-
+import { mapState } from "vuex";
 export default {
     components: {
         NowData,
@@ -55,6 +58,18 @@ export default {
     },
     data() {
         return {};
+    },
+    computed: {
+        ...mapState({
+            lastAllEnergy: (state) => {
+               // debugger;
+                var lastAllEnergy = state.lastAllEnergy;
+                lastAllEnergy.energyCompare = Number(
+                    (lastAllEnergy.energyCompare * 100).toFixed(0)
+                );
+                return lastAllEnergy;
+            },
+        }),
     },
 };
 </script>

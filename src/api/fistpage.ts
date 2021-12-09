@@ -1,6 +1,6 @@
 export default {
-    queryConditionerStatus: "/environment/queryConditionerStatus",//空调状态
-    queryEnvHistory: "/environment/queryEnvHistory",//上月温度
-    queryEnvCurrent: "/environment/queryEnvCurrent",//实时数据
-    queryIndoorTempList: "/environment/queryIndoorTempList",//实时温度
+    queryConditionerStatus: "/daping/environment/queryConditionerStatus",//空调状态
+    queryEnvHistory: "/daping/environment/queryEnvHistory",//上月温度
+    queryEnvCurrent: "/daping/environment/queryEnvCurrent",//实时数据
+    queryIndoorTempList: "/daping/environment/queryIndoorTempList",//实时温度
 };

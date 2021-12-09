@@ -1,4 +1,9 @@
 export default {
-    queryFs: "/object/floor/queryFs", //空调状态
-    queryParam: "/object/floor/queryParam", //上月温度
+    queryFs: "/daping/object/floor/queryFs", //获取楼层
+    queryParam: "/daping/object/floor/queryParam", //获取楼层详情
+    getWeatherCurrent: "/weather/duoduo-service/object-service/weather/getCurrent", //天气
+
+    queryLastDayEnergy: "/daping/energy/week/day/query", //上月每日能耗
+    queryLastAllEnergy: "/daping/sceneValue/query", //上月所有能耗
+
 };

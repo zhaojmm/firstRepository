@@ -1,52 +1,69 @@
 <template>
     <div
         class="lastSaveEnergy"
-        :class="[screenType=='ver'?'verticalClass':'horizontalClass']"
+        :class="[screenType == 'ver' ? 'verticalClass' : 'horizontalClass']"
     >
         <div class="head-title">
             <span>上月节约能耗</span>
         </div>
         <div class="bottomCont">
-            <img src='@/assets/save_energy.png' />
+            <img src="@/assets/save_energy.png" />
             <div class="showData">
-                <div class="leftsave">节约电<br /><span>2566</span>度</div>
+                <div class="leftsave">
+                    节约电<br /><span>{{ lastAllEnergy.energySaving }}</span
+                    >度
+                </div>
                 <div class="equalTo">相当于</div>
-                <div class="saveCo2">减排<span>0.955</span>kg二氧化碳</div>
-                <div class="saveCarbon">减排<span>0.225</span>kg碳</div>
-                <div class="plantTree">为国家种<span>26</span>棵树</div>
+                <div class="saveCo2">
+                    减排<span>{{ lastAllEnergy.cdmCo2 }}</span
+                    >kg二氧化碳
+                </div>
+                <div class="saveCarbon">
+                    减排<span>{{ lastAllEnergy.cdmC }}</span
+                    >kg碳
+                </div>
+                <div class="plantTree">
+                    为国家种<span>{{ lastAllEnergy.cdmTree }}</span
+                    >棵树
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import air_close from '@/assets/horImg/air_close.png';
-import air_open from '@/assets/horImg/air_open.png';
+import air_close from "@/assets/horImg/air_close.png";
+import air_open from "@/assets/horImg/air_open.png";
+import { mapState } from "vuex";
 export default {
     name: "lastSaveEnergy",
     props: {
         screenType: {
             type: String,
-            default: () => { return 'hor' } //hor 横屏  vert 竖屏
-        }
+            default: () => {
+                return "hor";
+            }, //hor 横屏  vert 竖屏
+        },
     },
     data() {
-        return {
-
-        }
+        return {};
     },
-}
+    computed: {
+        ...mapState({
+            lastAllEnergy: (state) => state.lastAllEnergy,
+        }),
+    },
+};
 </script>
 <style lang="less" scoped>
-
 .lastSaveEnergy {
     &.verticalClass {
         height: 535px;
     }
-     &.horizontalClass {
+    &.horizontalClass {
         height: 100%;
     }
     .bottomCont {
-         width: 900px;
+        width: 900px;
         margin: 40px auto;
         position: relative;
         img {
@@ -100,5 +117,3 @@ export default {
     }
 }
 </style>
-
-

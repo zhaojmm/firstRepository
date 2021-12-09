@@ -9,11 +9,7 @@
     >
         <div class="head-title"><span>上月数据</span></div>
         <div class="itemWrap">
-            <div
-                class="item"
-                v-for="(item, index) in lastDataArr"
-                :key="index"
-            >
+            <div class="item" v-for="(item, index) in lastDataArr" :key="index">
                 <div class="item-left">
                     <img :src="item.img" />
                 </div>
@@ -96,26 +92,28 @@ export default {
     created() {
         this.getLastMonthData();
     },
-    watch:{
-        lastDataArr(newv){
-            debugger;
-        }
+    watch: {
+        lastDataArr(newv,oldv) {
+            //debugger;
+            console.log('watch-lastDataArr',newv,oldv);
+        },
     },
     computed: {
         ...mapState({
-            lastDataArr(state) {
+            lastDataArr(state) {//state改变调用
+                var statecopu=JSON.parse(JSON.stringify(state))  ;
+                console.log('lastDataArr',statecopu);
+                console.log('lastDataArr-state-realTimeData',state.realTimeData);
+                 console.log('lastDataArr-state',state);
                 var lastMonthData = state.lastMonthData;
                 var lastMonthInit = [
                     {
                         id: "temp",
                         name: "温度",
                         code: "Tdb",
-                        value: 24.5,
                         unit: "℃",
                         maxName: "最高温",
-                        max: 37,
                         minName: "最低温",
-                        min: 24,
                         img: icon_temp,
                     },
                     {
@@ -187,20 +185,6 @@ export default {
     methods: {
         ...mapActions(["getLastMonthData"]),
         selectColor: selectColor,
-        // getLastMonthData() {
-        //     //上月温度
-        //     this.$axios
-        //         .post(this.$api.queryEnvHistory, {
-        //             projectId: "Pj1101080259",
-        //         })
-        //         .then((res) => {
-        //             this.lastMonthData.forEach(function(item) {
-        //                 item.value = res[item.id];
-        //                 item.max = res[item.id + "Max"];
-        //                 item.min = res[item.id + "Min"];
-        //             });
-        //         });
-        // },
     },
 };
 </script>

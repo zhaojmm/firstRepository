@@ -46,17 +46,20 @@ export default {
     computed: {
         ...mapState({
             airValue: (state) => {
-             
                 var openRate = state.airCondition.openRate;
-                var value = openRate
+                var avalue = openRate
                     ? Number((openRate * 100).toFixed(0))
                     : openRate;
-                return value;
+                return avalue;
             },
             airStatus: (state) => {
+                //debugger
+                 var statecopu=JSON.parse(JSON.stringify(state))  ;
+                console.log('airStatus',statecopu);
+
                 var openRate = state.airCondition.openRate;
-                var state = openRate ? true : false;
-                return state;
+                var astate = openRate ? true : false;
+                return astate;
             },
         }),
     },

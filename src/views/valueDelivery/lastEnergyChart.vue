@@ -1,45 +1,46 @@
 <template>
     <div
         class="lastChart"
-        :class="[screenType==='hor' ? 'horizontalClass' : 'verticalClass verticalTemChart' ]"
+        :class="[
+            screenType === 'hor'
+                ? 'horizontalClass'
+                : 'verticalClass verticalTemChart',
+        ]"
     >
         <div class="head-title">
             <span>上月每日能耗</span>
         </div>
-        <div
-            id="lastChartBox"
-            class="lastChartBox"
-        ></div>
+        <div id="lastChartBox" class="lastChartBox"></div>
         <!-- <div id="slider"></div> -->
     </div>
 </template>
 <script>
-import G2 from '@antv/g2';
-import DataSet from '@antv/data-set';
-import moment from 'moment';
+import G2 from "@antv/g2";
+import DataSet from "@antv/data-set";
+import moment from "moment";
 
 // 自定义 shape, 支持图片形式的气泡
-G2.Shape.registerShape('interval', 'borderRadius', {
+G2.Shape.registerShape("interval", "borderRadius", {
     draw: function draw(cfg, container) {
         var points = cfg.points;
         var path = [];
-        path.push(['M', points[0].x, points[0].y]);
-        path.push(['L', points[1].x, points[1].y]);
-        path.push(['L', points[2].x, points[2].y]);
-        path.push(['L', points[3].x, points[3].y]);
-        path.push('Z');
+        path.push(["M", points[0].x, points[0].y]);
+        path.push(["L", points[1].x, points[1].y]);
+        path.push(["L", points[2].x, points[2].y]);
+        path.push(["L", points[3].x, points[3].y]);
+        path.push("Z");
         path = this.parsePath(path); // 将 0 - 1 转化为画布坐标
-        return container.addShape('rect', {
+        return container.addShape("rect", {
             attrs: {
                 x: path[1][1], // 矩形起始点为左上角
                 y: path[1][2],
                 width: path[2][1] - path[1][1],
                 height: path[0][2] - path[1][2],
                 fill: cfg.color,
-                radius: (path[2][1] - path[1][1]) / 2
-            }
+                radius: (path[2][1] - path[1][1]) / 2,
+            },
         });
-    }
+    },
 });
 
 export default {
@@ -47,138 +48,203 @@ export default {
     props: {
         screenType: {
             type: String,
-            default: () => { return 'ver' } //hor 横屏  vert 竖屏
-        }
+            default: () => {
+                return "ver";
+            }, //hor 横屏  vert 竖屏
+        },
     },
     created() {
         console.log("created");
     },
     mounted() {
         console.log("mounted");
-        this.cInitChart();
-        var start = moment('2021-08-01', 'YYYY-MM-DD');
-        var end = moment('2021-08-12', 'YYYY-MM-DD');
-        var end2 = moment('2021-08-12', 'YYYY-MM-DD');
-        console.log('start', start);
-        // var intervalInt = setInterval(() => {
-        //     start.add(1, 'days');
-        //     end.add(1, 'days');
-
-        //     //console.log('start', start);
-
-        //     this.ds.setState('start', start.format('YYYY-MM-DD'));
-        //     this.ds.setState('end', end.format('YYYY-MM-DD'));
-
-        //     if (end.format('YYYY-MM-DD') == end2.endOf('month').format('YYYY-MM-DD')) {
-        //         clearInterval(intervalInt);
-        //     }
-        // }, 800);
+        this.queryLastDayEnergy();
     },
     data() {
         return {
             ds: null,
-        }
+        };
     },
     methods: {
+        queryLastDayEnergy() {
+            //上月每日能耗
+            var start = moment()
+                .subtract(1, "months")
+                .startOf("month")
+                .format("YYYYMMDD");
+            var end = moment()
+                .subtract(1, "months")
+                .endOf("month")
+                .format("YYYYMMDD");
 
-        cInitChart() {
-            var data = [
-                { Date: '2021-08-01', type: '订阅数', value: 1300 },
-                { Date: '2021-08-02', type: '订阅数', value: 1200 },
-                { Date: '2021-08-03', type: '订阅数', value: 1350 },
-                { Date: '2021-08-04', type: '订阅数', value: 1100 },
-                { Date: '2021-08-05', type: '订阅数', value: 1005 },
-                { Date: '2021-08-06', type: '订阅数', value: 1200 },
-                { Date: '2021-08-07', type: '订阅数', value: 1100 },
-                { Date: '2021-08-08', type: '订阅数', value: 1100 },
-                { Date: '2021-08-09', type: '订阅数', value: 1200 },
-                { Date: '2021-08-10', type: '订阅数', value: 900 },
-                { Date: '2021-08-11', type: '订阅数', value: 800 },
-                { Date: '2021-08-12', type: '订阅数', value: 970 },
-                { Date: '2021-08-13', type: '订阅数', value: 1100 },
-                { Date: '2021-08-14', type: '订阅数', value: 1100 },
-                { Date: '2021-08-15', type: '订阅数', value: 1005 },
-                { Date: '2021-08-16', type: '订阅数', value: 1200 },
-                { Date: '2021-08-17', type: '订阅数', value: 1100 },
-                { Date: '2021-08-18', type: '订阅数', value: 1100 },
-                { Date: '2021-08-19', type: '订阅数', value: 1200 },
-                { Date: '2021-08-20', type: '订阅数', value: 900 },
-                { Date: '2021-08-21', type: '订阅数', value: 800 },
-                { Date: '2021-08-22', type: '订阅数', value: 970 },
-                { Date: '2021-08-23', type: '订阅数', value: 1100 },
-                { Date: '2021-08-24', type: '订阅数', value: 1100 },
-                { Date: '2021-08-25', type: '订阅数', value: 1005 },
-                { Date: '2021-08-26', type: '订阅数', value: 1200 },
-                { Date: '2021-08-27', type: '订阅数', value: 1100 },
-                { Date: '2021-08-28', type: '订阅数', value: 1100 },
-                { Date: '2021-08-29', type: '订阅数', value: 1200 }, { Date: '2021-08-30', type: '订阅数', value: 1200 },
-            ];
+            console.log("start", start);
+            this.$axios
+                .post(this.$api.queryLastDayEnergy, {
+                    criteria: {
+                        projectId: "Pj1101080259",
+                        date: {
+                            $gte: start,
+                            $lte: end,
+                        },
+                    },
+                })
+                .then((res) => {
+                    var resdata = res.data.content || [];
+                    //debugger;
+                    resdata.forEach(function(item) {
+                        var dateStr = item.date;
+                        item.Date =
+                            dateStr.substr(0, 4) +
+                            "-" +
+                            dateStr.substr(4, 2) +
+                            "-" +
+                            dateStr.substr(6, 2);
+                        item.value = (
+                            item.energyAcTerminal +
+                            item.energyCooling +
+                            item.energyHeating +
+                            item.energyLight
+                        ).toFixed(0);
+                    });
+                    var chart = this.cInitChart(resdata);
+                    var start = moment()
+                        .subtract(1, "months")
+                        .date(1);
+                    var end = moment()
+                        .subtract(1, "months")
+                        .date(12);
+                    var end2 = moment().subtract(1, "months");
+                    //debugger;
+
+                    // console.log("start", start);
+                    console.log("start", chart);
+                    console.log("start", this.ds);
+                    // var intervalInt = setInterval(() => {
+                    //     start.add(1, "days");
+                    //     end.add(1, "days");
+                    //     //debugger;
+                    //     console.log("start--", start);
+                    //     console.log("end--", end);
+                    //     this.ds.setState("start", start.format("YYYY-MM-DD"));
+                    //     this.ds.setState("end", end.format("YYYY-MM-DD"));
+
+                    //     if (
+                    //         end.format("YYYY-MM-DD") ==
+                    //         end2.endOf("month").format("YYYY-MM-DD")
+                    //     ) {
+                    //         clearInterval(intervalInt);
+                    //     }
+                    // }, 800);
+                });
+        },
+        cInitChart(cdata) {
+            // var data = [
+            //     { Date: "2021-08-01", type: "订阅数", value: 1300 },
+            //     { Date: "2021-08-02", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-03", type: "订阅数", value: 1350 },
+            //     { Date: "2021-08-04", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-05", type: "订阅数", value: 1005 },
+            //     { Date: "2021-08-06", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-07", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-08", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-09", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-10", type: "订阅数", value: 900 },
+            //     { Date: "2021-08-11", type: "订阅数", value: 800 },
+            //     { Date: "2021-08-12", type: "订阅数", value: 970 },
+            //     { Date: "2021-08-13", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-14", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-15", type: "订阅数", value: 1005 },
+            //     { Date: "2021-08-16", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-17", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-18", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-19", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-20", type: "订阅数", value: 900 },
+            //     { Date: "2021-08-21", type: "订阅数", value: 800 },
+            //     { Date: "2021-08-22", type: "订阅数", value: 970 },
+            //     { Date: "2021-08-23", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-24", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-25", type: "订阅数", value: 1005 },
+            //     { Date: "2021-08-26", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-27", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-28", type: "订阅数", value: 1100 },
+            //     { Date: "2021-08-29", type: "订阅数", value: 1200 },
+            //     { Date: "2021-08-30", type: "订阅数", value: 1200 },
+            // ];
+            //debugger;
             var ds = new DataSet({
                 state: {
-                    start: '2021-08-01',
-                    end: '2021-08-12'
-                }
-            })
+                    start: cdata[0].Date,
+                    end: cdata[11].Date,
+                },
+            });
             var dv = ds.createView();
-            dv.source(data).transform({
-                type: 'filter',
+            dv.source(cdata).transform({
+                type: "filter",
                 callback: function callback(obj) {
                     var date = obj.Date;
                     return date <= ds.state.end && date >= ds.state.start;
-                }
+                },
             });
             var chart = new G2.Chart({
-                container: 'lastChartBox',
+                container: "lastChartBox",
                 forceFit: true,
-                height: this.screenType === 'hor' ? 274 : 330,
+                height: this.screenType === "hor" ? 274 : 330,
                 padding: [20, 20, 36, 20],
             });
             chart.source(dv);
             chart.tooltip(false);
-            chart.scale('Date', {
+            chart.scale("Date", {
                 //range: [0, 1],
                 tickCount: 12,
                 //tickInterval:0,
-                type: 'timeCat',
-                mask: 'MM-DD',
+                type: "timeCat",
+                mask: "MM-DD",
                 // formatter: function formatter(val) {
                 //     console.log('val',val);
                 //     return val.substr(5);
                 // }
             });
-            chart.scale('value', {
+            chart.scale("value", {
                 //range: [0, 1],
                 tickCount: 5,
-                type: 'linear',
-                max: 1500
+                type: "linear",
+                max: 1500,
                 //tickInterval
                 // type: 'timeCat'
             });
-            chart.axis('Date', {
+            chart.axis("Date", {
                 line: {
                     lineWidth: 1, // 设置线的宽度
-                    stroke: 'rgba(155, 152, 173,0.4)', // 设置线的颜色
-                    lineDash: [3, 3] // 设置虚线样式
+                    stroke: "rgba(155, 152, 173,0.4)", // 设置线的颜色
+                    lineDash: [3, 3], // 设置虚线样式
                 },
                 label: {
                     textStyle: {
-                        fill: '#9B98AD',
+                        fill: "#9B98AD",
                         fontSize: 12,
-                    }
+                    },
                 },
-                tickLine: null
+                tickLine: null,
             });
-            chart.axis('value', false);
+            chart.axis("value", false);
 
             chart.legend(false);
 
-            chart.interval().position('Date*value').color('l(90) 0:#3E91F8 1:#76DEFF').opacity(1).shape('borderRadius').adjust({ type: 'stack' }).size(12).label('value', {
-                offset: 10,
-                textStyle: {
-                    fill: '#3281F6',
-                    fontSize: 12
-                }
-            });
+            chart
+                .interval()
+                .position("Date*value")
+                .color("l(90) 0:#3E91F8 1:#76DEFF")
+                .opacity(1)
+                .shape("borderRadius")
+                .adjust({ type: "stack" })
+                .size(12)
+                .label("value", {
+                    offset: 10,
+                    textStyle: {
+                        fill: "#3281F6",
+                        fontSize: 12,
+                    },
+                });
 
             chart.render();
             this.ds = ds;
@@ -207,9 +273,9 @@ export default {
             //     }
             // });
             return chart;
-        }
-    }
-}
+        },
+    },
+};
 </script>
 <style lang="less" scoped>
 .lastChart {
@@ -234,5 +300,3 @@ export default {
     }
 }
 </style>
-
-

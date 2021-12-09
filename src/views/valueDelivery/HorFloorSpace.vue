@@ -212,7 +212,7 @@ export default {
             var loading = this.$loading({ fullscreen: true });
 
             var endTime = moment();
-            var startTime = moment().subtract(15, "minutes");
+            var startTime = moment().subtract(15, "minutes");//往前取15分钟
             var startStr = startTime.format("YYYYMMDDHHmmss");
             var endStr = endTime.format("YYYYMMDDHHmmss");
             var param = this.selIndicator.code;

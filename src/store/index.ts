@@ -9,8 +9,8 @@ export default new Vuex.Store({
     state: {
         realTimeData: [], //实时数据
         airCondition: {}, //空调情况
-        realTimeTemp: [], //实时温度
         lastMonthData: [], //上月数据
+        lastAllEnergy: {}, //上月所有能耗数据
     },
     mutations: {
         getRealTimeData(state, data) {
@@ -20,15 +20,15 @@ export default new Vuex.Store({
         getAirCondition(state, data) {
             state.airCondition = data;
         },
-        getRealTimeTemp(state, data) {
-            state.realTimeTemp = data;
-        },
         getLastMonthData(state, data) {
             state.lastMonthData = data;
         },
+        getLastAllEnergy(state, data) {
+            state.lastAllEnergy = data;
+        },
     },
     actions: {
-        getRealTimeData({ state, commit }, payload) {
+        getRealTimeData({ state, commit }, data) {
             //实时数据
             axios
                 .get(api.queryEnvCurrent + "?projectId=Pj1101020002")
@@ -38,7 +38,7 @@ export default new Vuex.Store({
                     commit("getRealTimeData", resdata);
                 });
         },
-        getAirCondition({ state, commit }, payload) {
+        getAirCondition({ state, commit }, data) {
             //空调状态
             axios
                 .get(api.queryConditionerStatus + "?projectId=Pj1101020002")
@@ -48,27 +48,35 @@ export default new Vuex.Store({
                     commit("getAirCondition", resdata);
                 });
         },
-        getRealTimeTemp({ state, commit }, payload) {
+        getRealTimeTemp({ state, commit }, data) {
             //实时温度
-            axios
-                .post(api.queryIndoorTempList, {
-                    projectId: "Pj1101020002",
-                })
-                .then((res: any) => {
-                    // commit({
-                    //     type: "getRealTimeTemp",
-                    //     data: res,
-                    // });
-                });
+            return axios.get(
+                api.queryIndoorTempList + "?projectId=Pj1101020002"
+            );
         },
-        getLastMonthData({ state, commit }, payload) {
-            //上月温度
+        getLastMonthData({ state, commit }, data) {
+            //上月数据
             axios
                 .get(api.queryEnvHistory + "?projectId=Pj1101020002")
                 .then((res: any) => {
-                    debugger;
+                    //debugger;
                     var resdata = res.data.data || [];
                     commit("getLastMonthData", resdata);
+                });
+        },
+        getLastAllEnergy({ state, commit }, data) {
+            //上月所有能耗数据
+            axios
+                .post(api.queryLastAllEnergy, {
+                    criteria: {
+                        projectId: "Pj1101080259",
+                    },
+                })
+                .then((res: any) => {
+                   // debugger;
+                    console.log("getLastAllEnergy", res);
+                    var resdata = res.data.content[0] || {};
+                    commit("getLastAllEnergy", resdata);
                 });
         },
     },

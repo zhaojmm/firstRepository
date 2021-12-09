@@ -13,10 +13,11 @@ export default {
     },
     created() {
         this.getAirCondition();//空调数据
+        this.getLastAllEnergy();
     },
     components: {},
     methods: {
-        ...mapActions(["getAirCondition"]),
+        ...mapActions(["getAirCondition","getLastAllEnergy"]),
     },
 };
 </script>

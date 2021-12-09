@@ -1,13 +1,16 @@
 <template>
     <div class="horizontalScreen">
         <div class="bg">
-            <img :src="bgImg">
+            <img :src="bgImg" />
         </div>
         <div class="container">
             <div class="hor-head">
                 <pageHead />
             </div>
-            <div class="hor-nowData-content firstScreen flexBetween">
+            <div
+                class="hor-nowData-content firstScreen flexBetween"
+                style="display:none"
+            >
                 <div class="content-left">
                     <NowData screenType="hor" />
                     <div class="content-left-cont flexBetween">
@@ -17,7 +20,6 @@
                         <div class="bottom-right">
                             <TemChart screenType="hor" />
                         </div>
-
                     </div>
                 </div>
                 <div class="content-right">
@@ -38,11 +40,14 @@
                             <div class="left-text">
                                 <div class="left-content-first">比基准能耗</div>
                                 <div class="left-content-next">
-                                    节能<span class="next-num">50%</span>
+                                    节能<span class="next-num"
+                                        >{{ lastAllEnergy.energyCompare }}%</span
+                                    >
                                 </div>
-                                <div class="left-content-first blue">总能耗28050KWh</div>
+                                <div class="left-content-first blue">
+                                    总能耗{{ lastAllEnergy.energyTotal }}KWh
+                                </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="right ">
@@ -53,34 +58,53 @@
                     <lastEnergyChart screenType="hor" />
                 </div>
             </div>
-            <div class="hor-nowData-content">
+            <div class="hor-nowData-content" style="display:none">
                 <horFloorSpace />
             </div>
         </div>
-
     </div>
 </template>
 <script>
-import hor_big_bg from '@/assets/horImg/hor_big_bg.png';
-import pageHead from './valueDelivery/pageHead.vue'
-import NowData from './valueDelivery/NowData.vue'
-import LastMonth from './valueDelivery/LastMonthData.vue'
-import HorAirSwitch from './valueDelivery/HorAirSwitch.vue'
-import lastSaveEnergy from './valueDelivery/lastSaveEnergy.vue'
-import TemChart from './valueDelivery/TemChart.vue'
-import lastEnergyChart from './valueDelivery/lastEnergyChart.vue'
-import horFloorSpace from './valueDelivery/horFloorSpace.vue'
-
+import hor_big_bg from "@/assets/horImg/hor_big_bg.png";
+import pageHead from "./valueDelivery/pageHead.vue";
+import NowData from "./valueDelivery/NowData.vue";
+import LastMonth from "./valueDelivery/LastMonthData.vue";
+import HorAirSwitch from "./valueDelivery/HorAirSwitch.vue";
+import lastSaveEnergy from "./valueDelivery/lastSaveEnergy.vue";
+import TemChart from "./valueDelivery/TemChart.vue";
+import lastEnergyChart from "./valueDelivery/lastEnergyChart.vue";
+import horFloorSpace from "./valueDelivery/horFloorSpace.vue";
+import { mapState } from "vuex";
 export default {
-    components: { pageHead, NowData, HorAirSwitch, LastMonth, lastSaveEnergy, TemChart, lastEnergyChart, horFloorSpace },
+    components: {
+        pageHead,
+        NowData,
+        HorAirSwitch,
+        LastMonth,
+        lastSaveEnergy,
+        TemChart,
+        lastEnergyChart,
+        horFloorSpace,
+    },
     data() {
         return {
             bgImg: hor_big_bg,
-            lastMonthTotal: require("@/assets/horImg/hor_lastMonthTotal.png")
-
-        }
-    }
-}
+            lastMonthTotal: require("@/assets/horImg/hor_lastMonthTotal.png"),
+        };
+    },
+    computed: {
+        ...mapState({
+            lastAllEnergy: (state) => {
+                //debugger;
+                var lastAllEnergy = state.lastAllEnergy;
+                lastAllEnergy.energyCompare = Number(
+                    (lastAllEnergy.energyCompare * 100).toFixed(0)
+                );
+                return lastAllEnergy;
+            },
+        }),
+    },
+};
 </script>
 <style lang="less" scoped>
 .horizontalScreen {
@@ -179,6 +203,3 @@ export default {
     }
 }
 </style>
-
-
-
