@@ -9,7 +9,7 @@
             </div>
             <div
                 class="hor-nowData-content firstScreen flexBetween"
-                style="display:none"
+                v-show="nowPage == 1"
             >
                 <div class="content-left">
                     <NowData screenType="hor" />
@@ -17,7 +17,7 @@
                         <div class="bottom-left">
                             <HorAirSwitch />
                         </div>
-                        <div class="bottom-right">
+                        <div class="bottom-right" ref="bottomright">
                             <TemChart screenType="hor" />
                         </div>
                     </div>
@@ -26,7 +26,10 @@
                     <LastMonth screenType="hor" />
                 </div>
             </div>
-            <div class="hor-nowData-content secondScreen">
+            <div class="hor-nowData-content" v-show="nowPage == 2">
+                <horFloorSpace />
+            </div>
+            <div class="hor-nowData-content secondScreen" v-show="nowPage == 3">
                 <div class="flexBetween">
                     <div class="left horizontalClass">
                         <div class="head-title">
@@ -41,7 +44,9 @@
                                 <div class="left-content-first">比基准能耗</div>
                                 <div class="left-content-next">
                                     节能<span class="next-num"
-                                        >{{ lastAllEnergy.energyCompare }}%</span
+                                        >{{
+                                            lastAllEnergy.energyCompare
+                                        }}%</span
                                     >
                                 </div>
                                 <div class="left-content-first blue">
@@ -57,9 +62,6 @@
                 <div class="chart-box ">
                     <lastEnergyChart screenType="hor" />
                 </div>
-            </div>
-            <div class="hor-nowData-content" style="display:none">
-                <horFloorSpace />
             </div>
         </div>
     </div>
@@ -90,13 +92,27 @@ export default {
         return {
             bgImg: hor_big_bg,
             lastMonthTotal: require("@/assets/horImg/hor_lastMonthTotal.png"),
+            nowPage: 2,
         };
+    },
+    mounted() {
+       // debugger;
+        // setInterval(() => {
+        //     console.log("horizontalScreen-setInterval", this.nowPage);
+        //     //debugger;
+        //     this.nowPage = this.nowPage + 1;
+        //     if (this.nowPage == 4) {
+        //         this.nowPage = 1;
+        //     }
+        // }, 6000);
     },
     computed: {
         ...mapState({
             lastAllEnergy: (state) => {
                 //debugger;
-                var lastAllEnergy = state.lastAllEnergy;
+                var lastAllEnergy = JSON.parse(
+                    JSON.stringify(state.lastAllEnergy)
+                );
                 lastAllEnergy.energyCompare = Number(
                     (lastAllEnergy.energyCompare * 100).toFixed(0)
                 );

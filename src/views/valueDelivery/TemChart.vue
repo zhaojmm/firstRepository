@@ -14,12 +14,12 @@
                 >℃
             </div>
         </div>
-        <div id="tempChartBox" class="tempChartBox"></div>
+        <div id="tempChartBox" class="tempChartBox" ref="tempChartBox"></div>
     </div>
 </template>
 <script>
 import G2 from "@antv/g2";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 import moment from "moment";
 export default {
     name: "TemChart",
@@ -31,11 +31,9 @@ export default {
             }, //hor 横屏  vert 竖屏
         },
     },
-    created() {
-        console.log("created");
-    },
+    created() {},
     mounted() {
-        console.log("mounted");
+        //console.log("temchart--mounted");
         this.getRealTimeTemp().then((res) => {
             //debugger;
             var cdata = res.data.data || [];
@@ -46,13 +44,19 @@ export default {
                 element.time = hour + ":" + minute;
             });
             this.cInitChart(cdata);
-            this.getWeahter();
+            //this.getWeahter();
         });
     },
     data() {
-        return {
-            temperature: null,
-        };
+        return {};
+    },
+    computed: {
+        ...mapState({
+            temperature: (state) => {
+                var weatherCont = state.weatherCont;
+                return weatherCont.temperature;
+            },
+        }),
     },
     methods: {
         ...mapActions(["getRealTimeTemp"]),
@@ -69,9 +73,16 @@ export default {
             //     { time: "16", type: "温度", temp: 34.5 },
             //     { time: "17", type: "温度", temp: 30.5 },
             // ];
+            //var width = this.$refs.tempChartBox.clientWidth;
+            //debugger;
+            var width =
+                this.screenType === "hor"
+                    ? document.getElementsByTagName("body")[0].offsetWidth - 874
+                    : document.getElementsByTagName("body")[0].offsetWidth - 80;
             var chart = new G2.Chart({
                 container: "tempChartBox",
-                forceFit: true,
+               // forceFit: true,
+                width: width,
                 height: 330,
                 padding: [50, 50, 46, 60],
             });
@@ -117,9 +128,9 @@ export default {
                     // }
                 },
             });
-            chart.tooltip({
-                crosshairs: "y",
-            });
+            // chart.tooltip({
+            //     crosshairs: "y",
+            // });
             chart.legend(false);
             //view1
             // var view1 = chart.view();
@@ -169,8 +180,12 @@ export default {
                 .shape("smooth");
             var lastpoint = cdata[cdata.length - 1];
             const tooltipHtml = `<div style='line-height:22px;color:#fff;background: rgba(35,204,249,0.7);padding:10px 12px;border-radius:5px;'>
-                <div style='font-size:13px;font-weight:400;'>${lastpoint.time}</div>
-                <div style='font-size:12px;font-weight:600;'>室内温度：${lastpoint.temp}℃</div></div>`;
+                <div style='font-size:13px;font-weight:400;'>${
+                    lastpoint.time
+                }</div>
+                <div style='font-size:12px;font-weight:600;'>室内温度：${lastpoint.temp.toFixed(
+                    1
+                )}℃</div></div>`;
             chart.guide().html({
                 position: lastpoint,
                 html: tooltipHtml,
@@ -195,7 +210,7 @@ export default {
             chart.guide().text({
                 // position: ['min', 'max'], // 文本的起始位置，值为原始数据值，支持 callback
                 position: function(xScale, yScale) {
-                    console.log("position", xScale, yScale);
+                    //console.log("position", xScale, yScale);
                     return ["0%", "0%"];
                 },
                 content: "温度/℃", // 显示的文本内容
@@ -210,13 +225,6 @@ export default {
             });
             chart.render();
             return chart;
-        },
-        getWeahter() {
-            this.$axios
-                .get(this.$api.getWeatherCurrent + "?projectId=Pj1101020002")
-                .then((res) => {
-                    this.temperature = res.data.content.temperature;
-                });
         },
     },
 };

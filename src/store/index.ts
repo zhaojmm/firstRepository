@@ -11,6 +11,7 @@ export default new Vuex.Store({
         airCondition: {}, //空调情况
         lastMonthData: [], //上月数据
         lastAllEnergy: {}, //上月所有能耗数据
+        weatherCont: {}, //天气
     },
     mutations: {
         getRealTimeData(state, data) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         getLastAllEnergy(state, data) {
             state.lastAllEnergy = data;
+        },
+        getWeahter(state, data) {
+            state.weatherCont = data;
         },
     },
     actions: {
@@ -64,8 +68,9 @@ export default new Vuex.Store({
                     commit("getLastMonthData", resdata);
                 });
         },
+
         getLastAllEnergy({ state, commit }, data) {
-            //上月所有能耗数据
+            //上月所有能耗数据  上月总能耗 上月节约能耗
             axios
                 .post(api.queryLastAllEnergy, {
                     criteria: {
@@ -73,10 +78,20 @@ export default new Vuex.Store({
                     },
                 })
                 .then((res: any) => {
-                   // debugger;
-                    console.log("getLastAllEnergy", res);
+                    // debugger;
+                    
                     var resdata = res.data.content[0] || {};
                     commit("getLastAllEnergy", resdata);
+                });
+        },
+        getWeahter({ state, commit }, data) {
+            axios
+                .get(api.getWeatherCurrent + "?projectId=Pj1101020002")
+                .then((res: any) => {
+                    //temperature = res.data.content.temperature;
+                    //debugger;
+                    var weatherCont = res.data.content||{};
+                    commit("getWeahter", weatherCont);
                 });
         },
     },

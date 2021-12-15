@@ -10,7 +10,7 @@
         <div class="head-title">
             <span>上月每日能耗</span>
         </div>
-        <div id="lastChartBox" class="lastChartBox"></div>
+        <div id="lastChartBox" class="lastChartBox" ref="lastChartBox"></div>
         <!-- <div id="slider"></div> -->
     </div>
 </template>
@@ -53,11 +53,8 @@ export default {
             }, //hor 横屏  vert 竖屏
         },
     },
-    created() {
-        console.log("created");
-    },
+    created() {},
     mounted() {
-        console.log("mounted");
         this.queryLastDayEnergy();
     },
     data() {
@@ -77,7 +74,7 @@ export default {
                 .endOf("month")
                 .format("YYYYMMDD");
 
-            console.log("start", start);
+            //console.log("start", start);
             this.$axios
                 .post(this.$api.queryLastDayEnergy, {
                     criteria: {
@@ -114,11 +111,9 @@ export default {
                         .subtract(1, "months")
                         .date(12);
                     var end2 = moment().subtract(1, "months");
-                    //debugger;
 
                     // console.log("start", start);
-                    console.log("start", chart);
-                    console.log("start", this.ds);
+
                     // var intervalInt = setInterval(() => {
                     //     start.add(1, "days");
                     //     end.add(1, "days");
@@ -141,31 +136,7 @@ export default {
             // var data = [
             //     { Date: "2021-08-01", type: "订阅数", value: 1300 },
             //     { Date: "2021-08-02", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-03", type: "订阅数", value: 1350 },
-            //     { Date: "2021-08-04", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-05", type: "订阅数", value: 1005 },
-            //     { Date: "2021-08-06", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-07", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-08", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-09", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-10", type: "订阅数", value: 900 },
-            //     { Date: "2021-08-11", type: "订阅数", value: 800 },
-            //     { Date: "2021-08-12", type: "订阅数", value: 970 },
-            //     { Date: "2021-08-13", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-14", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-15", type: "订阅数", value: 1005 },
-            //     { Date: "2021-08-16", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-17", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-18", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-19", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-20", type: "订阅数", value: 900 },
-            //     { Date: "2021-08-21", type: "订阅数", value: 800 },
-            //     { Date: "2021-08-22", type: "订阅数", value: 970 },
-            //     { Date: "2021-08-23", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-24", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-25", type: "订阅数", value: 1005 },
-            //     { Date: "2021-08-26", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-27", type: "订阅数", value: 1100 },
+
             //     { Date: "2021-08-28", type: "订阅数", value: 1100 },
             //     { Date: "2021-08-29", type: "订阅数", value: 1200 },
             //     { Date: "2021-08-30", type: "订阅数", value: 1200 },
@@ -185,9 +156,15 @@ export default {
                     return date <= ds.state.end && date >= ds.state.start;
                 },
             });
+            // var width = this.$refs.lastChartBox.clientWidth;
+            var width =
+                document.getElementsByTagName("body")[0].offsetWidth - 80;
+            // debugger;
+            //console.log("lastenergychart-width", width);
             var chart = new G2.Chart({
                 container: "lastChartBox",
-                forceFit: true,
+                //forceFit: true,
+                width: width,
                 height: this.screenType === "hor" ? 274 : 330,
                 padding: [20, 20, 36, 20],
             });

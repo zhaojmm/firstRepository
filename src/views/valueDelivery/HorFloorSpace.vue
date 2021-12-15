@@ -1,22 +1,6 @@
 <template>
     <div class="floorSpace">
         <div class="leftChange">
-            <!-- <div class="allIndicator">
-                <div
-                    class="eachItem"
-                    v-for="item in allIndicator"
-                    @click="clickIndicator(item)"
-                    v-bind:class="{'select':item.id==selIndicator.id}"
-                ><span>{{item.name}}</span><span class="bar"></span></div>
-            </div>
-            <div class="imageDiv">
-                <img :src="selIndicator.img" />
-            </div>
-            <div class="textCont">
-                平均<span>{{selIndicator.name}}</span><span class="value">234</span><span>
-                    {{selIndicator.unit}}
-                </span>
-            </div> -->
             <div class="allIndicator">
                 <div
                     class="eachItem "
@@ -52,7 +36,7 @@
                         :key="id"
                         v-bind:style="{ width: item.spacewidth + '%' }"
                     >
-                        <div class="space-name" v-bind:style="{backgroundColor:selectColor(childItem.avgValues,selIndicator.id,true)}">{{childItem.localName}}</div>
+                        <div class="space-name" v-bind:style="{backgroundColor:selectColor(childItem.avgValues,selIndicatorId,true)}">{{childItem.localName}}</div>
                     </div>
                 </div>
             </div>
@@ -69,6 +53,7 @@ export default {
     data() {
         return {
             selIndicator: {},      
+            selIndicatorId:'',//为了颜色用
              //              温度
             //  二氧化碳
             //  湿度
@@ -121,7 +106,7 @@ export default {
             // debugger;
             if (newv == oldv) return;
             this.selIndicator = this.allIndicator[newv];
-            this.showFloors =[];
+           // this.showFloors =[];
             //第一屏的参数 第二屏的参数
             var floorparam =
                 this.nowPage == 1
@@ -140,14 +125,13 @@ export default {
             this.nowIndicatorIndex = index;
         },
          queryFs() {
-            //let loadingInstance = Loading.service({ fullscreen: true });
-            var loading = this.$loading({ fullscreen: true });
+            //var loading = this.$loading({ fullscreen: true });
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
                         projectId: "Pj1101020002",
                     },
-                    size: 14,
+                    size: 14,//最多14层
                     page: 1,
                     orders: [
                         {
@@ -157,9 +141,8 @@ export default {
                     ],
                 })
                 .then((res) => {
-                    // loadingInstance.close();
-                    loading.close();
-                    console.log("queryFs", res);
+                   // loading.close();
+                    //console.log("queryFs", res);
                     var allFloor = res.data.content || [];
                     allFloor = allFloor.filter(function(item) {
                         return item.spaceNum > 0;
@@ -180,13 +163,13 @@ export default {
                     var firstMaxSpace = this.floorHandle(firstPageNum); //第一屏 一层最多空间
                     var sendMaxSpace = this.floorHandle(secondPageNum);
                     var firstPageFloors = allFloor.slice(0, firstPageNum); //第一屏 所有楼层
-                    var secondPageFloors = allFloor.slice(firstPageNum);
-
+                    var secondPageFloors = allFloor.slice(firstPageNum);//第二屏 所有楼层
+                    //第一屏的参数 第二屏的参数
                     this.firstPageParams = firstPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
                         obj.projectId = "Pj1101020002";
-                        obj.spaceNum = firstMaxSpace;
+                        obj.spaceNum = firstMaxSpace;//最多空间数
                         return obj;
                     });
 
@@ -197,19 +180,15 @@ export default {
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });
-                    //第一屏的参数 第二屏的参数
-                    // var floorparam =
-                    //     this.nowPage == 1
-                    //         ? this.firstPageParams
-                    //         : this.secondPageParams;
-                    // this.queryParam(floorparam);
+                    
+                
                     this.nowIndicatorIndex=0;
                 }).catch(function(res){
-                    loading.close();
+                   // loading.close();
                 });
         },
         queryParam(floorparam) {
-            var loading = this.$loading({ fullscreen: true });
+            //var loading = this.$loading({ fullscreen: true });
 
             var endTime = moment();
             var startTime = moment().subtract(15, "minutes");//往前取15分钟
@@ -222,8 +201,8 @@ export default {
                     floorparam
                 )
                 .then((res) => {
-                    loading.close();
-                    console.log("queryParam", res);
+                   // loading.close();
+                    //console.log("queryParam", res);
                     var showFloors = res.data.content || [];
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
@@ -239,7 +218,8 @@ export default {
                         ele.spacewidth = 100 / lineNum;
                     });
                     this.showFloors = showFloors;
-                    console.log('showFloors',showFloors);
+                    this.selIndicatorId=this.selIndicator.id;
+                    //console.log('showFloors',showFloors);
                 });
         },
         spaceHandle(spaceNum,floorNum){//返回一层 的每一行 几个房间

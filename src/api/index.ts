@@ -9,5 +9,5 @@ const allApi = files.keys().reduce((con: any, src: string) => {
     }
     return con;
 }, {});
-console.log("con", allApi);
+
 export default allApi;

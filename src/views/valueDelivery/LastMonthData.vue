@@ -95,16 +95,17 @@ export default {
     watch: {
         lastDataArr(newv,oldv) {
             //debugger;
-            console.log('watch-lastDataArr',newv,oldv);
+       
         },
+    },
+    destroyed(){
+        console.log("lastMonthData---destroyed");
     },
     computed: {
         ...mapState({
-            lastDataArr(state) {//state改变调用
+            lastDataArr(state) {//state改变时调用  通过state.lastMonthData的值 生成新的值
                 var statecopu=JSON.parse(JSON.stringify(state))  ;
-                console.log('lastDataArr',statecopu);
-                console.log('lastDataArr-state-realTimeData',state.realTimeData);
-                 console.log('lastDataArr-state',state);
+                //console.log('lastDataArr',statecopu);
                 var lastMonthData = state.lastMonthData;
                 var lastMonthInit = [
                     {

@@ -11,13 +11,14 @@ export default {
     data() {
         return {};
     },
-    created() {
+    created() {//对于两个组件的 接口写在了这里
         this.getAirCondition();//空调数据
-        this.getLastAllEnergy();
+        this.getLastAllEnergy();//上月所有能耗数据  上月总能耗 上月节约能耗
+        this.getWeahter();//获取天气
     },
     components: {},
     methods: {
-        ...mapActions(["getAirCondition","getLastAllEnergy"]),
+        ...mapActions(["getAirCondition","getLastAllEnergy","getWeahter"]),
     },
 };
 </script>

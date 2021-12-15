@@ -55,7 +55,7 @@ export default {
             airStatus: (state) => {
                 //debugger
                  var statecopu=JSON.parse(JSON.stringify(state))  ;
-                console.log('airStatus',statecopu);
+                //console.log('airStatus',statecopu);
 
                 var openRate = state.airCondition.openRate;
                 var astate = openRate ? true : false;

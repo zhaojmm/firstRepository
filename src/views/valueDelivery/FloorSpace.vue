@@ -138,14 +138,13 @@ export default {
             this.nowIndicatorIndex = index;
         },
         queryFs() {
-            //let loadingInstance = Loading.service({ fullscreen: true });
-            var loading = this.$loading({ fullscreen: true });
+           // var loading = this.$loading({ fullscreen: true });
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
                         projectId: "Pj1101020002",
                     },
-                    size: 14,
+                    size: 14,//最多14层
                     page: 1,
                     orders: [
                         {
@@ -154,10 +153,9 @@ export default {
                         },
                     ],
                 })
-                .then((res) => {
-                    // loadingInstance.close();
-                    loading.close();
-                    console.log("queryFs", res);
+                .then((res) => {     
+                    //loading.close();
+              
                     var allFloor = res.data.content || [];
                     allFloor = allFloor.filter(function(item) {
                         return item.spaceNum > 0;
@@ -175,7 +173,7 @@ export default {
                         secondPageNum = Math.floor(allFloorNum / 2);
                     }
 
-                    //this.nowPage = 1; //取第一屏
+                    this.nowPage = 1; //取第一屏
 
                     var firstMaxSpace = this.floorHandle(firstPageNum); //第一屏 一层最多空间
                     var sendMaxSpace = this.floorHandle(secondPageNum);
@@ -198,18 +196,18 @@ export default {
                         return obj;
                     });
                     this.nowIndicatorIndex = 0;
-                    // var floorparam =
-                    //     this.nowPage == 1
-                    //         ? this.firstPageParams
-                    //         : this.secondPageParams;
-                    // this.queryParam(floorparam);
+                    var floorparam =
+                        this.nowPage == 1
+                            ? this.firstPageParams
+                            : this.secondPageParams;
+                    this.queryParam(floorparam);
                 }).catch((res) =>{
-                      loading.close();
+                     // loading.close();
                 });
         },
 
         queryParam(floorparam) {
-            var loading = this.$loading({ fullscreen: true });
+            //var loading = this.$loading({ fullscreen: true });
             //             Tdb 温度
             // CO2 二氧化碳
             // RH 湿度
@@ -228,8 +226,8 @@ export default {
                     floorparam
                 )
                 .then((res) => {
-                    loading.close();
-                    console.log("queryParam", res);
+                    //loading.close();
+                   
                     var showFloors = res.data.content || [];
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
@@ -245,7 +243,7 @@ export default {
                         ele.spacewidth = 100 / lineNum;
                     });
                     this.showFloors = showFloors;
-                    console.log("showFloors", showFloors);
+                   
                 });
         },
         floorHandle(floorNum) {

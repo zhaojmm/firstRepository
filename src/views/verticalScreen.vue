@@ -3,13 +3,14 @@
         <div class="pageHead">
             <pageHead />
         </div>
-        <div style="display:none">
+        <div v-show="nowPage == 1">
             <NowData screenType="ver" />
             <AirSwitchVer />
             <TemChart screenType="ver" />
             <LastMonthData screenType="ver" />
         </div>
-        <div>
+        <FloorSpace v-show="nowPage == 2" />
+        <div v-show="nowPage == 3">
             <div class="lastTotalEnergy verticalClass">
                 <div class="head-title">
                     <span>上月总能耗</span>
@@ -32,7 +33,6 @@
             <lastSaveEnergy screenType="ver" />
             <lastEnergyChart />
         </div>
-        <FloorSpace style="display:none" />
     </div>
 </template>
 <script>
@@ -57,13 +57,28 @@ export default {
         pageHead,
     },
     data() {
-        return {};
+        return {
+            nowPage: 1,
+        };
+    },
+    mounted() {
+        // setInterval(() => {
+        //     console.log("verticalScreen-setInterval", this.nowPage);
+        //     //debugger;
+        //     this.nowPage = this.nowPage + 1;
+        //     if (this.nowPage == 4) {
+        //         this.nowPage = 1;
+        //     }
+        // }, 6000);
     },
     computed: {
         ...mapState({
             lastAllEnergy: (state) => {
-               // debugger;
-                var lastAllEnergy = state.lastAllEnergy;
+                // debugger;
+                var lastAllEnergy = JSON.parse(
+                    JSON.stringify(state.lastAllEnergy)
+                );
+
                 lastAllEnergy.energyCompare = Number(
                     (lastAllEnergy.energyCompare * 100).toFixed(0)
                 );

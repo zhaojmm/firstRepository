@@ -1,10 +1,7 @@
 <template>
     <div class="horHead horSty">
         <div class="horHead-left">
-            <img
-                :src="logo"
-                alt=""
-            >
+            <img :src="logo" alt="" />
         </div>
         <div class="horHead-content">
             <img :src="title" />
@@ -12,29 +9,18 @@
         <div class="horHead-right">
             <div class="right-item">
                 <span class="item-time"> 2021.07.26 11:00</span>
-
             </div>
             <div class="right-item">
-                晴
+                {{ weatherText }}
             </div>
-            <div
-                class="right-item"
-                style="display:none"
-            >
+            <div class="right-item" @click="changeScreen">
                 <img
                     class="firstImg"
-                    :src="changeVer"
+                    :src="nowScreen == 'vertical' ? changeHor : changeVer"
                     alt=""
-                >
-                <img
-                    :src="shrink"
-                    alt=""
-                >
+                />
             </div>
-            <div
-                class="right-item"
-                style="display:none"
-            >
+            <div class="right-item" style="display:none">
                 退出
             </div>
         </div>
@@ -48,15 +34,49 @@ declare function require(img: string): string;
 const persagyLogo = require("@/assets/horImg/persagyLogo.png");
 const title = require("@/assets/horImg/hor_title.png");
 const changeVer = require("@/assets/horImg/changeVer.png");
-const shrink = require("@/assets/horImg/shrink.png");
+const changeHor = require("@/assets/horImg/changeHor.png");
+import { mapState } from "vuex";
 export default Vue.extend({
     data() {
         return {
             logo: persagyLogo,
             title: title,
             changeVer: changeVer,
-            shrink: shrink,
+            changeHor: changeHor,
+            nowScreen: "vertical",
+            // weatherText:''
         };
+    },
+    mounted() {
+        // console.log("route", this.$route);
+        // console.log("router", this.$router);
+        var path = this.$route.path;
+        if (path.indexOf("horizontalScreen")>-1) {
+            this.nowScreen = "horizontal";
+        } else if (path.indexOf("verticalScreen")>-1) {
+            this.nowScreen = "vertical";
+        }
+        
+    },
+    computed: {
+        ...mapState({
+            weatherText(state: any) {
+                //debugger;
+                var text = state.weatherCont.text;
+                return text;
+            },
+        }),
+    },
+    methods: {
+        changeScreen() {
+            if (this.nowScreen == "vertical") {
+                this.nowScreen = "horizontal";
+                this.$router.push({ name: "horizontalScreen" });
+            } else {
+                this.nowScreen = "vertical";
+                this.$router.push({ name: "verticalScreen" });
+            }
+        },
     },
 });
 </script>
@@ -79,7 +99,7 @@ export default Vue.extend({
             display: flex;
             justify-content: center;
             align-items: center;
-
+            cursor: pointer;
             padding: 12px 16px;
             font-size: 16px;
             color: #575271;
@@ -101,4 +121,3 @@ export default Vue.extend({
     }
 }
 </style>
-
