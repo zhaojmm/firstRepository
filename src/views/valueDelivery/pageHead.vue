@@ -62,7 +62,7 @@ export default Vue.extend({
         ...mapState({
             weatherText(state: any) {
                 //debugger;
-                var text = state.weatherCont.text;
+                var text = state.weatherCont.text||'晴';
                 return text;
             },
         }),

@@ -1,6 +1,6 @@
 const { name } = require("./package.json");
 let env = process.env.NODE_ENV.toString();
-console.log('env2',env);
+console.log('env2', env);
 
 module.exports = {
     publicPath: `/sagadaping`, //相对路径
@@ -15,18 +15,32 @@ module.exports = {
         //hotOnly: false,
         proxy: {
             "/daping": {
-               // http://api.sagacloud.cn/duoduo-service/object-service/object/floor/queryFs
-                 target: 'http://api.sagacloud.cn', // 接 口环境
-                // 'target': 'http://192.168.100.236:9910', // 开发环境
+                // http://api.sagacloud.cn/duoduo-service/object-service/object/floor/queryFs
+                //target: 'http://192.168.0.14:52021', // 接 口环境
+                'target': 'http://api.sagacloud.cn/', // 开发环境
                 // target: 'http://test.persagy.com', // 测试环境
                 changeOrigin: true,
                 //logLevel: "debug",
                 pathRewrite: {
-                     '^/daping': 'http://api.sagacloud.cn', // 接口环境
-                    // '^/api': 'http://192.168.100.236:9910', // 开发环境
-                    // '^/api': 'http://test.persagy.com/api' // 测试环境
+                    '^/daping': 'http://api.sagacloud.cn/', // 接口环境
+                    // '^/daping': 'http://192.168.0.14:52015', // 开发环境
+
                 },
             },
+            "/weather": {
+                // http://api.sagacloud.cn/duoduo-service/object-service/object/floor/queryFs
+                // target: 'http://192.168.0.14:52010', // 接 口环境
+                'target': 'https://duoduoenv.sagacloud.cn/', // 开发环境
+                // target: 'http://test.persagy.com', // 测试环境
+                changeOrigin: true,
+                //logLevel: "debug",
+                pathRewrite: {
+                    // '^/daping': 'http://192.168.0.14:52010', // 接口环境
+                    '^/weather': 'https://duoduoenv.sagacloud.cn/', // 开发环境
+
+                },
+            },
+
         },
     },
 };

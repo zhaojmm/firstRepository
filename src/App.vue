@@ -24,14 +24,25 @@ export default {
 </script>
 
 <style lang="less">
+html{
+    height: 100%;
+}
+body{
+    overflow-x: hidden;
+    margin:0;
+    padding:0;
+    height: 100%;
+}
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #f3fdff;
+     height: 100%;
+    // background: #f3fdff;
     //   text-align: center;
     //   color: #2c3e50;
     //   margin-top: 60px;
+  
 }
 @import "/src/assets/css/common.less";
 </style>

@@ -52,15 +52,31 @@ export default {
                 return "ver";
             }, //hor 横屏  vert 竖屏
         },
+        showPing: {
+            type: Number,
+            default: () => {
+                return 0;
+            },
+        },
     },
     created() {},
-    mounted() {
-        this.queryLastDayEnergy();
-    },
+    mounted() {},
     data() {
         return {
             ds: null,
+            lastChart: null,
         };
+    },
+    watch: {
+        showPing(newv, oldv) {
+            if (newv == 3) {
+                if (!this.lastChart) {
+                    this.queryLastDayEnergy();
+                } else {
+                    this.setChartInterval();
+                }
+            }
+        },
     },
     methods: {
         queryLastDayEnergy() {
@@ -103,49 +119,54 @@ export default {
                             item.energyLight
                         ).toFixed(0);
                     });
-                    var chart = this.cInitChart(resdata);
-                    var start = moment()
-                        .subtract(1, "months")
-                        .date(1);
-                    var end = moment()
-                        .subtract(1, "months")
-                        .date(12);
-                    var end2 = moment().subtract(1, "months");
-
-                    // console.log("start", start);
-
-                    // var intervalInt = setInterval(() => {
-                    //     start.add(1, "days");
-                    //     end.add(1, "days");
-                    //     //debugger;
-                    //     console.log("start--", start);
-                    //     console.log("end--", end);
-                    //     this.ds.setState("start", start.format("YYYY-MM-DD"));
-                    //     this.ds.setState("end", end.format("YYYY-MM-DD"));
-
-                    //     if (
-                    //         end.format("YYYY-MM-DD") ==
-                    //         end2.endOf("month").format("YYYY-MM-DD")
-                    //     ) {
-                    //         clearInterval(intervalInt);
-                    //     }
-                    // }, 800);
+                    this.lastChart = this.cInitChart(resdata);
+                    this.setChartInterval();
                 });
+        },
+        setChartInterval() {
+            if (this.screenType == "ver") {
+                //上个月
+                var start = moment()
+                    .subtract(1, "months")
+                    .date(1);
+                var end = moment()
+                    .subtract(1, "months")
+                    .date(12);
+                var end2 = moment().subtract(1, "months");
+                var intervalInt = setInterval(() => {
+                    start.add(1, "days");
+                    end.add(1, "days");
+                    //debugger;
+                    //console.log("start--", chart);
+                    //console.log("end--", _this.ds);
+
+                    this.ds.setState("start", start.format("YYYY-MM-DD"));
+                    this.ds.setState("end", end.format("YYYY-MM-DD"));
+
+                    if (
+                        end.format("YYYY-MM-DD") ==
+                        end2.endOf("month").format("YYYY-MM-DD")
+                    ) {
+                        clearInterval(intervalInt);
+                        this.$emit("donethreepage");
+                    }
+                }, 800);
+            }
         },
         cInitChart(cdata) {
             // var data = [
             //     { Date: "2021-08-01", type: "订阅数", value: 1300 },
-            //     { Date: "2021-08-02", type: "订阅数", value: 1200 },
-
-            //     { Date: "2021-08-28", type: "订阅数", value: 1100 },
-            //     { Date: "2021-08-29", type: "订阅数", value: 1200 },
-            //     { Date: "2021-08-30", type: "订阅数", value: 1200 },
             // ];
-            //debugger;
+
+            if (this.screenType == "hor") {
+                var end = cdata[cdata.length - 1].Date;
+            } else {
+                var end = cdata[11].Date;
+            }
             var ds = new DataSet({
                 state: {
                     start: cdata[0].Date,
-                    end: cdata[11].Date,
+                    end: end,
                 },
             });
             var dv = ds.createView();
@@ -156,11 +177,8 @@ export default {
                     return date <= ds.state.end && date >= ds.state.start;
                 },
             });
-            // var width = this.$refs.lastChartBox.clientWidth;
             var width =
                 document.getElementsByTagName("body")[0].offsetWidth - 80;
-            // debugger;
-            //console.log("lastenergychart-width", width);
             var chart = new G2.Chart({
                 container: "lastChartBox",
                 //forceFit: true,

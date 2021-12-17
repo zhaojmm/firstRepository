@@ -2,14 +2,14 @@
     <div class="airSwitch verticalClass">
         <div class="air-title head-title">
             <span>空调实时开关</span>
-            <span class="status">{{
-                airStatus ? "空调已开启" : "空调已关闭"
-            }}</span>
+            <span class="status" v-bind:class="{ close: !airStatus }">
+                {{ airStatus ? "空调已开启" : "空调已关闭" }}</span
+            >
         </div>
         <div class="air-cont">
             <div class="air-left">
                 <div class="bar-box">
-                    <div class="bar"></div>
+                    <div class="bar" v-bind:style="{width:airValue+'%'}"></div>
                 </div>
                 <div class="air-rate">
                     <span>空调开启率</span>

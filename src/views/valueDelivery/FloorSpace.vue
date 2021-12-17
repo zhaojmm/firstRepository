@@ -45,7 +45,7 @@
                             v-bind:style="{
                                 backgroundColor: selectColor(
                                     childItem.avgValues,
-                                    selIndicator.id,
+                                    selIndicatorId,
                                     true
                                 ),
                             }"
@@ -68,8 +68,8 @@ export default {
     data() {
         return {
             selIndicator: {},
+            selIndicatorId: "", //为了颜色
             nowIndicatorIndex: null, //现在选中的指标 index
-
             allIndicator: [
                 {
                     id: "temp",
@@ -112,39 +112,68 @@ export default {
             firstPageParams: [],
             secondPageParams: [],
             nowPage: 1, //当前哪一屏幕
+            pageNum: 0, //总页数 楼层一共几页
             showFloors: [],
         };
     },
-    watch: {
-        nowIndicatorIndex(newv, oldv) {
-            // debugger;
-            if (newv == oldv) return;
-            this.selIndicator = this.allIndicator[newv];
-            this.showFloors = [];
-            //第一屏的参数 第二屏的参数
-            var floorparam =
-                this.nowPage == 1
-                    ? this.firstPageParams
-                    : this.secondPageParams;
-            this.queryParam(floorparam);
+    props: {
+        showPing: {
+            type: Number,
+            default: () => {
+                return 0;
+            },
         },
     },
-    mounted() {
-        this.queryFs();
+    watch: {
+        showPing(newv, oldv) {
+            //debugger;
+            //当前屏幕第几屏
+            if (newv == 2) {
+                this.nowPage = 1;
+                this.queryFs();
+            }
+        },
     },
+    mounted() {},
     methods: {
         selectColor: selectColor,
         clickIndicator(index) {
             this.nowIndicatorIndex = index;
         },
+        getTimeFloorParam() {
+            //第一屏的参数 第二屏的参数
+            var floorparam =
+                this.nowPage == 1
+                    ? this.firstPageParams
+                    : this.secondPageParams;
+            var _this = this;
+            this.queryParam(floorparam).then(() => {
+                var timeoutsign = setTimeout(() => {
+                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;
+                    if (_this.nowIndicatorIndex == 5) {
+                        if (_this.pageNum == _this.nowPage) {
+                            _this.nowIndicatorIndex = 0;
+                            _this.$emit("donetowpage");
+                            clearTimeout(timeoutsign);
+                            return;
+                        }
+                        if (_this.pageNum == 2 && _this.nowPage == 1) {
+                            _this.nowPage = 2;
+                            _this.nowIndicatorIndex = 0;
+                        }
+                    }
+                    this.getTimeFloorParam();
+                }, 2000);
+            });
+        },
         queryFs() {
-           // var loading = this.$loading({ fullscreen: true });
+            // var loading = this.$loading({ fullscreen: true });
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
                         projectId: "Pj1101020002",
                     },
-                    size: 14,//最多14层
+                    size: 14, //最多14层
                     page: 1,
                     orders: [
                         {
@@ -153,9 +182,9 @@ export default {
                         },
                     ],
                 })
-                .then((res) => {     
+                .then((res) => {
                     //loading.close();
-              
+
                     var allFloor = res.data.content || [];
                     allFloor = allFloor.filter(function(item) {
                         return item.spaceNum > 0;
@@ -168,12 +197,12 @@ export default {
                     if (allFloorNum <= 7) {
                         firstPageNum = allFloorNum;
                         secondPageNum = 0;
+                        this.pageNum = 1;
                     } else {
                         firstPageNum = Math.ceil(allFloorNum / 2);
                         secondPageNum = Math.floor(allFloorNum / 2);
+                        this.pageNum = 2;
                     }
-
-                    this.nowPage = 1; //取第一屏
 
                     var firstMaxSpace = this.floorHandle(firstPageNum); //第一屏 一层最多空间
                     var sendMaxSpace = this.floorHandle(secondPageNum);
@@ -196,13 +225,10 @@ export default {
                         return obj;
                     });
                     this.nowIndicatorIndex = 0;
-                    var floorparam =
-                        this.nowPage == 1
-                            ? this.firstPageParams
-                            : this.secondPageParams;
-                    this.queryParam(floorparam);
-                }).catch((res) =>{
-                     // loading.close();
+                    this.getTimeFloorParam();
+                })
+                .catch((res) => {
+                    // loading.close();
                 });
         },
 
@@ -213,21 +239,23 @@ export default {
             // RH 湿度
             // HCHO甲醛
             // PM2d5 pm2.5
-
+            
             var endTime = moment();
-            var startTime = moment().subtract(15, "minutes");
+            var startTime = moment().subtract(30, "minutes");
             var startStr = startTime.format("YYYYMMDDHHmmss");
             var endStr = endTime.format("YYYYMMDDHHmmss");
-
+            var newv = this.nowIndicatorIndex;
+            //debugger;
+            this.selIndicator = this.allIndicator[newv];
             var param = this.selIndicator.code;
-            this.$axios
+            return this.$axios
                 .post(
                     `${this.$api.queryParam}?endTime=${endStr}&startTime=${startStr}&param=${param}`,
                     floorparam
                 )
                 .then((res) => {
                     //loading.close();
-                   
+
                     var showFloors = res.data.content || [];
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
@@ -243,7 +271,7 @@ export default {
                         ele.spacewidth = 100 / lineNum;
                     });
                     this.showFloors = showFloors;
-                   
+                    this.selIndicatorId = this.selIndicator.id;
                 });
         },
         floorHandle(floorNum) {

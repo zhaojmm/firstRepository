@@ -191,7 +191,8 @@ export default {
                 html: tooltipHtml,
                 alignX: "right",
                 alignY: "bottom",
-                offsetX: 10,
+                offsetX: 60,
+                offsetY: -5,
             });
             chart.guide().text({
                 top: false,

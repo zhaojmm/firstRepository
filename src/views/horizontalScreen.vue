@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="hor-nowData-content" v-show="nowPage == 2">
-                <horFloorSpace />
+                <horFloorSpace :showPing="nowPage" @donetowpage="doneTowPage" />
             </div>
             <div class="hor-nowData-content secondScreen" v-show="nowPage == 3">
                 <div class="flexBetween">
@@ -93,18 +93,34 @@ export default {
             bgImg: hor_big_bg,
             lastMonthTotal: require("@/assets/horImg/hor_lastMonthTotal.png"),
             nowPage: 2,
+            horiInterval: null,
         };
     },
     mounted() {
-       // debugger;
-        // setInterval(() => {
-        //     console.log("horizontalScreen-setInterval", this.nowPage);
-        //     //debugger;
-        //     this.nowPage = this.nowPage + 1;
-        //     if (this.nowPage == 4) {
-        //         this.nowPage = 1;
-        //     }
-        // }, 6000);
+         //this.timePageShow();
+    },
+    methods: {
+        doneTowPage() {
+            //第二屏刷新结束 通知
+            this.nowPage = 3;
+            this.timePageShow();
+        },
+        timePageShow() {
+            var timeoutsign = setTimeout(() => {
+                this.nowPage = this.nowPage + 1;
+                if (this.nowPage == 4) {
+                    this.nowPage = 1;
+                }
+                if (this.nowPage == 2) {
+                    //clearTimeout(timeoutsign);
+                    return;
+                }
+                this.timePageShow();
+            }, 6000);
+        },
+    },
+    destroyed() {
+        clearInterval(this.horiInterval);
     },
     computed: {
         ...mapState({
@@ -125,12 +141,18 @@ export default {
 <style lang="less" scoped>
 .horizontalScreen {
     padding: 30px 40px;
+    min-height: 100%;
+    box-sizing: border-box;
     scrollbar-width: none;
+    position: relative;
     .bg {
         position: absolute;
         top: 0;
         left: 0;
         z-index: -1;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
     }
     .hor-head {
         // padding-top: 32px;

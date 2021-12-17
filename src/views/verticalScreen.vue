@@ -9,7 +9,9 @@
             <TemChart screenType="ver" />
             <LastMonthData screenType="ver" />
         </div>
-        <FloorSpace v-show="nowPage == 2" />
+        <div v-show="nowPage == 2">
+            <FloorSpace :showPing="nowPage" @donetowpage="doneTowPage" />
+        </div>
         <div v-show="nowPage == 3">
             <div class="lastTotalEnergy verticalClass">
                 <div class="head-title">
@@ -31,7 +33,11 @@
                 </div>
             </div>
             <lastSaveEnergy screenType="ver" />
-            <lastEnergyChart />
+            <lastEnergyChart
+                screenType="ver"
+                :showPing="nowPage"
+                @donethreepage="doneThreePage"
+            />
         </div>
     </div>
 </template>
@@ -59,17 +65,14 @@ export default {
     data() {
         return {
             nowPage: 1,
+            verticalInterval: null,
         };
     },
     mounted() {
-        // setInterval(() => {
-        //     console.log("verticalScreen-setInterval", this.nowPage);
-        //     //debugger;
-        //     this.nowPage = this.nowPage + 1;
-        //     if (this.nowPage == 4) {
-        //         this.nowPage = 1;
-        //     }
-        // }, 6000);
+       // this.timePageShow();
+    },
+    destroyed() {
+        clearInterval(this.verticalInterval);
     },
     computed: {
         ...mapState({
@@ -85,6 +88,25 @@ export default {
                 return lastAllEnergy;
             },
         }),
+    },
+    methods: {
+        doneThreePage() {
+            //第三屏刷新结束 通知
+            this.nowPage = 1;
+            this.timePageShow();//1屏变2屏
+        },
+        doneTowPage() {
+            //第二屏刷新结束 通知
+            this.nowPage = 3;
+        },
+        timePageShow() {
+            var timeoutsign = setTimeout(() => {
+                this.nowPage = this.nowPage + 1;
+                if (this.nowPage == 4) {
+                    this.nowPage = 1;
+                }
+            }, 6000);
+        },
     },
 };
 </script>
