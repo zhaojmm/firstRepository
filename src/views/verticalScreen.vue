@@ -6,7 +6,7 @@
         <div v-show="nowPage == 1">
             <NowData screenType="ver" />
             <AirSwitchVer />
-            <TemChart screenType="ver" />
+            <TemChart screenType="ver" :showPing="nowPage"/>
             <LastMonthData screenType="ver" />
         </div>
         <div v-show="nowPage == 2">
@@ -64,12 +64,13 @@ export default {
     },
     data() {
         return {
-            nowPage: 1,
+            nowPage: null,
             verticalInterval: null,
         };
     },
     mounted() {
-       // this.timePageShow();
+        this.nowPage = 1;
+        this.timePageShow();
     },
     destroyed() {
         clearInterval(this.verticalInterval);
@@ -93,7 +94,7 @@ export default {
         doneThreePage() {
             //第三屏刷新结束 通知
             this.nowPage = 1;
-            this.timePageShow();//1屏变2屏
+            this.timePageShow(); //1屏变2屏
         },
         doneTowPage() {
             //第二屏刷新结束 通知

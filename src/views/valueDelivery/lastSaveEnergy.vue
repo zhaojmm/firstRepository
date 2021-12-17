@@ -14,17 +14,19 @@
                     >度
                 </div>
                 <div class="equalTo">相当于</div>
-                <div class="saveCo2">
-                    减排<span>{{ lastAllEnergy.cdmCo2 }}</span
-                    >kg二氧化碳
-                </div>
-                <div class="saveCarbon">
-                    减排<span>{{ lastAllEnergy.cdmC }}</span
-                    >kg碳
-                </div>
-                <div class="plantTree">
-                    为国家种<span>{{ lastAllEnergy.cdmTree }}</span
-                    >棵树
+                <div class="rightCont">
+                    <div class="saveCo2">
+                        减排<span>{{ lastAllEnergy.cdmCo2 }}</span
+                        >kg二氧化碳
+                    </div>
+                    <div class="saveCarbon">
+                        减排<span>{{ lastAllEnergy.cdmC }}</span
+                        >kg碳
+                    </div>
+                    <div class="plantTree">
+                        为国家种<span>{{ lastAllEnergy.cdmTree }}</span
+                        >棵树
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,7 +65,7 @@ export default {
         height: 100%;
     }
     .bottomCont {
-        width: 900px;
+        max-width: 900px;
         margin: 40px auto;
         position: relative;
         img {
@@ -73,45 +75,78 @@ export default {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             box-sizing: border-box;
             // display: flex;
-            // align-items: center;
-            // justify-content: center;
-            // flex-direction: column;
+            // // align-items: center;
+            // // justify-content: center;
+            // flex-direction: row;
             .leftsave {
-                position: absolute;
-                left: 12px;
-                top: 160px;
+                // position: absolute;
+                // left: 12px;
+                // top: 160px;
                 color: #fff;
-                width: 210px;
-                line-height: 34px;
-                text-align: center;
+                width: 25%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                float: left;
+                // width: 210px;
+                // line-height: 34px;
+                // text-align: center;
                 span {
                     font-size: 32px;
                 }
             }
             .equalTo {
-                position: absolute;
-                left: 249px;
-                top: 186px;
+                // position: absolute;
+                // left: 249px;
+                // top: 186px;
+                float: left;
                 font-size: 20px;
+                width: 10%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
-            .saveCo2 {
-                position: absolute;
-                left: 562px;
-                top: 32px;
-            }
-            .saveCarbon {
-                position: absolute;
-                left: 562px;
-                top: 186px;
-            }
-            .plantTree {
-                position: absolute;
-                left: 562px;
-                top: 340px;
+            .rightCont {
+                position: relative;
+                width: 38%;
+                height: 100%;
+                float: right;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .saveCo2 {
+                    // position: absolute;
+                    // left: 562px;
+                    // top: 32px;
+                    height: 22%;
+                    display: flex;
+                    align-items: center;
+                    // justify-content: center;
+                }
+                .saveCarbon {
+                    // position: absolute;
+                    // left: 562px;
+                    // top: 186px;
+                    height: 30%;
+                    display: flex;
+                    align-items: center;
+                    //justify-content: center;
+                }
+                .plantTree {
+                    // position: absolute;
+                    // left: 562px;
+                    // top: 340px;
+                    height: 25%;
+                    display: flex;
+                    align-items: center;
+                    //  justify-content: center;
+                }
             }
         }
     }

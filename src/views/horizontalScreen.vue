@@ -18,7 +18,7 @@
                             <HorAirSwitch />
                         </div>
                         <div class="bottom-right" ref="bottomright">
-                            <TemChart screenType="hor" />
+                            <TemChart screenType="hor" :showPing="nowPage" />
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="chart-box ">
-                    <lastEnergyChart screenType="hor" />
+                    <lastEnergyChart screenType="hor" :showPing="nowPage" />
                 </div>
             </div>
         </div>
@@ -92,16 +92,18 @@ export default {
         return {
             bgImg: hor_big_bg,
             lastMonthTotal: require("@/assets/horImg/hor_lastMonthTotal.png"),
-            nowPage: 2,
+            nowPage: null,
             horiInterval: null,
         };
     },
     mounted() {
-         //this.timePageShow();
+        this.nowPage = 1;
+        this.timePageShow();
     },
     methods: {
         doneTowPage() {
             //第二屏刷新结束 通知
+            //debugger;
             this.nowPage = 3;
             this.timePageShow();
         },
@@ -112,7 +114,7 @@ export default {
                     this.nowPage = 1;
                 }
                 if (this.nowPage == 2) {
-                    //clearTimeout(timeoutsign);
+                    clearTimeout(timeoutsign);
                     return;
                 }
                 this.timePageShow();
@@ -120,7 +122,7 @@ export default {
         },
     },
     destroyed() {
-        clearInterval(this.horiInterval);
+        //clearInterval(this.horiInterval);
     },
     computed: {
         ...mapState({
@@ -158,6 +160,7 @@ export default {
         // padding-top: 32px;
         // display: flex;
         // justify-content: center;
+        margin-bottom: 30px;
     }
     .hor-nowData-content {
         // padding: 30px 36px;

@@ -17,7 +17,7 @@
             </div>
             <div class="textCont">
                 平均<span>{{ selIndicator.name }}</span
-                ><span class="value">234</span
+                ><span class="value">{{ totalAvgValues }}</span
                 ><span>
                     {{ selIndicator.unit }}
                 </span>
@@ -77,6 +77,7 @@ export default {
                     img: require("../../assets/verwendu.png"),
                     unit: "℃",
                     code: "Tdb",
+                    fixed: 1,
                 },
                 {
                     id: "humidity",
@@ -84,6 +85,7 @@ export default {
                     name: "湿度",
                     img: require("../../assets/vershidu.png"),
                     unit: "%",
+                    fixed: 0,
                 },
                 {
                     id: "co2",
@@ -91,6 +93,7 @@ export default {
                     name: "CO₂",
                     img: require("../../assets/verco2.png"),
                     unit: "ppm",
+                    fixed: 0,
                 },
                 {
                     id: "methanal",
@@ -98,6 +101,7 @@ export default {
                     name: "甲醛",
                     img: require("../../assets/verjiaquan.png"),
                     unit: "mg/m³",
+                    fixed: 2,
                 },
                 {
                     id: "pm25",
@@ -105,6 +109,7 @@ export default {
                     name: "PM2.5",
                     img: require("../../assets/verpm25.png"),
                     unit: "ug/m³",
+                    fixed: 0,
                 },
             ],
 
@@ -114,6 +119,7 @@ export default {
             nowPage: 1, //当前哪一屏幕
             pageNum: 0, //总页数 楼层一共几页
             showFloors: [],
+            totalAvgValues: null,
         };
     },
     props: {
@@ -239,7 +245,7 @@ export default {
             // RH 湿度
             // HCHO甲醛
             // PM2d5 pm2.5
-            
+
             var endTime = moment();
             var startTime = moment().subtract(30, "minutes");
             var startStr = startTime.format("YYYYMMDDHHmmss");
@@ -256,7 +262,13 @@ export default {
                 .then((res) => {
                     //loading.close();
 
-                    var showFloors = res.data.content || [];
+                    var showFloors = res.data.data.floors || [];
+                    this.totalAvgValues = res.data.data.avgValues || null;
+                    this.totalAvgValues &&
+                        (this.totalAvgValues = this.totalAvgValues.toFixed(
+                            this.selIndicator.fixed
+                        ));
+
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
                             return item.id == ele.id;

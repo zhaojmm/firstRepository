@@ -62,7 +62,10 @@ export default {
         },
     },
     data() {
-        return {};
+        return {
+            intervalInt: null,
+         
+        };
     },
     watch: {
         // "$store.state.realTimeData"(newv, oldv) {
@@ -72,18 +75,19 @@ export default {
         //     });
         // },
         realDataArr(newv, oldv) {
-           // debugger;
+            // debugger;
         },
     },
     mounted() {
-        // setTimeout(() => {
         this.getRealTimeData(); //实时数据
-        // }, 20000);
+        this.intervalInt = setInterval(() => {
+            this.getRealTimeData(); //实时数据
+        }, 60000);
     },
     computed: {
         ...mapState({
             realDataArr(state) {
-                //debugger;
+                //获取数据realTimeData后的处理
                 var realTimeData = state.realTimeData;
                 var realInit = [
                     {
@@ -94,6 +98,7 @@ export default {
                         //value: 24.5,
                         unit: "℃",
                         level: "low",
+                        fixed: 1,
                     },
                     {
                         id: "humidity",
@@ -103,6 +108,7 @@ export default {
                         // value: 33,
                         unit: "%",
                         level: "middle",
+                        fixed: 0,
                     },
                     {
                         id: "co2",
@@ -112,6 +118,7 @@ export default {
                         // value: 2399,
                         unit: "ppm",
                         level: "low",
+                        fixed: 0,
                     },
                     {
                         id: "methanal",
@@ -121,6 +128,7 @@ export default {
                         // value: 0.12,
                         unit: "mg/m³",
                         level: "low",
+                        fixed: 2,
                     },
                     {
                         id: "pm25",
@@ -130,6 +138,7 @@ export default {
                         // value: 100,
                         unit: "ug/m³",
                         level: "low",
+                        fixed: 0,
                     },
                 ];
                 realInit.forEach((item) => {
@@ -137,12 +146,18 @@ export default {
                         return ele.code == item.code;
                     });
                     var value = (filterRes[0] || {}).data;
-                    item.value = value ? Number(value.toFixed(1)) : value;
+                    item.value = value
+                        ? Number(value.toFixed(item.fixed))
+                        : value;
                 });
 
                 return realInit;
             },
         }),
+    },
+    destroyed() {
+        console.log('nowdata-destory');
+        clearInterval(this.intervalInt);
     },
     methods: {
         ...mapActions(["getRealTimeData"]),

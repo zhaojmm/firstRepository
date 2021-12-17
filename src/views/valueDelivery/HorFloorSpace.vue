@@ -12,7 +12,7 @@
                     <div
                         class="textCont"
                         v-show="item.id==selIndicator.id"
-                    >22{{selIndicator.unit}}<br /><span class="name">平均{{selIndicator.name}}</span></div>
+                    >{{totalAvgValues}}{{selIndicator.unit}}<br /><span class="name">平均{{selIndicator.name}}</span></div>
                     <img
                         v-show="item.id==selIndicator.id"
                         class="img"
@@ -65,32 +65,37 @@ export default {
                 code:'Tdb',
                 name: '温度',
                 img: require('../../assets/horImg/wendu.png'),
-                unit: '℃'
+                unit: '℃',
+                fixed:1
             }, {
                 id: 'humidity',
                 code:'RH',
                 name: '湿度',
                 img: require('../../assets/horImg/shidu.png'),
-                unit: '%'
+                unit: '%',
+                fixed:0
             }, {
                 id: 'co2',
                 code:'CO2',
                 name: 'CO₂',
                 img: require('../../assets/horImg/co2.png'),
-                unit: 'ppm'
+                unit: 'ppm',
+                fixed:0
             }, {
                 id: 'methanal',
                 code:'HCHO',
                 name: '甲醛',
                 img: require('../../assets/horImg/jiaquan.png'),
-                unit: 'mg/m³'
+                unit: 'mg/m³',
+                fixed:2
 
             }, {
                 id: 'pm25',
                 code:'PM2d5',
                 name: 'PM2.5',
                 img: require('../../assets/horImg/pm25.png'),
-                unit: 'ug/m³'
+                unit: 'ug/m³',
+                fixed:0
             }],
 
             allFloor: [],
@@ -99,6 +104,7 @@ export default {
             nowPage: 1, //当前哪一屏幕
             pageNum:0,
             showFloors: [],
+            totalAvgValues:null
         }
     },
     props: {
@@ -111,7 +117,7 @@ export default {
     },
     watch:{
         showPing(newv,oldv){
-           debugger;
+          // debugger;
             if(newv==2){
                    this.nowPage = 1;
                    this.queryFs();
@@ -119,7 +125,7 @@ export default {
         }
     },
     mounted() {
-        
+   
     },
     destroyed(){
         console.log("horfloorspace---destroyed");
@@ -240,7 +246,9 @@ export default {
                 .then((res) => {
                    // loading.close();
                     //console.log("queryParam", res);
-                    var showFloors = res.data.content || [];
+                    var showFloors = res.data.data.floors || [];
+                    this.totalAvgValues = res.data.data.avgValues || null;
+                    this.totalAvgValues&&(this.totalAvgValues=this.totalAvgValues.toFixed(this.selIndicator.fixed));
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
                             return item.id == ele.id;

@@ -11,38 +11,44 @@ export default {
     data() {
         return {};
     },
-    created() {//对于两个组件的 接口写在了这里
-        this.getAirCondition();//空调数据
-        this.getLastAllEnergy();//上月所有能耗数据  上月总能耗 上月节约能耗
-        this.getWeahter();//获取天气
+    created() {
+        //对于两个组件的 接口写在了这里
+        setInterval(() => {
+            this.getAirCondition(); //空调数据
+        }, 60000);
+        this.getAirCondition(); //空调数据
+        this.getLastAllEnergy(); //上月所有能耗数据  上月总能耗 上月节约能耗
+        this.getWeahter(); //获取天气
+    },
+     destroyed() {
+        console.log("app---destroyed");
     },
     components: {},
     methods: {
-        ...mapActions(["getAirCondition","getLastAllEnergy","getWeahter"]),
+        ...mapActions(["getAirCondition", "getLastAllEnergy", "getWeahter"]),
     },
 };
 </script>
 
 <style lang="less">
-html{
+html {
     height: 100%;
 }
-body{
+body {
     overflow-x: hidden;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     height: 100%;
 }
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-     height: 100%;
+    height: 100%;
     // background: #f3fdff;
     //   text-align: center;
     //   color: #2c3e50;
     //   margin-top: 60px;
-  
 }
 @import "/src/assets/css/common.less";
 </style>

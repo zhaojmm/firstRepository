@@ -8,7 +8,7 @@
         </div>
         <div class="horHead-right">
             <div class="right-item">
-                <span class="item-time"> 2021.07.26 11:00</span>
+                <span class="item-time">{{ nowstr }}</span>
             </div>
             <div class="right-item">
                 {{ weatherText }}
@@ -36,6 +36,7 @@ const title = require("@/assets/horImg/hor_title.png");
 const changeVer = require("@/assets/horImg/changeVer.png");
 const changeHor = require("@/assets/horImg/changeHor.png");
 import { mapState } from "vuex";
+import moment from "moment";
 export default Vue.extend({
     data() {
         return {
@@ -44,6 +45,7 @@ export default Vue.extend({
             changeVer: changeVer,
             changeHor: changeHor,
             nowScreen: "vertical",
+            nowstr: "",
             // weatherText:''
         };
     },
@@ -51,18 +53,21 @@ export default Vue.extend({
         // console.log("route", this.$route);
         // console.log("router", this.$router);
         var path = this.$route.path;
-        if (path.indexOf("horizontalScreen")>-1) {
+        if (path.indexOf("horizontalScreen") > -1) {
             this.nowScreen = "horizontal";
-        } else if (path.indexOf("verticalScreen")>-1) {
+        } else if (path.indexOf("verticalScreen") > -1) {
             this.nowScreen = "vertical";
         }
-        
+        this.nowstr = moment().format("YYYY.MM.DD HH:mm");
+        setInterval(() => {
+            this.nowstr = moment().format("YYYY.MM.DD HH:mm");
+        }, 60000);
     },
     computed: {
         ...mapState({
             weatherText(state: any) {
                 //debugger;
-                var text = state.weatherCont.text||'晴';
+                var text = state.weatherCont.text || "晴";
                 return text;
             },
         }),

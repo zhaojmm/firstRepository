@@ -93,18 +93,18 @@ export default {
         this.getLastMonthData();
     },
     watch: {
-        lastDataArr(newv,oldv) {
+        lastDataArr(newv, oldv) {
             //debugger;
-       
         },
     },
-    destroyed(){
-        console.log("lastMonthData---destroyed");
+    destroyed() {
+       // console.log("lastMonthData---destroyed");
     },
     computed: {
         ...mapState({
-            lastDataArr(state) {//state改变时调用  通过state.lastMonthData的值 生成新的值
-                var statecopu=JSON.parse(JSON.stringify(state))  ;
+            lastDataArr(state) {
+                //state改变时调用  通过state.lastMonthData的值 生成新的值
+                var statecopu = JSON.parse(JSON.stringify(state));
                 //console.log('lastDataArr',statecopu);
                 var lastMonthData = state.lastMonthData;
                 var lastMonthInit = [
@@ -116,18 +116,19 @@ export default {
                         maxName: "最高温",
                         minName: "最低温",
                         img: icon_temp,
+                        fixed: 1,
                     },
                     {
                         id: "humidity",
                         name: "湿度",
                         code: "RH",
-                        value: 100,
                         unit: "%",
                         maxName: "最大值",
                         max: 50,
                         minName: "最小值",
                         min: 20,
                         img: icon_humidity,
+                        fixed: 0,
                     },
                     {
                         id: "co2",
@@ -140,6 +141,7 @@ export default {
                         minName: "最小值",
                         min: 300,
                         img: icon_CO2,
+                        fixed: 0,
                     },
                     {
                         id: "methanal",
@@ -152,6 +154,7 @@ export default {
                         minName: "最小值",
                         min: 0.07,
                         img: icon_formaldehyde,
+                        fixed: 2,
                     },
                     {
                         id: "pm25",
@@ -166,6 +169,7 @@ export default {
                         minName: "最小值",
                         min: 20,
                         img: icon_PM2d5,
+                        fixed: 0,
                     },
                 ];
                 lastMonthInit.forEach((item) => {
@@ -174,10 +178,14 @@ export default {
                     });
                     var filterObj = filterRes[0] || {};
                     item.value = filterObj.avgData
-                        ? Number(filterObj.avgData.toFixed(1))
+                        ? Number(filterObj.avgData.toFixed(item.fixed))
                         : filterObj.avgData;
-                    item.max = filterObj.maxData;
-                    item.min = filterObj.minData;
+                    item.max = filterObj.maxData
+                        ? Number(filterObj.maxData.toFixed(item.fixed))
+                        : filterObj.maxData;
+                    item.min = filterObj.minData
+                        ? Number(filterObj.minData.toFixed(item.fixed))
+                        : filterObj.minData;
                 });
                 return lastMonthInit;
             },

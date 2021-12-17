@@ -69,6 +69,7 @@ export default {
     },
     watch: {
         showPing(newv, oldv) {
+            // debugger;
             if (newv == 3) {
                 if (!this.lastChart) {
                     this.queryLastDayEnergy();

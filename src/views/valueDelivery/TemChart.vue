@@ -30,25 +30,39 @@ export default {
                 return "ver";
             }, //hor 横屏  vert 竖屏
         },
+        showPing: {
+            type: Number,
+            default: () => {
+                return 0;
+            },
+        },
     },
     created() {},
     mounted() {
         //console.log("temchart--mounted");
-        this.getRealTimeTemp().then((res) => {
-            //debugger;
-            var cdata = res.data.data || [];
-            cdata.forEach((element) => {
-                var timestr = element.time;
-                var hour = timestr.substr(8, 2);
-                var minute = timestr.substr(10, 2);
-                element.time = hour + ":" + minute;
-            });
-            this.cInitChart(cdata);
-            //this.getWeahter();
-        });
     },
     data() {
-        return {};
+        return {
+            tempChart: null,
+        };
+    },
+    watch: {
+        showPing(newv, oldv) {
+            //debugger;
+            if (newv == 1) {
+                this.getRealTimeTemp().then((res) => {
+                    var cdata = res.data.data || [];
+                    cdata.forEach((element) => {
+                        var timestr = element.time;
+                        var hour = timestr.substr(8, 2);
+                        var minute = timestr.substr(10, 2);
+                        element.time = hour + ":" + minute;
+                    });
+
+                    this.tempChart = this.cInitChart(cdata);
+                });
+            }
+        },
     },
     computed: {
         ...mapState({
@@ -79,13 +93,19 @@ export default {
                 this.screenType === "hor"
                     ? document.getElementsByTagName("body")[0].offsetWidth - 874
                     : document.getElementsByTagName("body")[0].offsetWidth - 80;
-            var chart = new G2.Chart({
-                container: "tempChartBox",
-               // forceFit: true,
-                width: width,
-                height: 330,
-                padding: [50, 50, 46, 60],
-            });
+            if (this.tempChart) {
+                this.tempChart.clear();
+                var chart = this.tempChart;
+            } else {
+                var chart = new G2.Chart({
+                    container: "tempChartBox",
+                    // forceFit: true,
+                    width: width,
+                    height: 330,
+                    padding: [50, 50, 46, 60],
+                });
+            }
+
             chart.source(cdata);
 
             chart.scale("time", {
@@ -160,9 +180,8 @@ export default {
                     stroke: "#ffffff",
                     shadowColor: "#23CCF9",
                     shadowBlur: (val) => {
-                        var nowtime = moment();
-                        var timestr = nowtime.format("HH") + ":00";
-                        if (val && val == timestr) {
+                        //debugger;
+                        if (val && val == cdata[cdata.length - 1].time) {
                             return 3;
                         } else {
                             return 0;
@@ -179,11 +198,13 @@ export default {
                 .tooltip(false)
                 .shape("smooth");
             var lastpoint = cdata[cdata.length - 1];
+            var nowtime = moment();
+            var timestr = nowtime.format("YYYY.MM.DD");
             const tooltipHtml = `<div style='line-height:22px;color:#fff;background: rgba(35,204,249,0.7);padding:10px 12px;border-radius:5px;'>
-                <div style='font-size:13px;font-weight:400;'>${
-                    lastpoint.time
-                }</div>
-                <div style='font-size:12px;font-weight:600;'>室内温度：${lastpoint.temp.toFixed(
+                <div style='font-size:13px;font-weight:600;'><span style='margin-right:5px'>${timestr}</span>${
+                lastpoint.time
+            }</div>
+                <div style='font-size:15px;font-weight:600;'>室内温度：${lastpoint.temp.toFixed(
                     1
                 )}℃</div></div>`;
             chart.guide().html({
