@@ -20,7 +20,7 @@
 <script lang="ts">
 import Vue from "vue";
 import pageHead from "./valueDelivery/pageHead.vue";
-import HorFloorSpace from "./valueDelivery/horFloorSpace.vue";
+import HorFloorSpace from "./valueDelivery/HorFloorSpace.vue";
 declare function require(img: string): string;
 const hor_big_bg = require("@/assets/horImg/hor_big_bg.png");
 

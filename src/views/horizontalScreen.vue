@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="hor-nowData-content" v-show="nowPage == 2">
-                <horFloorSpace :showPing="nowPage" @donetowpage="doneTowPage" />
+                <HorFloorSpace :showPing="nowPage" @donetowpage="doneTowPage" />
             </div>
             <div class="hor-nowData-content secondScreen" v-show="nowPage == 3">
                 <div class="flexBetween">
@@ -75,7 +75,7 @@ import HorAirSwitch from "./valueDelivery/HorAirSwitch.vue";
 import lastSaveEnergy from "./valueDelivery/lastSaveEnergy.vue";
 import TemChart from "./valueDelivery/TemChart.vue";
 import lastEnergyChart from "./valueDelivery/lastEnergyChart.vue";
-import horFloorSpace from "./valueDelivery/horFloorSpace.vue";
+import HorFloorSpace from "./valueDelivery/HorFloorSpace.vue";
 import { mapState } from "vuex";
 export default {
     components: {
@@ -86,7 +86,7 @@ export default {
         lastSaveEnergy,
         TemChart,
         lastEnergyChart,
-        horFloorSpace,
+        HorFloorSpace,
     },
     data() {
         return {
