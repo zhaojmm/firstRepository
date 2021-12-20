@@ -40,6 +40,9 @@ export default {
     created() {},
     mounted() {
         //console.log("temchart--mounted");
+        window.onresize = () => {
+            console.log("resize");
+        };
     },
     data() {
         return {
@@ -204,7 +207,7 @@ export default {
                 <div style='font-size:13px;font-weight:600;'><span style='margin-right:5px'>${timestr}</span>${
                 lastpoint.time
             }</div>
-                <div style='font-size:15px;font-weight:600;'>室内温度：${lastpoint.temp.toFixed(
+                <div style='font-size:16px;font-weight:600;'>室内温度：${lastpoint.temp.toFixed(
                     1
                 )}℃</div></div>`;
             chart.guide().html({

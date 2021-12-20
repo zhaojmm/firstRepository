@@ -222,7 +222,11 @@ export default {
                 },
                 tickLine: null,
             });
-            chart.axis("value", false);
+            chart.axis("value", {
+                line: null,
+                tickline:null,
+                label:null
+            });
 
             chart.legend(false);
 

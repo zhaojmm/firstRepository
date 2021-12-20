@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="floorCont">
         <div class="topChange">
             <div class="allIndicator">
                 <div
@@ -169,7 +169,7 @@ export default {
                         }
                     }
                     this.getTimeFloorParam();
-                }, 2000);
+                }, 200000);
             });
         },
         queryFs() {
@@ -322,11 +322,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.floorCont {
+    border-radius: 16px;
+    overflow: hidden;
+}
 .topChange {
     height: 194px;
     // width: 1000px;
     margin: 0 auto;
     background: #ffffff;
+
     .allIndicator {
         padding-top: 32px;
         padding-bottom: 20px;
@@ -375,6 +380,8 @@ export default {
     // width: 1000px;
     margin: 0 auto;
     background: #ffffff;
+    padding-right: 16px;
+    box-sizing: border-box;
     .floor-item {
         display: flex;
         padding: 18px 0;

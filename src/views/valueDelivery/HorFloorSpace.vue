@@ -144,7 +144,7 @@ export default {
             var _this = this;
             this.queryParam(floorparam).then(() => {
                 var timeoutsign = setTimeout(() => {
-                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;
+                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;//
                     if (_this.nowIndicatorIndex == 5) {
                         //debugger;
                          if (_this.pageNum == _this.nowPage) {
@@ -329,6 +329,7 @@ export default {
     width: 100%;
     // height: 910px;
     display: flex;
+   
 }
 .leftChange {
     height: 100%;
@@ -336,6 +337,8 @@ export default {
     margin: 0 auto;
     min-height: 700px;
     background: #ffffff;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
     .allIndicator {
         padding-top: 32px;
         padding-bottom: 20px;
@@ -423,6 +426,10 @@ export default {
     flex: 1;
     margin: 0 auto;
     background: #ffffff;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    padding-right:20px;
+    box-sizing: border-box;
     .floor-item {
         display: flex;
         padding: 18px 0;

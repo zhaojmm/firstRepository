@@ -98,7 +98,7 @@ export default {
         },
     },
     destroyed() {
-       // console.log("lastMonthData---destroyed");
+        // console.log("lastMonthData---destroyed");
     },
     computed: {
         ...mapState({
@@ -248,8 +248,13 @@ export default {
                 margin-right: 8px;
             }
         }
-        .min {
-            padding-top: 8px;
+        .item-content-right {
+            font-size: 14px;
+            white-space: nowrap;
+            color:#575271;
+            .min {
+                padding-top: 8px;
+            }
         }
     }
 }
@@ -266,6 +271,7 @@ export default {
             // justify-content: center;
             .item-content-right {
                 font-size: 14px;
+                white-space: nowrap;
             }
         }
     }

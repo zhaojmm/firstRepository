@@ -112,7 +112,7 @@ export default {
                     },
                     {
                         id: "co2",
-                        name: "CO2",
+                        name: "CO₂",
                         code: "CO2",
                         img: icon_CO2,
                         // value: 2399,
@@ -218,6 +218,7 @@ export default {
                 font-size: 24px;
                 font-weight: 400;
                 line-height: 34px;
+                color:#575271;
             }
         }
     }

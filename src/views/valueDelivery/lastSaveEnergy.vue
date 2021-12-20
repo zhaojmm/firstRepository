@@ -10,8 +10,11 @@
             <img src="@/assets/save_energy.png" />
             <div class="showData">
                 <div class="leftsave">
-                    节约电<br /><span>{{ lastAllEnergy.energySaving }}</span
-                    >度
+                    <div class="firstline">节约电</div>
+                    <div class="secondline">
+                        <span class="value">{{ lastAllEnergy.energySaving }}</span
+                        ><span class="unit">度</span>
+                    </div>
                 </div>
                 <div class="equalTo">相当于</div>
                 <div class="rightCont">
@@ -87,16 +90,18 @@ export default {
                 // left: 12px;
                 // top: 160px;
                 color: #fff;
-                width: 25%;
+                width: 26%;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 float: left;
+                flex-direction: column;
+                font-size:24px;
                 // width: 210px;
                 // line-height: 34px;
                 // text-align: center;
-                span {
+                .value {
                     font-size: 32px;
                 }
             }
@@ -106,11 +111,12 @@ export default {
                 // top: 186px;
                 float: left;
                 font-size: 20px;
-                width: 10%;
+                width: 12%;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                white-space: nowrap;
             }
             .rightCont {
                 position: relative;
@@ -127,6 +133,7 @@ export default {
                     height: 22%;
                     display: flex;
                     align-items: center;
+                    white-space: nowrap;
                     // justify-content: center;
                 }
                 .saveCarbon {
@@ -136,6 +143,7 @@ export default {
                     height: 30%;
                     display: flex;
                     align-items: center;
+                    white-space: nowrap;
                     //justify-content: center;
                 }
                 .plantTree {
@@ -145,6 +153,7 @@ export default {
                     height: 25%;
                     display: flex;
                     align-items: center;
+                    white-space: nowrap;
                     //  justify-content: center;
                 }
             }

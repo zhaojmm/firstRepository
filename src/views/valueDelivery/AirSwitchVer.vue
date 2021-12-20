@@ -121,7 +121,9 @@ export default {
                 height: 40px;
                 align-items: center;
                 margin-top: 14px;
+                color: #575271;
                 .air-rate-value {
+                    color: #3b3558;
                     font-size: 32px;
                     padding-left: 8px;
                 }
@@ -129,9 +131,11 @@ export default {
         }
         .air-bg {
             flex: 1;
+            padding-top: 6px;
             img {
                 width: 240px;
             }
+            
         }
     }
 }

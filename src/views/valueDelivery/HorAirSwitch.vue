@@ -6,7 +6,7 @@
         <div class="air-status" v-bind:class="{ close: !airStatus }">
             <span>{{ airStatus ? "空调已开启" : "空调已关闭" }}</span>
         </div>
-        <div class="air-bg">
+        <div class="air-bg" v-bind:class="{close: !airStatus}">
             <img :src="[airStatus ? img.openImg : img.closeImg]" />
         </div>
         <div class="air-rate">
@@ -96,17 +96,21 @@ export default {
         height: 250px;
         box-sizing: border-box;
         text-align: center;
+        &.close{
+            padding-top:41px;
+        }
     }
     .air-rate {
         font-weight: 400;
         line-height: 20px;
         color: #575271;
+        font-size:14px;
         .air-rate-value {
             color: #3b3558;
             font-family: Persagy;
             font-size: 20px;
             font-weight: 700;
-            line-height: 24px;
+            padding-left:5px;
         }
     }
 }
