@@ -61,7 +61,7 @@ export default Vue.extend({
         this.nowstr = moment().format("YYYY.MM.DD HH:mm");
         setInterval(() => {
             this.nowstr = moment().format("YYYY.MM.DD HH:mm");
-        }, 60000);
+        }, 5000);
     },
     computed: {
         ...mapState({
