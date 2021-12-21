@@ -69,8 +69,8 @@ export default {
         };
     },
     mounted() {
-        this.nowPage = 2;
-       // this.timePageShow();
+        this.nowPage = 1;
+        this.timePageShow();
     },
     destroyed() {
         clearInterval(this.verticalInterval);

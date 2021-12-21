@@ -170,7 +170,7 @@ export default {
                         }
                     }
                     this.getTimeFloorParam();
-                }, 200000);
+                }, 2000);
             });
         },
         queryFs() {
