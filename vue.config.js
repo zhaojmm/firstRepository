@@ -3,8 +3,8 @@ let env = process.env.NODE_ENV.toString();
 console.log('env2', env);
 
 module.exports = {
-    publicPath: `/sagadaping`, //相对路径
-    outputDir: name, //打包名称
+    publicPath: '/sgshow', //相对路径
+    outputDir: 'sgshow', //打包名称
     assetsDir: "static", //静态目录
     lintOnSave: false, //关闭lint代码
     productionSourceMap: false, // 生产环境是否开启sourceMap
