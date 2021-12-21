@@ -19,15 +19,15 @@
                 <div class="equalTo">相当于</div>
                 <div class="rightCont">
                     <div class="saveCo2">
-                        减排<span>{{ lastAllEnergy.cdmCo2 }}</span
+                        减排<span class="value">{{ lastAllEnergy.cdmCo2 }}</span
                         >kg二氧化碳
                     </div>
                     <div class="saveCarbon">
-                        减排<span>{{ lastAllEnergy.cdmC }}</span
+                        减排<span class="value">{{ lastAllEnergy.cdmC }}</span
                         >kg碳
                     </div>
                     <div class="plantTree">
-                        为国家种<span>{{ lastAllEnergy.cdmTree }}</span
+                        为国家种<span class="value">{{ lastAllEnergy.cdmTree }}</span
                         >棵树
                     </div>
                 </div>
@@ -85,6 +85,9 @@ export default {
             // // align-items: center;
             // // justify-content: center;
             // flex-direction: row;
+            .value{
+                font-family: Persagy;
+            }
             .leftsave {
                 // position: absolute;
                 // left: 12px;

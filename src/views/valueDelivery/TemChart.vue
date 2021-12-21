@@ -19,8 +19,9 @@
 </template>
 <script>
 import G2 from "@antv/g2";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import moment from "moment";
+
 export default {
     name: "TemChart",
     props: {
@@ -40,19 +41,18 @@ export default {
     created() {},
     mounted() {
         //console.log("temchart--mounted");
-        window.onresize = () => {
-            console.log("resize");
-        };
     },
     data() {
         return {
             tempChart: null,
+            timesign: null,
         };
     },
     watch: {
         showPing(newv, oldv) {
             //debugger;
             if (newv == 1) {
+                //如果当前切成第一屏幕 渲染chart图
                 this.getRealTimeTemp().then((res) => {
                     var cdata = res.data.data || [];
                     cdata.forEach((element) => {
@@ -61,10 +61,23 @@ export default {
                         var minute = timestr.substr(10, 2);
                         element.time = hour + ":" + minute;
                     });
-
                     this.tempChart = this.cInitChart(cdata);
                 });
             }
+        },
+        getBodyWidthHeight(newv, oldv) {
+            clearTimeout(this.timesign);
+            this.timesign = setTimeout(() => {
+                var width =
+                    this.screenType === "hor"
+                        ? document.getElementsByTagName("body")[0].offsetWidth -
+                          874
+                        : document.getElementsByTagName("body")[0].offsetWidth -
+                          80;
+                this.showPing == 1 &&
+                    this.tempChart &&
+                    this.tempChart.changeSize(width, 330);
+            }, 300);
         },
     },
     computed: {
@@ -74,6 +87,7 @@ export default {
                 return weatherCont.temperature;
             },
         }),
+        ...mapGetters(["getBodyWidthHeight"]),
     },
     methods: {
         ...mapActions(["getRealTimeTemp"]),

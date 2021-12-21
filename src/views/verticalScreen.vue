@@ -82,7 +82,6 @@ export default {
                 var lastAllEnergy = JSON.parse(
                     JSON.stringify(state.lastAllEnergy)
                 );
-
                 lastAllEnergy.energyCompare = Number(
                     (lastAllEnergy.energyCompare * 100).toFixed(0)
                 );
@@ -112,7 +111,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "/src/assets/css/common.less";
 .verticalWrap {
     background: #f3fdff;
     padding: 50px 40px 100px;

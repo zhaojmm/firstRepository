@@ -117,7 +117,7 @@ export default {
     },
     watch:{
         showPing(newv,oldv){
-          // debugger;
+            //当前展示为第二屏时
             if(newv==2){
                    this.nowPage = 1;
                    this.queryFs();
@@ -144,7 +144,7 @@ export default {
             var _this = this;
             this.queryParam(floorparam).then(() => {
                 var timeoutsign = setTimeout(() => {
-                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;//
+                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;//湿度等指标的轮询变化
                     if (_this.nowIndicatorIndex == 5) {
                         //debugger;
                          if (_this.pageNum == _this.nowPage) {
@@ -160,7 +160,7 @@ export default {
                        
                     }
                     this.getTimeFloorParam();
-                }, 2000);
+                }, 200000);
             });
         },
         queryFs() {

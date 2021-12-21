@@ -97,8 +97,8 @@ export default {
         };
     },
     mounted() {
-        this.nowPage = 1;
-        this.timePageShow();
+        this.nowPage =2;
+        //this.timePageShow();
     },
     methods: {
         doneTowPage() {
@@ -227,6 +227,7 @@ export default {
                         font-size: 48px;
                         font-weight: 700;
                         line-height: 58px;
+                        font-size:Persagy;
                     }
                 }
             }

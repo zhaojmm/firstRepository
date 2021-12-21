@@ -12,8 +12,22 @@ export default new Vuex.Store({
         lastMonthData: [], //上月数据
         lastAllEnergy: {}, //上月所有能耗数据
         weatherCont: {}, //天气
+        bodyWidth:null,
+        bodyHeight:null,
+    },
+    getters:{
+        getBodyWidthHeight(state){
+            return [state.bodyWidth,state.bodyHeight]
+        }
     },
     mutations: {
+        setBodyWidth(state,width){
+           // debugger;
+            state.bodyWidth=width;
+        },
+        setBodyHeight(state,height){
+            state.bodyHeight=height;
+        },
         getRealTimeData(state, data) {
             //debugger;
             state.realTimeData = data;

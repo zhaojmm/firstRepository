@@ -18,6 +18,7 @@
 import G2 from "@antv/g2";
 import DataSet from "@antv/data-set";
 import moment from "moment";
+import { mapGetters } from "vuex";
 
 // 自定义 shape, 支持图片形式的气泡
 G2.Shape.registerShape("interval", "borderRadius", {
@@ -60,16 +61,23 @@ export default {
         },
     },
     created() {},
-    mounted() {},
+    mounted() {
+        // window.onresize = () => {
+        // };
+    },
+    computed: {
+        ...mapGetters(["getBodyWidthHeight"]),
+    },
     data() {
         return {
             ds: null,
             lastChart: null,
+            time: null,
         };
     },
     watch: {
         showPing(newv, oldv) {
-            // debugger;
+            // debugger; 当前是第三屏时渲染
             if (newv == 3) {
                 if (!this.lastChart) {
                     this.queryLastDayEnergy();
@@ -77,6 +85,18 @@ export default {
                     this.setChartInterval();
                 }
             }
+        },
+        getBodyWidthHeight(newv, oldv) {
+            clearTimeout(this.time);
+            this.time = setTimeout(() => {
+               // console.log("resize-over");
+                var width =
+                    document.getElementsByTagName("body")[0].offsetWidth - 80;
+                var height = this.screenType === "hor" ? 274 : 330;
+                this.showPing == 3 &&
+                    this.lastChart &&
+                    this.lastChart.changeSize(width, height);
+            }, 300);
         },
     },
     methods: {
@@ -224,8 +244,8 @@ export default {
             });
             chart.axis("value", {
                 line: null,
-                tickline:null,
-                label:null
+                tickline: null,
+                label: null,
             });
 
             chart.legend(false);

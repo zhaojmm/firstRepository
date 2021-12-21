@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
     data() {
@@ -19,12 +19,24 @@ export default {
         this.getAirCondition(); //空调数据
         this.getLastAllEnergy(); //上月所有能耗数据  上月总能耗 上月节约能耗
         this.getWeahter(); //获取天气
+        window.onresize = () => {
+            console.log("resize");
+            this.setBodyWidth(
+                document.getElementsByTagName("body")[0].offsetWidth
+            );
+            this.setBodyHeight(
+                document.getElementsByTagName("body")[0].offsetHeight
+            );
+
+      
+        };
     },
-     destroyed() {
+    destroyed() {
         console.log("app---destroyed");
     },
     components: {},
     methods: {
+        ...mapMutations(["setBodyWidth", "setBodyHeight"]),
         ...mapActions(["getAirCondition", "getLastAllEnergy", "getWeahter"]),
     },
 };

@@ -155,9 +155,10 @@ export default {
             var _this = this;
             this.queryParam(floorparam).then(() => {
                 var timeoutsign = setTimeout(() => {
-                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;
+                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;//湿度等指标的轮询变化
                     if (_this.nowIndicatorIndex == 5) {
                         if (_this.pageNum == _this.nowPage) {
+                            //如果指标轮询结束
                             _this.nowIndicatorIndex = 0;
                             _this.$emit("donetowpage");
                             clearTimeout(timeoutsign);
