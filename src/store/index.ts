@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "@/utils/axios";
 import api from "@/api/index";
+const { projectId } = require("/public/config2.js");
 
 Vue.use(Vuex);
 
@@ -12,21 +13,21 @@ export default new Vuex.Store({
         lastMonthData: [], //上月数据
         lastAllEnergy: {}, //上月所有能耗数据
         weatherCont: {}, //天气
-        bodyWidth:null,
-        bodyHeight:null,
+        bodyWidth: null,
+        bodyHeight: null
     },
-    getters:{
-        getBodyWidthHeight(state){
-            return [state.bodyWidth,state.bodyHeight]
-        }
+    getters: {
+        getBodyWidthHeight(state) {
+            return [state.bodyWidth, state.bodyHeight];
+        },
     },
     mutations: {
-        setBodyWidth(state,width){
-           // debugger;
-            state.bodyWidth=width;
+        setBodyWidth(state, width) {
+            // debugger;
+            state.bodyWidth = width;
         },
-        setBodyHeight(state,height){
-            state.bodyHeight=height;
+        setBodyHeight(state, height) {
+            state.bodyHeight = height;
         },
         getRealTimeData(state, data) {
             //debugger;
@@ -47,9 +48,10 @@ export default new Vuex.Store({
     },
     actions: {
         getRealTimeData({ state, commit }, data) {
+            console.log("projectId", projectId);
             //实时数据
             axios
-                .get(api.queryEnvCurrent + "?projectId=Pj1101020002")
+                .get(api.queryEnvCurrent + `?projectId=${projectId}`)
                 .then((res: any) => {
                     //debugger
                     var resdata = res.data.data || [];
@@ -59,7 +61,7 @@ export default new Vuex.Store({
         getAirCondition({ state, commit }, data) {
             //空调状态
             axios
-                .get(api.queryConditionerStatus + "?projectId=Pj1101020002")
+                .get(api.queryConditionerStatus + `?projectId=${projectId}`)
                 .then((res: any) => {
                     var resdata = res.data.data || {};
                     // debugger;
@@ -69,13 +71,13 @@ export default new Vuex.Store({
         getRealTimeTemp({ state, commit }, data) {
             //实时温度
             return axios.get(
-                api.queryIndoorTempList + "?projectId=Pj1101020002"
+                api.queryIndoorTempList + `?projectId=${projectId}`
             );
         },
         getLastMonthData({ state, commit }, data) {
             //上月数据
             axios
-                .get(api.queryEnvHistory + "?projectId=Pj1101020002")
+                .get(api.queryEnvHistory + `?projectId=${projectId}`)
                 .then((res: any) => {
                     //debugger;
                     var resdata = res.data.data || [];
@@ -88,23 +90,23 @@ export default new Vuex.Store({
             axios
                 .post(api.queryLastAllEnergy, {
                     criteria: {
-                        projectId: "Pj1101080259",
+                        projectId: projectId,
                     },
                 })
                 .then((res: any) => {
                     // debugger;
-                    
+
                     var resdata = res.data.content[0] || {};
                     commit("getLastAllEnergy", resdata);
                 });
         },
         getWeahter({ state, commit }, data) {
             axios
-                .get(api.getWeatherCurrent + "?projectId=Pj1101020002")
+                .get(api.getWeatherCurrent + `?projectId=${projectId}`)
                 .then((res: any) => {
                     //temperature = res.data.content.temperature;
                     //debugger;
-                    var weatherCont = res.data.content||{};
+                    var weatherCont = res.data.content || {};
                     commit("getWeahter", weatherCont);
                 });
         },

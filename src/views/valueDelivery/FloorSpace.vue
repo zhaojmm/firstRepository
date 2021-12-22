@@ -66,6 +66,7 @@
 import { Loading } from "element-ui";
 import moment from "moment";
 import { selectColor } from "@/utils/publicMethod";
+const { projectId } = require("/public/config2.js");
 
 export default {
     name: "FloorSpace",
@@ -182,7 +183,7 @@ export default {
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
-                        projectId: "Pj1101020002",
+                        projectId: projectId,
                     },
                     size: 14, //最多14层
                     page: 1,
@@ -223,7 +224,7 @@ export default {
                     this.firstPageParams = firstPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
-                        obj.projectId = "Pj1101020002";
+                        obj.projectId = projectId;
                         obj.spaceNum = firstMaxSpace;
                         return obj;
                     });
@@ -231,7 +232,7 @@ export default {
                     this.secondPageParams = secondPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
-                        obj.projectId = "Pj1101020002";
+                        obj.projectId = projectId;
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });

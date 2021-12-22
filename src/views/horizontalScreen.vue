@@ -98,6 +98,8 @@ export default {
     },
     mounted() {
         this.nowPage = 1;
+       // debugger;
+        
         this.timePageShow();
     },
     methods: {
