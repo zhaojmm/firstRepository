@@ -1,5 +1,5 @@
 <template>
-    <div class="floorSpace">
+    <div class="floorSpace" ref="floorSpace">
         <div class="leftChange">
             <div class="allIndicator">
                 <div
@@ -12,7 +12,7 @@
                     <div
                         class="textCont"
                         v-show="item.id==selIndicator.id"
-                    >{{totalAvgValues}}{{selIndicator.unit}}<br /><span class="name">平均{{selIndicator.name}}</span></div>
+                    ><span class="value">{{totalAvgValues}}{{selIndicator.unit}}</span><br /><span class="name">平均{{selIndicator.name}}</span></div>
                     <img
                         v-show="item.id==selIndicator.id"
                         class="img"
@@ -26,7 +26,7 @@
             <div
                 class="floor-item"
                 v-for="(item,index) in showFloors"
-                :key="index"
+                :key="index"   v-bind:style="{ height: item.floorHeight + 'px' }"
             >
                 <div class="floor-num"><span>{{item.localName}}</span></div>
                 <div class="floor-space">
@@ -34,7 +34,7 @@
                         class="space-box"
                         v-for="(childItem,id) in item.dataSpaces"
                         :key="id"
-                        v-bind:style="{ width: item.spacewidth + '%' }"
+                        v-bind:style="{ width: item.spacewidth + '%' ,height: item.spaceheight + '%'  }"
                     >
                         <div class="space-name" v-bind:style="{backgroundColor:selectColor(childItem.avgValues,selIndicatorId,true)}">{{childItem.localName}}</div>
                     </div>
@@ -160,7 +160,7 @@ export default {
                        
                     }
                     this.getTimeFloorParam();
-                }, 2000);
+                }, 1200);
             });
         },
         queryFs() {
@@ -248,6 +248,9 @@ export default {
                     //console.log("queryParam", res);
                     var showFloors = res.data.data.floors || [];
                     this.totalAvgValues = res.data.data.avgValues || null;
+                    var wrapHeight= document.getElementsByTagName("body")[0].offsetHeight-164;
+                    wrapHeight=Math.max(wrapHeight,730);//730是楼层区域的最小高度
+
                     this.totalAvgValues&&(this.totalAvgValues=this.totalAvgValues.toFixed(this.selIndicator.fixed));
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
@@ -258,33 +261,39 @@ export default {
                         ele.localId = filterFloor.localId;
                         ele.localName = filterFloor.localName;
                         var dataSpacesNum = ele.dataSpaces.length;//一层的空间数
-                        var lineNum = this.spaceHandle(dataSpacesNum,showFloors.length) ; //一行的个数
-                      
-                        ele.spacewidth = 100 / lineNum;
+                        var floorParam = this.spaceHandle(dataSpacesNum,showFloors.length) ; //一行的个数
+                        ele.spacewidth = 100 / floorParam.lineNum;
+                        ele.spaceheight = 100 / floorParam.floorline;//每一行的高度占比
+                        ele.floorHeight= wrapHeight/showFloors.length;//每一层的高度
                     });
+
                     this.showFloors = showFloors;
                     this.selIndicatorId=this.selIndicator.id;
                 }).catch((err)=>{});
         },
         spaceHandle(spaceNum,floorNum){//返回一层 的每一行 几个房间
             var lineNum = spaceNum; //一行的房间数
+            var floorline=1;//一层几行
             if (floorNum == 1) {//最多一层时
                     if (spaceNum > 2 && spaceNum <= 24 ) {
+                        floorline=2;
                         lineNum = spaceNum / 2;
                     }else if (spaceNum > 24 && spaceNum <= 36) {
+                        floorline=3;
                         lineNum = Math.ceil(spaceNum / 3);
                     } else if (spaceNum > 36 && spaceNum <= 48) {
+                        floorline=4;
                         lineNum = Math.ceil(spaceNum / 4);
                     } else if (spaceNum > 48 && spaceNum <= 60) {//48-60个 5行
+                        floorline=5;
                         lineNum = Math.ceil(spaceNum / 5);
                     }
                 }else{
-                    //debugger;
-                    var floorline = Math.ceil(spaceNum / 16); //20-30 3排 30-40个 4排 一层排数
+                     floorline = Math.ceil(spaceNum / 16); //20-30 3排 30-40个 4排 一层排数
                     lineNum = Math.ceil(spaceNum / floorline);
                 }
-                //debugger;
-                return lineNum;
+               
+                return {lineNum,floorline};
         },
         floorHandle(floorNum) {
             var maxFloorSpace = 1;//一层 最多显示房间数
@@ -329,32 +338,33 @@ export default {
     width: 100%;
     // height: 910px;
     display: flex;
-   
+    //min-height: 730px;
+    background: #ffffff;
+     border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
 }
 .leftChange {
     height: 100%;
     width: 154px;
     margin: 0 auto;
-    min-height: 700px;
-    background: #ffffff;
-    border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
+    //min-height: 730px;
     .allIndicator {
         padding-top: 32px;
-        padding-bottom: 20px;
+        //padding-bottom: 20px;
         // display: flex;
         // align-items: center;
         // justify-content: center;
         .eachItem {
             cursor: pointer;
-            margin-bottom: 60px;
+            margin-bottom: 56px;
             padding: 0;
             text-align: center;
+            font-family: PingFang SC;
             .title {
                 color: #9b98ad;
                 font-size: 24px;
+                font-weight: 600;
             }
-
             &.select {
                 border-left: 4px solid #46ccf6;
                 .title {
@@ -367,6 +377,9 @@ export default {
                     padding-top: 16px;
                     padding-bottom: 20px;
                     line-height: 20px;
+                    .value{
+                        font-weight: 600;
+                    }
                     .name {
                         font-size: 14px;
                     }
@@ -377,7 +390,12 @@ export default {
                     margin: 0;
                 }
             }
+           
         }
+         .eachItem:last-child{
+             margin-bottom:0;
+         }
+
     }
     // .allIndicator {
     //     padding-top: 32px;
@@ -464,11 +482,14 @@ export default {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 86px;
+                //height: 86px;
+                height: 100%;
                 min-width: 20px;
                 border-radius: 8px;
                 background: #d9f5d6;
                 text-align: center;
+                padding:0 8px;
+                box-sizing: border-box;
             }
         }
     }

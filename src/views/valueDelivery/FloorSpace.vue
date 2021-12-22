@@ -29,6 +29,7 @@
                 class="floor-item"
                 v-for="(item, index) in showFloors"
                 :key="index"
+                v-bind:style="{ height: item.floorHeight + 'px' }"
             >
                 <div class="floor-num">
                     <span>{{ item.localName }}</span>
@@ -38,7 +39,10 @@
                         class="space-box"
                         v-for="(childItem, id) in item.dataSpaces"
                         :key="id"
-                        v-bind:style="{ width: item.spacewidth + '%' }"
+                        v-bind:style="{
+                            width: item.spacewidth + '%',
+                            height: item.spaceheight + '%',
+                        }"
                     >
                         <div
                             class="space-name"
@@ -155,7 +159,7 @@ export default {
             var _this = this;
             this.queryParam(floorparam).then(() => {
                 var timeoutsign = setTimeout(() => {
-                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;//湿度等指标的轮询变化
+                    _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1; //湿度等指标的轮询变化
                     if (_this.nowIndicatorIndex == 5) {
                         if (_this.pageNum == _this.nowPage) {
                             //如果指标轮询结束
@@ -170,7 +174,7 @@ export default {
                         }
                     }
                     this.getTimeFloorParam();
-                }, 2000);
+                }, 1200);
             });
         },
         queryFs() {
@@ -269,6 +273,10 @@ export default {
                         (this.totalAvgValues = this.totalAvgValues.toFixed(
                             this.selIndicator.fixed
                         ));
+                    var wrapHeight =
+                        document.getElementsByTagName("body")[0].offsetHeight -
+                        428;
+                    wrapHeight = Math.max(wrapHeight, 1000); //1000是楼层区域的最小高度
 
                     showFloors.forEach((ele) => {
                         var filterFloorarr = this.allFloor.filter((item) => {
@@ -279,9 +287,11 @@ export default {
                         ele.localId = filterFloor.localId;
                         ele.localName = filterFloor.localName;
                         var dataSpacesNum = (ele.dataSpaces || []).length;
-                        var lineNum = this.spaceHandle(dataSpacesNum); //一行的个数
+                        var floorParam = this.spaceHandle(dataSpacesNum); //一行的个数
                         //debugger;
-                        ele.spacewidth = 100 / lineNum;
+                        ele.spacewidth = 100 / floorParam.lineNum;
+                        ele.spaceheight = 100 / floorParam.floorline; //每一行的高度
+                        ele.floorHeight = wrapHeight / showFloors.length; //每一层的高度
                     });
                     this.showFloors = showFloors;
                     this.selIndicatorId = this.selIndicator.id;
@@ -316,7 +326,7 @@ export default {
             var lineNum = spaceNum; //一行的房间数
             var floorline = Math.ceil(spaceNum / 10); //20-30 3排 30-40个 4排 所以一排10个
             lineNum = Math.ceil(spaceNum / floorline);
-            return lineNum;
+            return { lineNum, floorline };
             //debugger;
         },
     },
@@ -417,7 +427,8 @@ export default {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 86px;
+                //height: 86px;
+                height: 100%;
                 min-width: 80px;
                 border-radius: 8px;
                 background: #d9f5d6;

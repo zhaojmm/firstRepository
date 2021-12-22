@@ -6,7 +6,7 @@
         <div v-show="nowPage == 1">
             <NowData screenType="ver" />
             <AirSwitchVer />
-            <TemChart screenType="ver" :showPing="nowPage"/>
+            <TemChart screenType="ver" :showPing="nowPage" />
             <LastMonthData screenType="ver" />
         </div>
         <div v-show="nowPage == 2">
@@ -113,7 +113,7 @@ export default {
 <style lang="less" scoped>
 .verticalWrap {
     background: #f3fdff;
-    padding: 50px 40px 100px;
+    padding: 50px 40px 60px;
 }
 .pageHead {
     padding-bottom: 50px;

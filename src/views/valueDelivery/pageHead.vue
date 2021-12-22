@@ -1,10 +1,13 @@
 <template>
     <div class="horHead horSty">
+        <div class="horHead-content">
+            <!-- <img :src="title" /> -->
+            <div class="firtitle">北京中海OFFICEZIP</div>
+            <div class="sectitle">懂空间,更懂办公</div>
+        </div>
+        <div></div>
         <div class="horHead-left">
             <img :src="logo" alt="" />
-        </div>
-        <div class="horHead-content">
-            <img :src="title" />
         </div>
         <div class="horHead-right">
             <div class="right-item">
@@ -88,14 +91,39 @@ export default Vue.extend({
 
 <style lang="less" scoped>
 .horHead {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    position: relative;
     &.horSty {
         height: 74px;
         // width: 1840px;
     }
+    .horHead-content {
+        width: 100%;
+        height: 100%;
+        color: #3b3558;
+        text-align: center;
+        .firtitle {
+            font-weight: 700;
+            font-size: 38px;
+            font-family: Alibaba PuHuiTi;
+        }
+        .sectitle {
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing:8px;
+        }
+    }
+    .horHead-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     .horHead-right {
+        position: absolute;
+        top: 0;
+        right: 0;
         display: flex;
         // justify-content: space-between;
         height: 46px;

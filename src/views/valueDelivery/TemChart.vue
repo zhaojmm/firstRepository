@@ -183,6 +183,7 @@ export default {
                 .color("#23CCF9")
                 .opacity(1)
                 .shape("smooth")
+                .tooltip(false)
                 .style({
                     lineWidth: 3,
                 });
@@ -191,6 +192,7 @@ export default {
                 .position("time*temp")
                 .color("#23CCF9")
                 .opacity(1)
+                .tooltip(false)
                 .shape("circle")
                 .style("time", {
                     lineWidth: 2,

@@ -145,7 +145,7 @@ export default {
                 });
         },
         setChartInterval() {
-            if (this.screenType == "ver") {
+            if (this.screenType == "ver") {//只有竖屏才轮播
                 //上个月
                 var start = moment()
                     .subtract(1, "months")

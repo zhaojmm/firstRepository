@@ -3,7 +3,7 @@
         class="lastMonth"
         :class="[
             screenType === 'hor'
-                ? 'horizontalClass'
+                ? 'horizontalClass horiLastMonth'
                 : 'verticalClass verticalLastMonth',
         ]"
     >
@@ -251,11 +251,22 @@ export default {
         .item-content-right {
             font-size: 14px;
             white-space: nowrap;
-            color:#575271;
+            color: #575271;
             .min {
                 padding-top: 8px;
             }
         }
+    }
+}
+.horiLastMonth {
+    .item {
+        padding-top: 0;
+    }
+    .itemWrap {
+        height: calc(100% - 30px);
+        display: flex;
+        flex-direction:column;
+        justify-content: space-evenly;
     }
 }
 .verticalLastMonth {
