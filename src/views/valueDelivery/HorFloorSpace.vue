@@ -47,7 +47,6 @@
 <script>
 import moment from "moment";
 import { selectColor } from "@/utils/publicMethod";
-const { projectId } = require("/public/config2.js");
 
 export default {
     name: 'FloorSpace',

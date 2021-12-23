@@ -1,10 +1,9 @@
 const { name } = require("./package.json");
-const { projectId } = require("./public/config2.js");
 
 let env = process.env.NODE_ENV.toString();
 console.log('env2', env);
 console.log('env2--name', name);
-console.log('env2---projectId', projectId);
+
 module.exports = {
     publicPath: '/sgshow', //相对路径
     outputDir: 'sgshow', //打包名称

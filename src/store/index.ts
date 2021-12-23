@@ -2,9 +2,10 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "@/utils/axios";
 import api from "@/api/index";
-const { projectId } = require("/public/config2.js");
 
 Vue.use(Vuex);
+
+let projectId:any=(<any>window).projectId;
 
 export default new Vuex.Store({
     state: {
@@ -48,7 +49,7 @@ export default new Vuex.Store({
     },
     actions: {
         getRealTimeData({ state, commit }, data) {
-            console.log("projectId", projectId);
+            console.log("projectId",projectId);
             //实时数据
             axios
                 .get(api.queryEnvCurrent + `?projectId=${projectId}`)

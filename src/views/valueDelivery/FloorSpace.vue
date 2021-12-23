@@ -66,7 +66,7 @@
 import { Loading } from "element-ui";
 import moment from "moment";
 import { selectColor } from "@/utils/publicMethod";
-const { projectId } = require("/public/config2.js");
+
 
 export default {
     name: "FloorSpace",
@@ -180,6 +180,7 @@ export default {
         },
         queryFs() {
             // var loading = this.$loading({ fullscreen: true });
+            console.log('projectId',projectId);
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {

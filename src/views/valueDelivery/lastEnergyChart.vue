@@ -19,7 +19,7 @@ import G2 from "@antv/g2";
 import DataSet from "@antv/data-set";
 import moment from "moment";
 import { mapGetters } from "vuex";
-const { projectId } = require("/public/config2.js");
+
 
 // 自定义 shape, 支持图片形式的气泡
 G2.Shape.registerShape("interval", "borderRadius", {
