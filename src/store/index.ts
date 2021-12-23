@@ -5,7 +5,7 @@ import api from "@/api/index";
 
 Vue.use(Vuex);
 
-let projectId:any=(<any>window).projectId;
+let projectId: any = (<any>window).projectId;
 
 export default new Vuex.Store({
     state: {
@@ -15,7 +15,7 @@ export default new Vuex.Store({
         lastAllEnergy: {}, //上月所有能耗数据
         weatherCont: {}, //天气
         bodyWidth: null,
-        bodyHeight: null
+        bodyHeight: null,
     },
     getters: {
         getBodyWidthHeight(state) {
@@ -49,7 +49,7 @@ export default new Vuex.Store({
     },
     actions: {
         getRealTimeData({ state, commit }, data) {
-            console.log("projectId",projectId);
+            console.log("projectId", projectId);
             //实时数据
             axios
                 .get(api.queryEnvCurrent + `?projectId=${projectId}`)
@@ -97,7 +97,7 @@ export default new Vuex.Store({
                 .then((res: any) => {
                     // debugger;
 
-                    var resdata = res.data.content[0] || {};
+                    var resdata = (res.data.content || [])[0] || {};
                     commit("getLastAllEnergy", resdata);
                 });
         },
