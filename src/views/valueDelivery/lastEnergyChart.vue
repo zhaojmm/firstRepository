@@ -78,7 +78,7 @@ export default {
     },
     watch: {
         showPing(newv, oldv) {
-            // debugger; 当前是第三屏时渲染
+            // debugger; 当前是第三屏时请求数据 渲染chart
             if (newv == 3) {
                 if (!this.lastChart) {
                     this.queryLastDayEnergy();

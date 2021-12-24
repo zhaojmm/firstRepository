@@ -79,7 +79,7 @@ export default {
                 {
                     id: "temp",
                     name: "温度",
-                    img: require("../../assets/verwendu.png"),
+                    img: require("../../assets/wendu.svg"),
                     unit: "℃",
                     code: "Tdb",
                     fixed: 1,
@@ -88,7 +88,7 @@ export default {
                     id: "humidity",
                     code: "RH",
                     name: "湿度",
-                    img: require("../../assets/vershidu.png"),
+                    img: require("../../assets/shidu.svg"),
                     unit: "%",
                     fixed: 0,
                 },
@@ -96,7 +96,7 @@ export default {
                     id: "co2",
                     code: "CO2",
                     name: "CO₂",
-                    img: require("../../assets/verco2.png"),
+                    img: require("../../assets/co2.svg"),
                     unit: "ppm",
                     fixed: 0,
                 },
@@ -104,7 +104,7 @@ export default {
                     id: "methanal",
                     code: "HCHO",
                     name: "甲醛",
-                    img: require("../../assets/verjiaquan.png"),
+                    img: require("../../assets/jiaquan.svg"),
                     unit: "mg/m³",
                     fixed: 2,
                 },
@@ -112,7 +112,7 @@ export default {
                     id: "pm25",
                     code: "PM2d5",
                     name: "PM2.5",
-                    img: require("../../assets/verpm25.png"),
+                    img: require("../../assets/pm25.svg"),
                     unit: "ug/m³",
                     fixed: 0,
                 },
@@ -354,6 +354,7 @@ export default {
         .eachItem {
             cursor: pointer;
             font-size: 24px;
+            font-weight: 600;
             color: #9b98ad;
             margin-right: 60px;
             display: flex;
@@ -393,14 +394,13 @@ export default {
     // width: 1000px;
     margin: 0 auto;
     background: #ffffff;
-    padding-right: 16px;
     box-sizing: border-box;
     .floor-item {
         display: flex;
-        padding: 18px 0;
+        padding: 18px 16px 18px 0;
         box-sizing: border-box;
         background: linear-gradient(
-            161.44deg,
+            186deg,
             rgba(50, 129, 246, 0.1) 6.16%,
             rgba(50, 129, 246, 0) 81.03%
         );
@@ -435,6 +435,8 @@ export default {
                 border-radius: 8px;
                 background: #d9f5d6;
                 text-align: center;
+                padding:0 8px;
+                box-sizing: border-box;
             }
         }
     }

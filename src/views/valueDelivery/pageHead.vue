@@ -34,10 +34,10 @@ import Vue from "vue";
 
 declare function require(img: string): string;
 
-const persagyLogo = require("@/assets/horImg/persagyLogo.png");
+const persagyLogo = require("@/assets/horImg/persagyLogo.svg");
 const title = require("@/assets/horImg/hor_title.png");
-const changeVer = require("@/assets/horImg/changeVer.png");
-const changeHor = require("@/assets/horImg/changeHor.png");
+const changeVer = require("@/assets/horImg/changeVer.svg");
+const changeHor = require("@/assets/horImg/changeHor.svg");
 import { mapState } from "vuex";
 import moment from "moment";
 export default Vue.extend({

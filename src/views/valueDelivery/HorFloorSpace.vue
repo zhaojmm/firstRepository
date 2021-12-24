@@ -64,28 +64,28 @@ export default {
                 id: 'temp',
                 code:'Tdb',
                 name: '温度',
-                img: require('../../assets/horImg/wendu.png'),
+                img: require('../../assets/horImg/wendu.svg'),
                 unit: '℃',
                 fixed:1
             }, {
                 id: 'humidity',
                 code:'RH',
                 name: '湿度',
-                img: require('../../assets/horImg/shidu.png'),
+                img: require('../../assets/horImg/shidu.svg'),
                 unit: '%',
                 fixed:0
             }, {
                 id: 'co2',
                 code:'CO2',
                 name: 'CO₂',
-                img: require('../../assets/horImg/co2.png'),
+                img: require('../../assets/horImg/co2.svg'),
                 unit: 'ppm',
                 fixed:0
             }, {
                 id: 'methanal',
                 code:'HCHO',
                 name: '甲醛',
-                img: require('../../assets/horImg/jiaquan.png'),
+                img: require('../../assets/horImg/jiaquan.svg'),
                 unit: 'mg/m³',
                 fixed:2
 
@@ -93,7 +93,7 @@ export default {
                 id: 'pm25',
                 code:'PM2d5',
                 name: 'PM2.5',
-                img: require('../../assets/horImg/pm25.png'),
+                img: require('../../assets/horImg/pm25.svg'),
                 unit: 'ug/m³',
                 fixed:0
             }],
@@ -340,8 +340,9 @@ export default {
     display: flex;
     //min-height: 730px;
     background: #ffffff;
-     border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
+     border-radius: 16px;
+     overflow: hidden;
+  
 }
 .leftChange {
     height: 100%;
@@ -446,14 +447,14 @@ export default {
     background: #ffffff;
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
-    padding-right:20px;
+    // padding-right:20px;
     box-sizing: border-box;
     .floor-item {
         display: flex;
-        padding: 18px 0;
+        padding: 18px 20px 18px 0;
         box-sizing: border-box;
         background: linear-gradient(
-            161.44deg,
+            186deg,
             rgba(50, 129, 246, 0.1) 6.16%,
             rgba(50, 129, 246, 0) 81.03%
         );

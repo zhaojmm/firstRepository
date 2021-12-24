@@ -19,7 +19,7 @@
                 </div>
                 <div class="subhead-title">低能耗亲自然</div>
                 <div class="bottomCont">
-                    <img src="@/assets/circleEnergy.png" />
+                    <img src="@/assets/circleEnergy.svg" />
                     <div class="showData">
                         <div class="title">比基准能耗</div>
                         <div class="energySave">
@@ -70,7 +70,7 @@ export default {
     },
     mounted() {
         this.nowPage = 1;
-        this.timePageShow();
+        //this.timePageShow();
     },
     destroyed() {
         clearInterval(this.verticalInterval);

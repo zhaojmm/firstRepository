@@ -98,15 +98,13 @@ export default {
     },
     mounted() {
         this.nowPage = 1;
-       // debugger;
-        
         this.timePageShow();
     },
     methods: {
         doneTowPage() {
             //第二屏刷新结束 通知
             //debugger;
-            this.nowPage = 3;
+            this.nowPage = 1;
             this.timePageShow();
         },
         timePageShow() {

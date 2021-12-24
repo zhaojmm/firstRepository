@@ -94,11 +94,13 @@ export default {
     .air-cont {
         display: flex;
         flex-direction: row;
+        padding-top:35px;
         .air-left {
             flex: 3;
             display: flex;
-            justify-content: center;
+            // justify-content: center;
             flex-direction: column;
+            padding-top:20px;
             .bar-box {
                 width: 88%;
                 height: 10px;
@@ -131,7 +133,6 @@ export default {
         }
         .air-bg {
             flex: 1;
-            padding-top: 6px;
             img {
                 width: 240px;
             }
