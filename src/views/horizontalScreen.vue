@@ -155,6 +155,10 @@ export default {
         right: 0;
         bottom: 0;
         overflow: hidden;
+        img{
+            width:100%;
+            height:100%;
+        }
     }
     .hor-head {
         // padding-top: 32px;

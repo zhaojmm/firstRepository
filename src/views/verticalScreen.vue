@@ -1,5 +1,5 @@
 <template>
-    <div class="verticalWrap">
+    <div class="verticalWrap" :style="{background:'url('+ver_big_bg+')',backgroundSize:'100% 100%'}">
         <div class="pageHead">
             <pageHead />
         </div>
@@ -42,6 +42,7 @@
     </div>
 </template>
 <script>
+//import ver_big_bg from "@/assets/ver_big_bg.png";
 import NowData from "./valueDelivery/NowData.vue";
 import LastMonthData from "./valueDelivery/LastMonthData.vue";
 import AirSwitchVer from "./valueDelivery/AirSwitchVer.vue";
@@ -66,6 +67,7 @@ export default {
         return {
             nowPage: null,
             verticalInterval: null,
+            ver_big_bg:require("@/assets/ver_big_bg.png"),
         };
     },
     mounted() {
