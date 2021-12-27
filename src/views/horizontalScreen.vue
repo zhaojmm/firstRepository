@@ -104,7 +104,7 @@ export default {
         doneTowPage() {
             //第二屏刷新结束 通知
             //debugger;
-            this.nowPage = 1;
+            this.nowPage = 3;
             this.timePageShow();
         },
         timePageShow() {

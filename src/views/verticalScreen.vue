@@ -70,7 +70,7 @@ export default {
     },
     mounted() {
         this.nowPage = 1;
-        //this.timePageShow();
+        this.timePageShow();
     },
     destroyed() {
         clearInterval(this.verticalInterval);
