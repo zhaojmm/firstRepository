@@ -20,7 +20,6 @@ import DataSet from "@antv/data-set";
 import moment from "moment";
 import { mapGetters } from "vuex";
 
-
 // 自定义 shape, 支持图片形式的气泡
 G2.Shape.registerShape("interval", "borderRadius", {
     draw: function draw(cfg, container) {
@@ -90,7 +89,7 @@ export default {
         getBodyWidthHeight(newv, oldv) {
             clearTimeout(this.time);
             this.time = setTimeout(() => {
-               // console.log("resize-over");
+                // console.log("resize-over");
                 var width =
                     document.getElementsByTagName("body")[0].offsetWidth - 80;
                 var height = this.screenType === "hor" ? 274 : 330;
@@ -134,19 +133,22 @@ export default {
                             dateStr.substr(4, 2) +
                             "-" +
                             dateStr.substr(6, 2);
-                        item.value = (
-                            item.energyAcTerminal +
-                            item.energyCooling +
-                            item.energyHeating +
-                            item.energyLight
-                        ).toFixed(0);
+                        item.value = Number(
+                            (
+                                item.energyAcTerminal +
+                                item.energyCooling +
+                                item.energyHeating +
+                                item.energyLight
+                            ).toFixed(0)
+                        );
                     });
                     this.lastChart = this.cInitChart(resdata);
                     this.setChartInterval();
                 });
         },
         setChartInterval() {
-            if (this.screenType == "ver") {//只有竖屏才轮播
+            if (this.screenType == "ver") {
+                //只有竖屏才轮播
                 //上个月
                 var start = moment()
                     .subtract(1, "months")
@@ -225,7 +227,7 @@ export default {
                 //range: [0, 1],
                 tickCount: 5,
                 type: "linear",
-                max: 1500,
+                //max: 1500,//这个不能小于实际值 不然显示不出来
                 //tickInterval
                 // type: 'timeCat'
             });
