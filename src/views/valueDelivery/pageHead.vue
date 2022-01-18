@@ -1,13 +1,13 @@
 <template>
     <div class="horHead horSty">
         <div class="horHead-content">
-            <!-- <img :src="title" /> -->
-            <div class="firtitle">北京中海OFFICEZIP</div>
+            <!-- <img :src="title" /> 北京中海OFFICEZIP-->
+            <div class="firtitle">之江实验室一期西区</div>
             <div class="sectitle">懂空间,更懂办公</div>
         </div>
         <div></div>
         <div class="horHead-left">
-            <img :src="logo" alt="" />
+            <img :src="logo" alt="" style="height:60px;" />
         </div>
         <div class="horHead-right">
             <div class="right-item">
@@ -35,6 +35,8 @@ import Vue from "vue";
 declare function require(img: string): string;
 
 const persagyLogo = require("@/assets/horImg/persagyLogo.svg");
+const zhijiangLogo = require("@/assets/horImg/zhijianglogo.jpg");
+
 const title = require("@/assets/horImg/hor_title.png");
 const changeVer = require("@/assets/horImg/changeVer.svg");
 const changeHor = require("@/assets/horImg/changeHor.svg");
@@ -43,7 +45,7 @@ import moment from "moment";
 export default Vue.extend({
     data() {
         return {
-            logo: persagyLogo,
+            logo: zhijiangLogo,
             title: title,
             changeVer: changeVer,
             changeHor: changeHor,
@@ -112,7 +114,7 @@ export default Vue.extend({
         .sectitle {
             font-weight: 500;
             font-size: 16px;
-            letter-spacing:8px;
+            letter-spacing: 8px;
         }
     }
     .horHead-left {
