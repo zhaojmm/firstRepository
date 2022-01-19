@@ -30,6 +30,11 @@ const routes: Array<RouteConfig> = [
         name: "horThree",
         component: () => import("@/views/horThree.vue"),
     },
+    {
+        path: "/officialAccount",
+        name: "officialAccount",
+        component: () => import("@/views/officialAccount/environment.vue"),
+    },
 ];
 
 const router = new VueRouter({
