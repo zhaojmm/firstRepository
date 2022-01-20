@@ -35,7 +35,7 @@ import Vue from "vue";
 declare function require(img: string): string;
 
 const persagyLogo = require("@/assets/horImg/persagyLogo.svg");
-const zhijiangLogo = require("@/assets/horImg/zhijianglogo.jpg");
+const zhijiangLogo = require("@/assets/horImg/zhijianglogo.png");
 
 const title = require("@/assets/horImg/hor_title.png");
 const changeVer = require("@/assets/horImg/changeVer.svg");
