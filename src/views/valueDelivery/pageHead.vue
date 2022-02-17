@@ -1,8 +1,9 @@
 <template>
     <div class="horHead horSty">
         <div class="horHead-content">
-            <!-- <img :src="title" /> 北京中海OFFICEZIP-->
-            <div class="firtitle">之江实验室一期西区</div>
+            <!-- <img :src="title" /> 北京中海OFFICEZIP -->
+            <!-- <div class="firtitle">之江实验室一期西区</div> -->
+            <div class="firtitle">北京中海OFFICEZIP</div>
             <div class="sectitle">懂空间,更懂办公</div>
         </div>
         <div></div>
@@ -45,7 +46,8 @@ import moment from "moment";
 export default Vue.extend({
     data() {
         return {
-            logo: zhijiangLogo,
+            //logo: zhijiangLogo,
+            logo:persagyLogo,
             title: title,
             changeVer: changeVer,
             changeHor: changeHor,
