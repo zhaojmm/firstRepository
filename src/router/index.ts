@@ -29,7 +29,7 @@ const routes: Array<RouteConfig> = [
         path: "/horThree",
         name: "horThree",
         component: () => import("@/views/horThree.vue"),
-    },
+    }
 ];
 
 const router = new VueRouter({
