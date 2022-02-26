@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "@/utils/axios";
 import api from "@/api/index";
-
+import moment from "moment";
 Vue.use(Vuex);
 
 let projectId: any = (<any>window).projectId;
@@ -88,10 +88,14 @@ export default new Vuex.Store({
 
         getLastAllEnergy({ state, commit }, data) {
             //上月所有能耗数据  上月总能耗 上月节约能耗
+            var monthTime = moment().subtract(1, "month"); //往前取15分钟
+            var monthTimeStr = monthTime.format("YYYYMM");
+
             axios
                 .post(api.queryLastAllEnergy, {
                     criteria: {
                         projectId: projectId,
+                        yyyymm: monthTimeStr,
                     },
                 })
                 .then((res: any) => {

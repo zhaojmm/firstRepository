@@ -135,10 +135,10 @@ export default {
                             dateStr.substr(6, 2);
                         item.value = Number(
                             (
-                                item.energyAcTerminal +
-                                item.energyCooling +
-                                item.energyHeating +
-                                item.energyLight
+                                (item.energyAcTerminal||0) +
+                                (item.energyCooling||0) +
+                                (item.energyHeating||0) +
+                                (item.energyLight||0)+(item.energyOthers||0)
                             ).toFixed(0)
                         );
                     });
