@@ -1,4 +1,4 @@
-# meri-design： brancha 的修改
+# meri-design：brancha 的修改 git branchb分支的修改
 - 基于vue的ui库，github地址 `ssh://git@101.254.183.198:5522/xiongshuang/meri-design.git`
 
 ## config
