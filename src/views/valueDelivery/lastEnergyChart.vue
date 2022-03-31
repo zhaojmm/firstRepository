@@ -183,13 +183,13 @@ export default {
             // ];
 
             if (this.screenType == "hor") {
-                var end = cdata[cdata.length - 1].Date;
+                var end = cdata[cdata.length - 1]&&cdata[cdata.length - 1].Date;
             } else {
-                var end = cdata[11].Date;
+                var end = cdata[11]&&cdata[11].Date;
             }
             var ds = new DataSet({
                 state: {
-                    start: cdata[0].Date,
+                    start: cdata[0]&&cdata[0].Date,
                     end: end,
                 },
             });

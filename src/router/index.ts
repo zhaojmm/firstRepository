@@ -21,14 +21,14 @@ const routes: Array<RouteConfig> = [
         component: () => import("@/views/horizontalScreen.vue"),
     },
     {
-        path: "/horTwo",
-        name: "horTwo",
-        component: () => import("@/views/horTwo.vue"),
-    },
-    {
         path: "/horThree",
         name: "horThree",
         component: () => import("@/views/horThree.vue"),
+    },
+    {
+        path: "/mapdata",
+        name: "mapdata",
+        component: () => import("@/views/mapdata.vue"),
     }
 ];
 

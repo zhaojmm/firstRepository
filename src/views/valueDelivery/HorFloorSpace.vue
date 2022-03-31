@@ -1,6 +1,7 @@
 <template>
     <div class="floorSpace" ref="floorSpace">
         <div class="leftChange">
+            <div>{{nowBuildName}}</div>
             <div class="allIndicator">
                 <div
                     class="eachItem "
@@ -97,6 +98,9 @@ export default {
                 unit: 'ug/m³',
                 fixed:0
             }],
+            allBuild: [],
+            nowBuildName: '',
+            nowBuildPage: 1, //目前是第几个建筑
 
             allFloor: [],
             firstPageParams: [],
@@ -120,7 +124,7 @@ export default {
             //当前展示为第二屏时
             if(newv==2){
                    this.nowPage = 1;
-                   this.queryFs();
+                   this.queryBuild();
             }
         }
     },
@@ -145,14 +149,24 @@ export default {
             this.queryParam(floorparam).then(() => {
                 var timeoutsign = setTimeout(() => {
                     _this.nowIndicatorIndex = _this.nowIndicatorIndex + 1;//湿度等指标的轮询变化
-                    if (_this.nowIndicatorIndex == 5) {
+                    if (_this.nowIndicatorIndex == 5) {//指标切换完毕
                         //debugger;
                          if (_this.pageNum == _this.nowPage) {
-                             _this.nowIndicatorIndex = 0;
-                             _this.$emit('donetowpage');
-                           // clearTimeout(timeoutsign);
+                             //一个建筑的所有楼层 切换完毕
+                            _this.nowIndicatorIndex = 0;
+                            _this.nowPage = 1;
+                             //所有建筑指标轮询结束 通知切换
+                            if (_this.nowBuildPage == _this.allBuild.length) {
+                                //_this.$emit("donetowpage");
+                                clearTimeout(timeoutsign);
+                            } else {
+                                //换下一个建筑
+                                _this.nowBuildPage = _this.nowBuildPage + 1;
+                                _this.queryFs();
+                            }
                             return;
                         }
+                          //如果是两页 并且nowPage是第一页
                         if (_this.pageNum == 2 && _this.nowPage == 1) {
                             _this.nowPage = 2;
                             _this.nowIndicatorIndex = 0;
@@ -163,12 +177,37 @@ export default {
                 }, 1200);
             });
         },
+         queryBuild() {
+            var _this = this;
+            this.$axios
+                .post(this.$api.queryBuilding, {
+                    criteria: {
+                        projectId: projectId,
+                    },
+                })
+                .then((res) => {
+                    debugger;
+                    var data = (res.data || {}).content || [];
+                    _this.allBuild = data;
+                    _this.nowBuildPage = 1;
+      
+                    _this.queryFs();
+                })
+                .catch((res) => {
+                    // loading.close();
+                });
+        },
         queryFs() {
             //var loading = this.$loading({ fullscreen: true });
+            var _this=this;
+            var buildId= (this.allBuild[this.nowBuildPage - 1]||{}).id;
+            if(!buildId){return;} 
+
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
                         projectId: projectId,
+                           buildingId: buildId,
                     },
                     size: 14,//最多14层
                     page: 1,
@@ -185,6 +224,19 @@ export default {
                     allFloor = allFloor.filter(function(item) {
                         return item.spaceNum > 0;
                     });
+                    debugger;
+                    //如果该建筑的所有楼层 没有空间 则请求下一个建筑
+                    if (allFloor.length == 0) {
+                        _this.nowBuildPage = _this.nowBuildPage + 1;
+                        if (_this.nowBuildPage > _this.allBuild.length) {
+                            //_this.$emit("donetowpage");
+                            return;
+                        }
+                        _this.queryFs();
+                        return;
+                    }
+                     _this.nowBuildName = _this.allBuild[_this.nowBuildPage - 1].localName;
+                    
                     this.allFloor = allFloor;
                     var allFloorNum = allFloor.length;
                     //如果超过7层 就显示两屏幕 第一屏 firstPageNum
@@ -220,7 +272,7 @@ export default {
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });
-                  
+                     debugger;
                 
                     this.nowIndicatorIndex=0;
                     this.getTimeFloorParam();

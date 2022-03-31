@@ -221,9 +221,9 @@ export default {
             var timestr = nowtime.format("YYYY.MM.DD");
             const tooltipHtml = `<div style='line-height:22px;color:#fff;background: rgba(35,204,249,0.7);padding:10px 12px;border-radius:5px;'>
                 <div style='font-size:13px;font-weight:600;'><span style='margin-right:5px'>${timestr}</span>${
-                lastpoint.time
+                lastpoint&&lastpoint.time
             }</div>
-                <div style='font-size:16px;font-weight:600;'>室内温度：${lastpoint.temp.toFixed(
+                <div style='font-size:16px;font-weight:600;'>室内温度：${lastpoint&&lastpoint.temp.toFixed(
                     1
                 )}℃</div></div>`;
             chart.guide().html({
