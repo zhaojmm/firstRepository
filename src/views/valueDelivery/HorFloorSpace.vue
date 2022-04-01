@@ -1,7 +1,7 @@
 <template>
     <div class="floorSpace" ref="floorSpace">
         <div class="leftChange">
-            <div>{{nowBuildName}}</div>
+            <div class="buildName">{{nowBuildName}}</div>
             <div class="allIndicator">
                 <div
                     class="eachItem "
@@ -401,6 +401,15 @@ export default {
     width: 154px;
     margin: 0 auto;
     //min-height: 730px;
+    .buildName{
+        height: 42px;
+        background:#E2F8FF;
+        line-height: 42px;
+        border-bottom-right-radius: 16px;
+        text-align:center;
+        font-size:26px;
+        width: 125px;
+    }
     .allIndicator {
         padding-top: 32px;
         //padding-bottom: 20px;
@@ -521,7 +530,7 @@ export default {
         font-weight: 700;
         line-height: 43px;
         color: #3b3558;
-        width: 80px;
+        width: 90px;
         flex-shrink: 0;
     }
     .floor-space {

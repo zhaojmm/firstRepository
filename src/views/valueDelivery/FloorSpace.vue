@@ -1,8 +1,8 @@
 <template>
     <div class="floorCont">
         <div class="topChange">
+            <div class="buildName">{{ nowBuildName }}</div>
             <div class="allIndicator">
-                <div>{{ nowBuildName }}</div>
                 <div
                     class="eachItem"
                     v-for="(item, index) in allIndicator"
@@ -392,7 +392,19 @@ export default {
     // width: 1000px;
     margin: 0 auto;
     background: #ffffff;
-
+    position: relative;
+    .buildName {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 42px;
+        background: #e2f8ff;
+        line-height: 42px;
+        border-bottom-right-radius: 16px;
+        text-align: center;
+        font-size: 26px;
+        width: 125px;
+    }
     .allIndicator {
         padding-top: 32px;
         padding-bottom: 20px;
@@ -463,7 +475,7 @@ export default {
         font-weight: 700;
         line-height: 43px;
         color: #3b3558;
-        width: 80px;
+        width: 90px;
         flex-shrink: 0;
     }
     .floor-space {
