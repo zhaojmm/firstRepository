@@ -43,7 +43,6 @@ router.beforeEach((to, from, next) => {
     // canUserAccess() 返回 `true` 或 `false`
     console.log("to", to);
     var projectId = to.query.projectId || "";
-    debugger;
     projectId && store.commit("setProjectId", projectId);
     next();
 });
