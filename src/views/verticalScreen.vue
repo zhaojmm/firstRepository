@@ -1,5 +1,11 @@
 <template>
-    <div class="verticalWrap" :style="{background:'url('+ver_big_bg+')',backgroundSize:'100% 100%'}">
+    <div
+        class="verticalWrap"
+        :style="{
+            background: 'url(' + ver_big_bg + ')',
+            backgroundSize: '100% 100%',
+        }"
+    >
         <div class="pageHead">
             <pageHead />
         </div>
@@ -67,7 +73,7 @@ export default {
         return {
             nowPage: null,
             verticalInterval: null,
-            ver_big_bg:require("@/assets/ver_big_bg.png"),
+            ver_big_bg: require("@/assets/ver_big_bg.png"),
         };
     },
     mounted() {
@@ -84,9 +90,9 @@ export default {
                 var lastAllEnergy = JSON.parse(
                     JSON.stringify(state.lastAllEnergy)
                 );
-                lastAllEnergy.energyCompare = Number(
-                    (lastAllEnergy.energyCompare * 100).toFixed(0)
-                );
+                lastAllEnergy.energyCompare = lastAllEnergy.energyCompare
+                    ? Number((lastAllEnergy.energyCompare * 100).toFixed(0))
+                    : lastAllEnergy.energyCompare;
                 return lastAllEnergy;
             },
         }),

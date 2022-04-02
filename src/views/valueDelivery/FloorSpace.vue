@@ -1,7 +1,7 @@
 <template>
     <div class="floorCont">
         <div class="topChange">
-            <div class="buildName">{{ nowBuildName }}</div>
+            <div class="buildName" v-show="allBuild.length>1">{{ nowBuildName }}</div>
             <div class="allIndicator">
                 <div
                     class="eachItem"
@@ -67,6 +67,7 @@
 import { Loading } from "element-ui";
 import moment from "moment";
 import { selectColor } from "@/utils/publicMethod";
+import { mapState } from "vuex";
 
 export default {
     name: "FloorSpace",
@@ -137,6 +138,9 @@ export default {
             },
         },
     },
+    computed: {
+        ...mapState({ projectId: (state) => state.projectId }),
+    },
     watch: {
         showPing(newv, oldv) {
             //debugger;
@@ -169,7 +173,7 @@ export default {
                             _this.nowIndicatorIndex = 0;
                             _this.nowPage = 1;
                             if (_this.nowBuildPage == _this.allBuild.length) {
-                                // _this.$emit("donetowpage");
+                                _this.$emit("donetowpage");
                                 clearTimeout(timeoutsign);
                             } else {
                                 //换下一个建筑
@@ -193,7 +197,7 @@ export default {
             this.$axios
                 .post(this.$api.queryBuilding, {
                     criteria: {
-                        projectId: projectId,
+                        projectId: this.projectId,
                     },
                 })
                 .then((res) => {
@@ -218,7 +222,7 @@ export default {
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
-                        projectId: projectId,
+                        projectId: this.projectId,
                         //'Bd3301100002bba81f4830e04cde87d4b6e5652c0d5e',
                         buildingId: buildId,
                     },
@@ -241,7 +245,7 @@ export default {
                     if (allFloor.length == 0) {
                         _this.nowBuildPage = _this.nowBuildPage + 1;
                         if (_this.nowBuildPage > _this.allBuild.length) {
-                            // _this.$emit("donetowpage");
+                            _this.$emit("donetowpage");
                             return;
                         }
                         _this.queryFs();
@@ -273,7 +277,7 @@ export default {
                     this.firstPageParams = firstPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
-                        obj.projectId = projectId;
+                        obj.projectId = this.projectId;
                         obj.spaceNum = firstMaxSpace;
                         return obj;
                     });
@@ -281,7 +285,7 @@ export default {
                     this.secondPageParams = secondPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
-                        obj.projectId = projectId;
+                        obj.projectId = this.projectId;
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });

@@ -18,7 +18,7 @@
 import G2 from "@antv/g2";
 import DataSet from "@antv/data-set";
 import moment from "moment";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 // 自定义 shape, 支持图片形式的气泡
 G2.Shape.registerShape("interval", "borderRadius", {
@@ -67,6 +67,7 @@ export default {
     },
     computed: {
         ...mapGetters(["getBodyWidthHeight"]),
+        ...mapState({ projectId: (state) => state.projectId }),
     },
     data() {
         return {
@@ -115,7 +116,7 @@ export default {
             this.$axios
                 .post(this.$api.queryLastDayEnergy, {
                     criteria: {
-                        projectId: projectId,
+                        projectId: this.projectId,
                         date: {
                             $gte: start,
                             $lte: end,
@@ -135,10 +136,11 @@ export default {
                             dateStr.substr(6, 2);
                         item.value = Number(
                             (
-                                (item.energyAcTerminal||0) +
-                                (item.energyCooling||0) +
-                                (item.energyHeating||0) +
-                                (item.energyLight||0)+(item.energyOthers||0)
+                                (item.energyAcTerminal || 0) +
+                                (item.energyCooling || 0) +
+                                (item.energyHeating || 0) +
+                                (item.energyLight || 0) +
+                                (item.energyOthers || 0)
                             ).toFixed(0)
                         );
                     });
@@ -183,13 +185,14 @@ export default {
             // ];
 
             if (this.screenType == "hor") {
-                var end = cdata[cdata.length - 1]&&cdata[cdata.length - 1].Date;
+                var end =
+                    cdata[cdata.length - 1] && cdata[cdata.length - 1].Date;
             } else {
-                var end = cdata[11]&&cdata[11].Date;
+                var end = cdata[11] && cdata[11].Date;
             }
             var ds = new DataSet({
                 state: {
-                    start: cdata[0]&&cdata[0].Date,
+                    start: cdata[0] && cdata[0].Date,
                     end: end,
                 },
             });

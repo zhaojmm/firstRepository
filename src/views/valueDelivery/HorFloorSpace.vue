@@ -1,7 +1,7 @@
 <template>
     <div class="floorSpace" ref="floorSpace">
         <div class="leftChange">
-            <div class="buildName">{{nowBuildName}}</div>
+            <div class="buildName" v-show="allBuild.length>1">{{nowBuildName}}</div>
             <div class="allIndicator">
                 <div
                     class="eachItem "
@@ -48,6 +48,7 @@
 <script>
 import moment from "moment";
 import { selectColor } from "@/utils/publicMethod";
+import { mapState } from "vuex";
 
 export default {
     name: 'FloorSpace',
@@ -134,6 +135,9 @@ export default {
     destroyed(){
         console.log("horfloorspace---destroyed");
     },
+    computed: {
+        ...mapState({ projectId: (state) => state.projectId }),
+    },
     methods: {
         selectColor:selectColor,
         clickIndicator(index) {
@@ -157,7 +161,7 @@ export default {
                             _this.nowPage = 1;
                              //所有建筑指标轮询结束 通知切换
                             if (_this.nowBuildPage == _this.allBuild.length) {
-                                //_this.$emit("donetowpage");
+                                _this.$emit("donetowpage");
                                 clearTimeout(timeoutsign);
                             } else {
                                 //换下一个建筑
@@ -182,7 +186,7 @@ export default {
             this.$axios
                 .post(this.$api.queryBuilding, {
                     criteria: {
-                        projectId: projectId,
+                        projectId: this.projectId,
                     },
                 })
                 .then((res) => {
@@ -206,7 +210,7 @@ export default {
             this.$axios
                 .post(this.$api.queryFs, {
                     criteria: {
-                        projectId: projectId,
+                        projectId: this.projectId,
                            buildingId: buildId,
                     },
                     size: 14,//最多14层
@@ -227,9 +231,10 @@ export default {
                     debugger;
                     //如果该建筑的所有楼层 没有空间 则请求下一个建筑
                     if (allFloor.length == 0) {
+                        //换下一栋楼
                         _this.nowBuildPage = _this.nowBuildPage + 1;
                         if (_this.nowBuildPage > _this.allBuild.length) {
-                            //_this.$emit("donetowpage");
+                            _this.$emit("donetowpage");
                             return;
                         }
                         _this.queryFs();
@@ -260,7 +265,7 @@ export default {
                     this.firstPageParams = firstPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
-                        obj.projectId = projectId;
+                        obj.projectId = this.projectId;
                         obj.spaceNum = firstMaxSpace;//最多空间数
                         return obj;
                     });
@@ -268,7 +273,7 @@ export default {
                     this.secondPageParams = secondPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
-                        obj.projectId = projectId;
+                        obj.projectId = this.projectId;
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });

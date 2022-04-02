@@ -92,7 +92,13 @@ export default Vue.extend({
                 //console.log(hindex, windex, lindex, tindex);
             });
             console.log("allDiv", allDiv);
-             console.log("allDiv-string",JSON.stringify(allDiv) );
+            console.log("allDiv-string", JSON.stringify(allDiv));
+            this.saveMapInfo(allDiv);
+        },
+        saveMapInfo(allDiv) {
+            this.$axios.post(this.$api.saveMapInfo, allDiv).then((res) => {
+                debugger;
+            });
         },
         getNum(str, param) {
             //debugger;

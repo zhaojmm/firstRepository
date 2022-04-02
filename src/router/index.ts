@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "@/views/Home.vue";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -29,7 +30,7 @@ const routes: Array<RouteConfig> = [
         path: "/mapdata",
         name: "mapdata",
         component: () => import("@/views/mapdata.vue"),
-    }
+    },
 ];
 
 const router = new VueRouter({
@@ -38,4 +39,12 @@ const router = new VueRouter({
     routes,
 });
 
+router.beforeEach((to, from, next) => {
+    // canUserAccess() 返回 `true` 或 `false`
+    console.log("to", to);
+    var projectId = to.query.projectId || "";
+    debugger;
+    projectId && store.commit("setProjectId", projectId);
+    next();
+});
 export default router;

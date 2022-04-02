@@ -131,9 +131,9 @@ export default {
                 var lastAllEnergy = JSON.parse(
                     JSON.stringify(state.lastAllEnergy)
                 );
-                lastAllEnergy.energyCompare = Number(
-                    (lastAllEnergy.energyCompare * 100).toFixed(0)
-                );
+                lastAllEnergy.energyCompare = lastAllEnergy.energyCompare
+                    ? Number((lastAllEnergy.energyCompare * 100).toFixed(0))
+                    : lastAllEnergy.energyCompare;
                 return lastAllEnergy;
             },
         }),
@@ -155,9 +155,9 @@ export default {
         right: 0;
         bottom: 0;
         overflow: hidden;
-        img{
-            width:100%;
-            height:100%;
+        img {
+            width: 100%;
+            height: 100%;
         }
     }
     .hor-head {
