@@ -14,6 +14,7 @@
             />
         </div>
         <div class="fileName">{{ fileName }}</div>
+        <div class="status">{{ status }}</div>
     </div>
 </template>
 <script>
@@ -25,6 +26,7 @@ export default Vue.extend({
             name: "mapdata",
             message: null,
             fileName: "",
+            status: "",
         };
     },
     created() {
@@ -32,6 +34,7 @@ export default Vue.extend({
     },
     methods: {
         getFile(e) {
+            debugger;
             console.log(e.target.files);
             var fileSelect = e.target.files[0];
             this.fileName = fileSelect.name;
@@ -91,13 +94,21 @@ export default Vue.extend({
                 // var tindex = divarr.indexOf("TOP:");
                 //console.log(hindex, windex, lindex, tindex);
             });
-            console.log("allDiv", allDiv);
+
             console.log("allDiv-string", JSON.stringify(allDiv));
+            this.status = "上传中...";
             this.saveMapInfo(allDiv);
         },
         saveMapInfo(allDiv) {
+            var _this = this;
             this.$axios.post(this.$api.saveMapInfo, allDiv).then((res) => {
-                debugger;
+                console.log("res", res);
+                if (res.data && res.data.result == "success") {
+                    _this.status = "上传成功";
+                    _this.fileName = "";
+                    document.getElementById("upfile").value = null;
+                    //document.getElementById("upfile").files = nul;
+                }
             });
         },
         getNum(str, param) {
@@ -171,6 +182,10 @@ export default Vue.extend({
         margin-top: 14px;
         color: #000000;
         font-size: 16px;
+    }
+    .status {
+        margin-top: 14px;
+        color: red;
     }
     // .content {
     //     width: 900px;
