@@ -190,7 +190,6 @@ export default {
                     },
                 })
                 .then((res) => {
-                    debugger;
                     var data = (res.data || {}).content || [];
                     _this.allBuild = data;
                     _this.nowBuildPage = 1;
@@ -228,7 +227,7 @@ export default {
                     allFloor = allFloor.filter(function(item) {
                         return item.spaceNum > 0;
                     });
-                    debugger;
+                   
                     //如果该建筑的所有楼层 没有空间 则请求下一个建筑
                     if (allFloor.length == 0) {
                         //换下一栋楼
@@ -277,7 +276,6 @@ export default {
                         obj.spaceNum = sendMaxSpace;
                         return obj;
                     });
-                     debugger;
                 
                     this.nowIndicatorIndex=0;
                     this.getTimeFloorParam();

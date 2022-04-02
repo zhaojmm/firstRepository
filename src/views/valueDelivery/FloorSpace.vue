@@ -201,7 +201,6 @@ export default {
                     },
                 })
                 .then((res) => {
-                    debugger;
                     var data = (res.data || {}).content || [];
                     _this.allBuild = data;
                     _this.nowBuildPage = 1;
@@ -273,7 +272,7 @@ export default {
                     var sendMaxSpace = this.floorHandle(secondPageNum);
                     var firstPageFloors = allFloor.slice(0, firstPageNum); //第一屏 所有楼层
                     var secondPageFloors = allFloor.slice(firstPageNum);
-                    debugger;
+                   
                     this.firstPageParams = firstPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;
