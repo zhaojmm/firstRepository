@@ -17,17 +17,11 @@ module.exports = {
         //https: false,
         //hotOnly: false,
         proxy: {
-            "/daping": {
-                // http://api.sagacloud.cn/duoduo-service/object-service/object/floor/queryFs
-                //target: 'http://192.168.0.14:52021', // 接 口环境
+            "/sgshow/duoduo-service": {
                 'target': 'http://duoduoenv.sagacloud.cn/', // 开发环境
-                // target: 'http://test.persagy.com', // 测试环境
                 changeOrigin: true,
-                //logLevel: "debug",
                 pathRewrite: {
-                    '^/daping': '', // 接口环境
-                    // '^/daping': 'http://192.168.0.14:52015', // 开发环境
-
+                    '^/sgshow/duoduo-service': '/duoduo-service', // 接口环境
                 },
             },
 
@@ -40,7 +34,7 @@ module.exports = {
             //     changeOrigin: true,
             //     //logLevel: "debug",
             //     pathRewrite: {
-            //         // '^/daping': 'http://192.168.0.14:52010', // 接口环境
+          
             //         '^/weather': '', // 开发环境
 
             //     },
