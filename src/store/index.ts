@@ -16,7 +16,7 @@ export default new Vuex.Store({
         weatherCont: {}, //天气
         bodyWidth: null,
         bodyHeight: null,
-        projectId: "Pj1101020002",
+        projectId: "Pj3301100002",
     },
     getters: {
         getBodyWidthHeight(state) {
