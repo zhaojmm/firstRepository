@@ -7,7 +7,7 @@ console.log('env2', env);
 
 module.exports = {
     publicPath: '/sgshow', //相对路径
-    outputDir: 'dist', //打包名称
+    outputDir: 'dist/sgshow', //打包名称
     assetsDir: "static", //静态目录
     lintOnSave: false, //关闭lint代码
     productionSourceMap: false, // 生产环境是否开启sourceMap
