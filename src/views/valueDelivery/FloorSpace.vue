@@ -202,7 +202,11 @@ export default {
                 })
                 .then((res) => {
                     var data = (res.data || {}).content || [];
-                    _this.allBuild = data;
+                    //todo 删除
+                    var filterdata= data.filter((item)=>{
+                        return  item.localName=='1#楼';
+                    })
+                    _this.allBuild = filterdata;
                     _this.nowBuildPage = 1;
                     _this.queryFs();
                 })
