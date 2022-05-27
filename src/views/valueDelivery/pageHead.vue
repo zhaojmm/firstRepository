@@ -1,13 +1,15 @@
 <template>
     <div class="horHead horSty">
         <div class="horHead-content">
-            <!-- <img :src="title" /> 北京中海OFFICEZIP  -->
-            <div class="firtitle">之江实验室一期西区</div>
-            <!-- <div class="firtitle">北京中海OFFICEZIP</div> -->
-            <div class="sectitle">懂空间,更懂办公</div>
+            <img :src="title" v-show="projectId == 'Pj1101020002'" />
+            <div class="firtitle" v-show="projectId == 'Pj3301100002'">
+                之江实验室一期西区
+            </div>
+            <div class="sectitle" v-show="projectId == 'Pj3301100002'">
+                懂空间,更懂办公
+            </div>
         </div>
-        <div></div>
-        <div class="horHead-left">
+        <div class="horHead-left"  v-show="projectId == 'Pj3301100002'">
             <img :src="logo" alt="" style="height:60px;" />
         </div>
         <div class="horHead-right">
@@ -76,6 +78,9 @@ export default Vue.extend({
                 //debugger;
                 var text = state.weatherCont.text || "晴";
                 return text;
+            },
+            projectId: (state: any) => {
+                return state.projectId;
             },
         }),
     },
