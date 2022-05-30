@@ -1,7 +1,9 @@
 <template>
     <div class="floorCont">
         <div class="topChange">
-            <div class="buildName" v-show="allBuild.length>1">{{ nowBuildName }}</div>
+            <div class="buildName" v-show="allBuild.length > 1">
+                {{ nowBuildName }}
+            </div>
             <div class="allIndicator">
                 <div
                     class="eachItem"
@@ -202,11 +204,16 @@ export default {
                 })
                 .then((res) => {
                     var data = (res.data || {}).content || [];
-                    //todo 删除
-                    var filterdata= data.filter((item)=>{
-                        return  item.localName=='1#楼';
-                    })
-                    _this.allBuild = filterdata;
+                    //todo 删除 之江项目
+                    if (this.projectId == "Pj3301100002") {
+                        var filterdata = data.filter((item) => {
+                            return item.localName == "1#楼";
+                        });
+                         _this.allBuild = filterdata;
+                    }else{
+                           _this.allBuild = data
+                    }
+
                     _this.nowBuildPage = 1;
                     _this.queryFs();
                 })
@@ -276,7 +283,7 @@ export default {
                     var sendMaxSpace = this.floorHandle(secondPageNum);
                     var firstPageFloors = allFloor.slice(0, firstPageNum); //第一屏 所有楼层
                     var secondPageFloors = allFloor.slice(firstPageNum);
-                   
+
                     this.firstPageParams = firstPageFloors.map((item) => {
                         var obj = {};
                         obj.id = item.id;

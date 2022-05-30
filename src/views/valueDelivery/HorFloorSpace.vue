@@ -192,11 +192,16 @@ export default {
                 .then((res) => {
                     var data = (res.data || {}).content || [];
                     //todo 删除
-                    var filterdata= data.filter((item)=>{
-                        return  item.localName=='1#楼';
-                    })
+                       if (this.projectId == "Pj3301100002") {
+                        var filterdata = data.filter((item) => {
+                            return item.localName == "1#楼";
+                        });
+                         _this.allBuild = filterdata;
+                    }else{
+                           _this.allBuild = data
+                    }
                   
-                    _this.allBuild = filterdata;
+                   // _this.allBuild = filterdata;
                     _this.nowBuildPage = 1;
       
                     _this.queryFs();
