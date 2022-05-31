@@ -1,15 +1,17 @@
 <template>
     <div class="horHead horSty">
         <div class="horHead-content">
-            <img :src="title" v-show="projectId == 'Pj1101020002'" />
-            <div class="firtitle" v-show="projectId == 'Pj3301100002'">
-                之江实验室一期西区
+            <div v-if="projectId == 'Pj3301100002'">
+                <div class="firtitle">
+                    之江实验室一期西区
+                </div>
+                <div class="sectitle">
+                    懂空间,更懂办公
+                </div>
             </div>
-            <div class="sectitle" v-show="projectId == 'Pj3301100002'">
-                懂空间,更懂办公
-            </div>
+            <img :src="title" v-else />
         </div>
-        <div class="horHead-left"  v-show="projectId == 'Pj3301100002'">
+        <div class="horHead-left">
             <img :src="logo" alt="" style="height:60px;" />
         </div>
         <div class="horHead-right">
@@ -35,7 +37,7 @@
 <script lang="ts">
 import Vue from "vue";
 
-declare function require(img: string): string;
+// declare function require(img: string): string;
 
 const persagyLogo = require("@/assets/horImg/persagyLogo.svg");
 const zhijiangLogo = require("@/assets/horImg/zhijianglogo.png");
@@ -48,8 +50,7 @@ import moment from "moment";
 export default Vue.extend({
     data() {
         return {
-            logo: zhijiangLogo,
-            //logo:persagyLogo,
+            //logo: this.projectId == "Pj3301100002" ? zhijiangLogo : persagyLogo,
             title: title,
             changeVer: changeVer,
             changeHor: changeHor,
@@ -83,6 +84,12 @@ export default Vue.extend({
                 return state.projectId;
             },
         }),
+        logo: function(): any {
+            //console.log("this", this);
+            var logoTemp =
+                this.projectId == "Pj3301100002" ? zhijiangLogo : persagyLogo;
+            return logoTemp;
+        },
     },
     methods: {
         changeScreen() {
