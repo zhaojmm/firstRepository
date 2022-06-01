@@ -1,15 +1,15 @@
 <template>
     <div class="horHead horSty">
         <div class="horHead-content">
-            <div v-if="projectId == 'Pj3301100002'">
+            <div>
                 <div class="firtitle">
-                    之江实验室一期西区
+                    {{ projectObj.localName }}
                 </div>
                 <div class="sectitle">
                     懂空间,更懂办公
                 </div>
             </div>
-            <img :src="title" v-else />
+            <!-- <img :src="title" v-else /> -->
         </div>
         <div class="horHead-left">
             <img :src="logo" alt="" style="height:60px;" />
@@ -82,6 +82,10 @@ export default Vue.extend({
             },
             projectId: (state: any) => {
                 return state.projectId;
+            },
+            projectObj: (state: any) => {
+                //debugger;
+                return state.projectObj;
             },
         }),
         logo: function(): any {

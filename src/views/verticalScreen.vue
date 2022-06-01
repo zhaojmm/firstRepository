@@ -74,6 +74,7 @@ export default {
             nowPage: null,
             verticalInterval: null,
             ver_big_bg: require("@/assets/ver_big_bg.png"),
+            // showAllPage: 3,
         };
     },
     mounted() {
@@ -95,6 +96,17 @@ export default {
                     : lastAllEnergy.energyCompare;
                 return lastAllEnergy;
             },
+            showAllPage: function() {
+                console.log("lastAllEnergy", this.lastAllEnergy);
+                if (
+                    this.lastAllEnergy.energyTotal === undefined &&
+                    this.lastAllEnergy.energyCompare === undefined
+                ) {
+                    return 2;
+                } else {
+                    return 3;
+                }
+            },
         }),
     },
     methods: {
@@ -105,14 +117,18 @@ export default {
         },
         doneTowPage() {
             //第二屏刷新结束 通知
-            this.nowPage = 3;
+            if (this.showAllPage == 3) {
+                this.nowPage = 3;
+            } else if (this.showAllPage == 2) {
+                this.nowPage = 1;
+            }
         },
         timePageShow() {
             var timeoutsign = setTimeout(() => {
                 this.nowPage = this.nowPage + 1;
-                if (this.nowPage == 4) {
-                    this.nowPage = 1;
-                }
+                // if (this.nowPage == 4) {
+                //     this.nowPage = 1;
+                // }
             }, 6000);
         },
     },

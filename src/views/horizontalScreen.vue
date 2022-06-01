@@ -94,6 +94,7 @@ export default {
             lastMonthTotal: require("@/assets/horImg/hor_lastMonthTotal.png"),
             nowPage: null,
             horiInterval: null,
+            //showAllPage: 3,
         };
     },
     mounted() {
@@ -104,7 +105,11 @@ export default {
         doneTowPage() {
             //第二屏刷新结束 通知
             //debugger;
-            this.nowPage = 3;
+            if (this.showAllPage == 3) {
+                this.nowPage = 3;
+            } else if (this.showAllPage == 2) {
+                this.nowPage = 1;
+            }
             this.timePageShow();
         },
         timePageShow() {
@@ -134,7 +139,19 @@ export default {
                 lastAllEnergy.energyCompare = lastAllEnergy.energyCompare
                     ? Number((lastAllEnergy.energyCompare * 100).toFixed(0))
                     : lastAllEnergy.energyCompare;
+                console.log("lastAllEnergy", lastAllEnergy);
                 return lastAllEnergy;
+            },
+            showAllPage: function() {
+                console.log("lastAllEnergy", this.lastAllEnergy);
+                if (
+                    this.lastAllEnergy.energyTotal === undefined &&
+                    this.lastAllEnergy.energyCompare === undefined
+                ) {
+                    return 2;
+                } else {
+                    return 3;
+                }
             },
         }),
     },
