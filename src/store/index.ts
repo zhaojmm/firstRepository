@@ -17,6 +17,7 @@ export default new Vuex.Store({
         bodyWidth: null,
         bodyHeight: null,
         projectId: "Pj3301100002",
+        projectObj: {},
     },
     getters: {
         getBodyWidthHeight(state) {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
         },
         getLastAllEnergy(state, data) {
             state.lastAllEnergy = data;
+        },
+        getProjectObj(state, data) {
+            state.projectObj = data;
         },
         getWeahter(state, data) {
             state.weatherCont = data;
@@ -90,7 +94,19 @@ export default new Vuex.Store({
                     commit("getLastMonthData", resdata);
                 });
         },
-
+        getProjectData({ state, commit }, data) {
+            //上月数据
+            axios
+                .post(api.queryProject, {
+                    criteria: {
+                        id: state.projectId,
+                    },
+                })
+                .then((res: any) => {
+                    var project = res.data.content[0] || {};
+                    commit("getProjectObj", project);
+                });
+        },
         getLastAllEnergy({ state, commit }, data) {
             //上月所有能耗数据  上月总能耗 上月节约能耗
             var monthTime = moment().subtract(1, "month"); //往前取15分钟
@@ -110,6 +126,7 @@ export default new Vuex.Store({
                     commit("getLastAllEnergy", resdata);
                 });
         },
+
         getWeahter({ state, commit }, data) {
             axios
                 .get(api.getWeatherCurrent + `?projectId=${state.projectId}`)

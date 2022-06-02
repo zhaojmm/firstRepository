@@ -8,6 +8,7 @@ export default {
         "/sgshow/duoduo-service/review-service/energy/week/day/query", //上月每日能耗
     queryLastAllEnergy:
         "/sgshow/duoduo-service/review-service/sceneValue/query", //上月所有能耗
-    saveMapInfo:"/sgshow/duoduo-service/setup-service/map/saveMapInfo"//保存地图
+    saveMapInfo:"/sgshow/duoduo-service/setup-service/map/saveMapInfo",//保存地图
+    queryProject: "/sgshow/duoduo-service/object-service/object/project/query", //获取楼层详情
         
 };

@@ -19,6 +19,7 @@ export default {
         this.getAirCondition(); //空调数据
         this.getLastAllEnergy(); //上月所有能耗数据  上月总能耗 上月节约能耗
         this.getWeahter(); //获取天气
+        this.getProjectData()
         window.onresize = () => {
             console.log("resize");
             this.setBodyWidth(
@@ -37,7 +38,7 @@ export default {
     components: {},
     methods: {
         ...mapMutations(["setBodyWidth", "setBodyHeight"]),
-        ...mapActions(["getAirCondition", "getLastAllEnergy", "getWeahter"]),
+        ...mapActions(["getAirCondition", "getLastAllEnergy", "getWeahter",'getProjectData']),
     },
 };
 </script>
