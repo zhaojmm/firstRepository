@@ -17,6 +17,7 @@ Vue.use(Button);
 Vue.prototype.$loading = Loading.service;
 
 
+//其他来源
 new Vue({
   router,
   store,
